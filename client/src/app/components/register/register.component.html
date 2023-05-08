@@ -1,0 +1,45 @@
+<div class = "container">
+  <mat-card>
+    <mat-card-header>
+      <h1>Registrieren</h1>
+    </mat-card-header>
+    <mat-card-content>
+            <div class=" row">
+  <mat-form-field >
+    <mat-label>Vorname</mat-label>
+    <input matInput [(ngModel)]="firstname">
+  </mat-form-field>
+      </div>
+  <mat-form-field >
+    <mat-label>Nachname</mat-label>
+    <input matInput [(ngModel)]="lastname">
+  </mat-form-field>
+      <div class=" row">
+  <mat-form-field >
+    <mat-label>E-Mail-Adresse</mat-label>
+    <input matInput [(ngModel)]="email">
+  </mat-form-field>
+      </div>
+      <div class=" row">
+  <mat-form-field >
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="password" >
+  </mat-form-field>
+      </div>
+            <div class=" row">
+  <mat-form-field >
+    <mat-label>Passwort bestätigen</mat-label>
+    <input matInput [(ngModel)]="email">
+  </mat-form-field>
+      </div>
+      <div class="button-container">
+      <div class="row">
+        <button mat-raised-button>Registrieren</button>
+        </div>
+              <div class="row">
+        <a href="">Zurück zum Login</a>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
