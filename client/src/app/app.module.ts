@@ -18,6 +18,8 @@ import {MatInputModule} from "@angular/material/input";
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import {FormsModule} from "@angular/forms";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { UserIconComponent } from './components/user-icon/user-icon.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
+    LogoutComponent,
+    UserIconComponent,
 
   ],
   imports: [

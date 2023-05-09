@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import {AuthService} from "../../services/auth/auth.service";
+import {LogoutComponent} from "../logout/logout.component";
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +17,11 @@ export class NavigationComponent {
       map(result => result.matches),
       shareReplay()
     );
+  isLoggedIn(){
+    this.authService.isLoggedIn();
+  }
+  constructor(private breakpointObserver: BreakpointObserver,
+              private authService: AuthService) {}
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
-
+  protected readonly LogoutComponent = LogoutComponent;
 }

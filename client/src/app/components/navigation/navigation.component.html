@@ -21,6 +21,10 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>client</span>
+      <div *ngIf="isLoggedIn">
+        <app-logout></app-logout>
+        <app-user-icon></app-user-icon>
+      </div>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

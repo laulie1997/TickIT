@@ -14,4 +14,8 @@ export class AuthService {
    isLoggedIn(){
     return !!sessionStorage.getItem('user');
   }
+  logout(){
+    sessionStorage.removeItem('user');
+    this.router.navigate(['']);
+  }
 }
