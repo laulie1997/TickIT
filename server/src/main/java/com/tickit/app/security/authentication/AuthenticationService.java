@@ -44,6 +44,6 @@ public class AuthenticationService {
 
     @NonNull
     public User registerUser(User user) {
-        return userService.saveUser(user);
+        return userService.createUser(user);
     }
 }

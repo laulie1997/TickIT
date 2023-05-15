@@ -35,18 +35,25 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotNull
     private String name;
+
     @NotNull
     private String surname;
+
     @NotNull
     private String username;
+
     @NotNull
     private String email;
+
     @NotNull
     private String password;
+
     @CreationTimestamp
     private LocalDateTime creationDate;
+
     @UpdateTimestamp
     private LocalDateTime modificationDate;
 
