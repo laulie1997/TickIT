@@ -13,13 +13,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import {MatCardModule} from "@angular/material/card";
-import {MatInputModule} from "@angular/material/input";
-import {CdkAccordionModule} from "@angular/cdk/accordion";
-import {FormsModule} from "@angular/forms";
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { UserIconComponent } from './components/user-icon/user-icon.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,6 @@ import { UserIconComponent } from './components/user-icon/user-icon.component';
     DashboardComponent,
     LogoutComponent,
     UserIconComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -45,9 +45,11 @@ import { UserIconComponent } from './components/user-icon/user-icon.component';
     MatCardModule,
     MatInputModule,
     CdkAccordionModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

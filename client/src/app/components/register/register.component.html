@@ -3,43 +3,86 @@
     <mat-card-header>
       <h1>Registrieren</h1>
     </mat-card-header>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
     <mat-card-content>
             <div class=" row">
   <mat-form-field >
     <mat-label>Vorname</mat-label>
-    <input matInput [(ngModel)]="firstname">
+    <input matInput
+      type="text"
+      class="form-control"
+      name="name"
+      [(ngModel)]="form.name"
+      required
+      #name="ngModel">
   </mat-form-field>
       </div>
   <mat-form-field >
     <mat-label>Nachname</mat-label>
-    <input matInput [(ngModel)]="lastname">
+    <input matInput
+           type="text"
+           class="form-control"
+           name="surname"
+           [(ngModel)]="form.surname"
+           required
+           minlength="3"
+           maxlength="20"
+           #surname="ngModel">
   </mat-form-field>
       <div class=" row">
   <mat-form-field >
     <mat-label>E-Mail-Adresse</mat-label>
-    <input matInput [(ngModel)]="email">
+    <input matInput
+           type="email"
+           class="form-control"
+           name="email"
+           [(ngModel)]="form.email"
+           required
+           email
+           #email="ngModel">
   </mat-form-field>
       </div>
       <div class=" row">
   <mat-form-field >
     <mat-label>Password</mat-label>
-    <input matInput [(ngModel)]="password" >
+    <input matInput
+           type="password"
+           class="form-control"
+           name="password"
+           [(ngModel)]="form.password"
+           required
+           minlength="6"
+           #password="ngModel">
   </mat-form-field>
       </div>
             <div class=" row">
   <mat-form-field >
     <mat-label>Passwort bestätigen</mat-label>
-    <input matInput [(ngModel)]="email">
+    <input matInput>
   </mat-form-field>
       </div>
       <div class="button-container">
       <div class="row">
-        <button mat-raised-button (click)="register()">Registrieren</button>
+        <button mat-raised-button type="submit" >Registrieren</button>
         </div>
               <div class="row">
         <a href="">Zurück zum Login</a>
         </div>
       </div>
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+      </div>
     </mat-card-content>
+    </form>
   </mat-card>
 </div>
+
