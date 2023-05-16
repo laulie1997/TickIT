@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseURL = 'localhost:3306/api/v1/security/';
+  private baseURL = 'localhost:8080/api/v1/security/';
   constructor(private router: Router, private http: HttpClient) {}
   login(username: string, password: string): Observable<any> {
     return this.http.post(
