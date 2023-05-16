@@ -33,6 +33,6 @@ public class Project {
     @ManyToMany(targetEntity = User.class)
     private Set<User> members;
 
-    @OneToMany(targetEntity = Column.class, mappedBy = Column.PROJECT_PROPERTY)
-    private Set<Column> columns;
+    @OneToMany(targetEntity = Status.class, mappedBy = Status.PROJECT_PROPERTY)
+    private Set<Status> statuses;
 }

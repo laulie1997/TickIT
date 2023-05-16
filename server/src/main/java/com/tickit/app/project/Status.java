@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Column {
+public class Status {
 
     public static final String PROJECT_PROPERTY = "project";
 
@@ -26,5 +28,6 @@ public class Column {
     private String icon;
 
     @ManyToOne(targetEntity = Project.class, optional = false)
+    @Cascade(CascadeType.DELETE)
     private Project project;
 }
