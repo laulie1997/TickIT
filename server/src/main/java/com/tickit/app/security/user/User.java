@@ -1,6 +1,7 @@
 package com.tickit.app.security.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tickit.app.project.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "user",
@@ -56,6 +58,12 @@ public class User implements UserDetails, Serializable {
 
     @UpdateTimestamp
     private LocalDateTime modificationDate;
+
+    @OneToMany(targetEntity = Project.class, mappedBy = Project.OWNER_PROPERTY)
+    private Set<Project> projects;
+
+    @ManyToMany(targetEntity = Project.class, mappedBy = Project.MEMBERS_PROPERTY)
+    private Set<Project> collaboratingProjects;
 
     @JsonIgnore
     @Override
