@@ -1,9 +1,8 @@
-<div class = "container">
-  <mat-card>
+<div class = "container"><mat-card>
     <mat-card-header>
       <h1>Registrieren</h1>
     </mat-card-header>
-    <form
+      <form
       *ngIf="!isSuccessful"
       name="form"
       (ngSubmit)="f.form.valid && onSubmit()"
