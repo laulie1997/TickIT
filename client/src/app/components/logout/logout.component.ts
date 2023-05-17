@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
+import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 
 @Component({
   selector: 'app-logout',
@@ -7,8 +7,8 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./logout.component.css'],
 })
 export class LogoutComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private tokenStorage: TokenStorageService) {}
   logout() {
-    this.authService.logout();
+    this.tokenStorage.signOut();
   }
 }
