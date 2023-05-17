@@ -35,4 +35,8 @@ export class TokenStorageService {
 
     return {};
   }
+
+  isLoggedIn() {
+    return !!sessionStorage.getItem(USER_KEY);
+  }
 }

@@ -39,7 +39,6 @@
            name="password"
            [(ngModel)]="form.password"
            required
-           minlength="6"
            #password="ngModel">
   </mat-form-field>
       </div>
@@ -65,10 +64,6 @@
             *ngIf="f.submitted && isLoginFailed"
           >
             Login failed: {{ errorMessage }}
-          </div>
-
-          <div class="row">
-            <a href="">Passwort vergessen</a>
           </div>
           <div class="row">
             <a href="/register">Registrieren</a>
