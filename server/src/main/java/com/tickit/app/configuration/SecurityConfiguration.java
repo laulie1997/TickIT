@@ -41,8 +41,6 @@ public class SecurityConfiguration {
                 .requestMatchers(REGISTRATION_ENDPOINT, LOGIN_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
