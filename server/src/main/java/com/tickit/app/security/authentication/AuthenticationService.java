@@ -5,7 +5,6 @@ import com.tickit.app.security.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,19 +26,15 @@ public class AuthenticationService {
     }
 
     @NonNull
-    public User authenticateUser(LoginCredentials loginCredentials) throws Exception {
+    public User authenticateUser(LoginCredentials loginCredentials) {
         if (loginCredentials.getUsername() == null || loginCredentials.getPassword() == null) {
-            throw new Exception("username and password must not be null");
+            throw new IllegalArgumentException("username and password must not be null");
         }
 
-        Authentication authentication;
-        try {
-            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginCredentials.getUsername(), loginCredentials.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (BadCredentialsException e) {
-            throw new Exception("Invalid credentials");
-        }
+        final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginCredentials.getUsername(), loginCredentials.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return (User) authentication.getPrincipal();
     }
 

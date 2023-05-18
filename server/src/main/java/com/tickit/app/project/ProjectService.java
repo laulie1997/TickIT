@@ -27,7 +27,7 @@ public class ProjectService {
      */
     @NonNull
     public Project getProject(@NonNull final Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project with id " + id + " does not exist"));
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
 
     /**
@@ -51,7 +51,7 @@ public class ProjectService {
     @NonNull
     public Project updateProject(@NonNull final Project project) {
         if (!projectRepository.existsById(project.getId())) {
-            throw new RuntimeException("Project with id " + project.getId() + " does not exist.");
+            throw new ProjectNotFoundException(project.getId());
         }
         return projectRepository.save(project);
     }

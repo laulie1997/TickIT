@@ -28,7 +28,7 @@ public class UserResource {
     }
 
     @PostMapping("{userId}/passwordChange")
-    public PasswordChangeResponse changePassword(
+    public boolean changePassword(
             @RequestBody PasswordChangeRequest passwordChangeRequest,
             @PathVariable Long userId) {
         return userService.changeUserPassword(passwordChangeRequest, userId);

@@ -46,7 +46,7 @@ public class StatusService {
     @NonNull
     public Status updateStatus(@NonNull final Status status) {
         if (!statusRepository.existsById(status.getId())) {
-            throw new RuntimeException("Status with id " + status.getId() + " does not exist");
+            throw new StatusNotFoundException(status.getId());
         }
         return statusRepository.save(status);
     }
