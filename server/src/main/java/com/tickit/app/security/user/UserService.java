@@ -1,9 +1,9 @@
 package com.tickit.app.security.user;
 
 import com.tickit.app.repository.UserRepository;
-import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * Service to manage {@link User} entity
+ * Service to manage {@link User} entity. Implements {@link UserDetailsService} as required by Spring Security to
+ * perform authentication.
  */
 @Service
 public class UserService implements UserDetailsService {
@@ -22,13 +23,16 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Retrieves the user with the given id
+     *
+     * @param id of the user to be fetched
+     * @return {@link User} if found
+     * @throws UserNotFoundException if user does not exist
+     */
     @NonNull
     public User getUserById(long id) {
-        final var user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throwUserNotFoundException(id);
-        }
-        return user;
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     /**
@@ -36,13 +40,9 @@ public class UserService implements UserDetailsService {
      *
      * @param user to be updated
      * @return saved user
-     * @throws NotFoundException if no user with the given id was found
      */
     @NonNull
     public User updateUser(final User user) {
-        if (!userRepository.existsById(user.getId())) {
-            throwUserNotFoundException(user.getId());
-        }
         final User dbUser = getUserById(user.getId());
         // ensure only username, name, surname and email address can be edited
         dbUser.setName(user.getName());
@@ -64,6 +64,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    /**
+     * Used by spring security to authenticate user by username or email address
+     *
+     * @param username the username identifying the user whose data is required.
+     * @return User for authentication
+     * @throws UsernameNotFoundException if user could not be identified by email or username
+     */
     @Override
     @NonNull
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -107,9 +114,5 @@ public class UserService implements UserDetailsService {
     private String encodePassword(@NonNull final String password) {
         var passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
-    }
-
-    private void throwUserNotFoundException(final Long id) {
-        throw new NotFoundException("User with id " + id + " does not exist");
     }
 }
