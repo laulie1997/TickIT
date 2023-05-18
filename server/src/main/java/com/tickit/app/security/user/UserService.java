@@ -86,24 +86,23 @@ public class UserService implements UserDetailsService {
      *
      * @param passwordChangeRequest request containing old and new password
      * @param userId                user whose password shall be changed
-     * @return {@link PasswordChangeResponse} indicating whether the change was successful
+     * @return {@code true} if the change was successful
      */
-    @NonNull
-    public PasswordChangeResponse changeUserPassword(@NonNull final PasswordChangeRequest passwordChangeRequest, final Long userId) {
+    public boolean changeUserPassword(@NonNull final PasswordChangeRequest passwordChangeRequest, final Long userId) {
         final String newPassword = passwordChangeRequest.getNewPassword();
         final String oldPassword = passwordChangeRequest.getOldPassword();
         if (newPassword == null || oldPassword == null) {
-            return new PasswordChangeResponse(false, "Old and new password must not be null");
+            throw new IllegalArgumentException("Old and new password must be provided");
         }
         // compare old password with persisted user password
         final User user = getUserById(userId);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(oldPassword, user.getPassword())) {
-            return new PasswordChangeResponse(false, "The entered password is invalid");
+            throw new BadCredentialsException("The entered password is invalid");
         }
         user.setPassword(encodePassword(newPassword));
         userRepository.save(user);
-        return new PasswordChangeResponse(true, null);
+        return true;
     }
 
     /**
