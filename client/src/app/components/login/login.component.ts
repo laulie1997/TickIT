@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe(
       (user: User) => {
-        // this.tokenStorage.saveToken(user?.accessToken);
+        // TODO remove save token -> session is used instead
+        this.tokenStorage.saveToken(user.username);
         this.tokenStorage.saveUser(user);
 
         this.isLoginFailed = false;
