@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     private static final String LOGIN_ENDPOINT = "/api/v1/security/authentication/login";
+    private static final String LOGOUT_ENDPOINT = "/api/v1/security/authentication/logout";
     private static final String REGISTRATION_ENDPOINT = "/api/v1/security/authentication/registration";
 
     @Autowired
@@ -40,9 +41,14 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .authenticationProvider(authProvider());
+                .authenticationProvider(authProvider())
+                .logout()
+                .logoutUrl(LOGOUT_ENDPOINT)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .clearAuthentication(true);
         return http.build();
     }
 
