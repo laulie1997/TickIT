@@ -11,10 +11,10 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseURL = 'localhost:8080/api/v1/security/';
+  private baseURL = '/api/v1/security/authentication/';
   constructor(private router: Router, private http: HttpClient) {}
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(
+  login(username: string, password: string): Observable<User> {
+    return this.http.post<User>(
       this.baseURL + 'login',
       {
         username,
