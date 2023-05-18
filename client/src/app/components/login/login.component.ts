@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { Router } from '@angular/router';
+import { User } from '../../api/user';
 
 @Component({
   selector: 'app-login',
@@ -35,9 +36,9 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.form;
 
     this.authService.login(email, password).subscribe(
-      (data) => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
+      (user: User) => {
+        // this.tokenStorage.saveToken(user?.accessToken);
+        this.tokenStorage.saveUser(user);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
         this.reloadPage();
         this.router.navigate['dashboard'];
       },
-      (err) => {
+      err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }

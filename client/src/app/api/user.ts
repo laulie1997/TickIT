@@ -1,4 +1,6 @@
-interface User {
+import { Project } from './project';
+
+export interface User {
   id: number;
   name: string;
   username: string;
