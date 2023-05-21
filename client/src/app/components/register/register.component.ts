@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,22 +17,25 @@ export class RegisterComponent {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   onSubmit(): void {
-    const { name, surname, email, password } = this.form;
-
-    this.authService.register(name, surname, email, password).subscribe(
-      (data) => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
-      (err) => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    );
+    const { name, surname, username, email, password } = this.form;
+    this.authService
+      .register(name, surname, username, email, password)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+          if (this.isSuccessful) {
+            this.router.navigate(['']);
+            alert('Registrierung erfolgreich, Bitte einloggen');
+          }
+        },
+        err => {
+          this.errorMessage = err.error.message;
+          this.isSignUpFailed = true;
+        }
+      );
   }
-
-  protected readonly name = name;
 }
