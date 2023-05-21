@@ -18,8 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private static final String LOGIN_ENDPOINT = "/api/v1/security/login";
-    private static final String REGISTRATION_ENDPOINT = "/api/v1/security/registration";
+    private static final String LOGIN_ENDPOINT = "/api/v1/security/authentication/login";
+    private static final String REGISTRATION_ENDPOINT = "/api/v1/security/authentication/registration";
 
     @Autowired
     private UserService userService;
@@ -35,13 +35,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .cors()
-                .and()
                 .authorizeHttpRequests()
                 .requestMatchers(REGISTRATION_ENDPOINT, LOGIN_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .httpBasic()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

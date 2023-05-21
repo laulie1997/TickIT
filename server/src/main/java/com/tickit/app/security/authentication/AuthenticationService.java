@@ -27,19 +27,20 @@ public class AuthenticationService {
     }
 
     @NonNull
-    public Authentication authenticateUser(LoginCredentials loginCredentials) throws Exception {
+    public User authenticateUser(LoginCredentials loginCredentials) throws Exception {
         if (loginCredentials.getUsername() == null || loginCredentials.getPassword() == null) {
             throw new Exception("username and password must not be null");
         }
 
         Authentication authentication;
         try {
-            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginCredentials.getUsername(), loginCredentials.getPassword()));
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    loginCredentials.getUsername(), loginCredentials.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (BadCredentialsException e) {
             throw new Exception("Invalid credentials");
         }
-        return authentication;
+        return (User) authentication.getPrincipal();
     }
 
     @NonNull
