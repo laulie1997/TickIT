@@ -9,6 +9,6 @@ export class AppComponent {
   title = 'client';
   constructor() {}
   isLoggedIn() {
-    return !!sessionStorage.getItem('user');
+    return !!sessionStorage.getItem('auth-user');
   }
 }
