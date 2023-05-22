@@ -1,8 +1,10 @@
 package com.tickit.app.project;
 
 import com.tickit.app.repository.ProjectRepository;
+import com.tickit.app.security.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,18 +14,23 @@ import org.springframework.stereotype.Service;
 public class ProjectService {
     @NonNull
     private final ProjectRepository projectRepository;
+    @NonNull
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public ProjectService(@NonNull final ProjectRepository projectRepository) {
+    public ProjectService(
+            @NonNull final ProjectRepository projectRepository,
+            @NonNull AuthenticationService authenticationService) {
         this.projectRepository = projectRepository;
+        this.authenticationService = authenticationService;
     }
 
     /**
      * Retrieves the project with the given id
      *
      * @param id of the project to be fetched
-     * @return {@link Project
-     * @throws if no project with the given id was found
+     * @return {@link Project}
+     * @throws ProjectNotFoundException if no project with the given id was found
      */
     @NonNull
     public Project getProject(@NonNull final Long id) {
@@ -63,7 +70,21 @@ public class ProjectService {
      * @return {@code true} if deletion was successful
      */
     public boolean deleteProject(@NonNull final Long id) {
+        checkProjectOwnership(id);
         projectRepository.deleteById(id);
         return true;
+    }
+
+    /**
+     * Checks if the currently authenticated user is owner of the project.
+     *
+     * @param id project to be checked
+     * @throws AccessDeniedException if project does not belong to the current user
+     */
+    private void checkProjectOwnership(Long id) {
+        final var projectOwner = getProject(id).getOwner();
+        if (projectOwner != authenticationService.getCurrentUser()) {
+            throw new AccessDeniedException("User " + projectOwner.getId() + " is not owner of the project");
+        }
     }
 }
