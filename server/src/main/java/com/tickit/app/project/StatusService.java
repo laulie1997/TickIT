@@ -30,8 +30,11 @@ public class StatusService {
      * @return saved status
      */
     @NonNull
-    public Status createStatus(@NonNull final Long projectId, @NonNull final Status status) {
-        final var project = projectService.getProject(projectId);
+    public Status createStatus(@NonNull final Status status) {
+        if (status.getProject() == null || status.getProject().getId() == 0L) {
+            throw new IllegalArgumentException("Project id must be provided");
+        }
+        final var project = projectService.getProject(status.getProject().getId());
         status.setProject(project);
         return statusRepository.save(status);
     }
