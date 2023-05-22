@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/project/{projectId}/status")
+@RequestMapping("/api/v1/status")
 public class StatusResource {
     @NonNull
     private final StatusService statusService;
@@ -16,8 +16,8 @@ public class StatusResource {
     }
 
     @PostMapping
-    public Status createStatus(@PathVariable("projectId") Long projectId, @RequestBody final Status status) {
-        return statusService.createStatus(projectId, status);
+    public Status createStatus(@RequestBody final Status status) {
+        return statusService.createStatus(status);
     }
 
     @PutMapping("{statusId}")
