@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -30,4 +32,7 @@ public class Status {
     @ManyToOne(targetEntity = Project.class, optional = false)
     @Cascade(CascadeType.DELETE)
     private Project project;
+
+    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
+    private Set<Ticket> tickets;
 }
