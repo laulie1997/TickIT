@@ -21,6 +21,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { UserIconComponent } from './components/user-icon/user-icon.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { Router, RouterModule } from '@angular/router';
     DashboardComponent,
     LogoutComponent,
     UserIconComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
