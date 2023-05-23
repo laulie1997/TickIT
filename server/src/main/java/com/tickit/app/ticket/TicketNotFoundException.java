@@ -1,4 +1,4 @@
-package com.tickit.app.project;
+package com.tickit.app.ticket;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

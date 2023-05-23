@@ -1,5 +1,6 @@
-package com.tickit.app.project;
+package com.tickit.app.status;
 
+import com.tickit.app.project.ProjectService;
 import com.tickit.app.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;

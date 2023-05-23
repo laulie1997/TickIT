@@ -1,4 +1,4 @@
-package com.tickit.app.project;
+package com.tickit.app.status;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;

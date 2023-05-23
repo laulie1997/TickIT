@@ -1,6 +1,6 @@
 package com.tickit.app.repository;
 
-import com.tickit.app.project.Status;
+import com.tickit.app.status.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

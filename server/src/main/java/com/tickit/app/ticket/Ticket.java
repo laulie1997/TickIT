@@ -1,6 +1,8 @@
-package com.tickit.app.project;
+package com.tickit.app.ticket;
 
+import com.tickit.app.project.Project;
 import com.tickit.app.security.user.User;
+import com.tickit.app.status.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

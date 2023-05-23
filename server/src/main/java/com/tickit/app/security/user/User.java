@@ -2,7 +2,7 @@ package com.tickit.app.security.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.project.Project;
-import com.tickit.app.project.Ticket;
+import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

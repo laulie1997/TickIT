@@ -1,6 +1,6 @@
 package com.tickit.app.repository;
 
-import com.tickit.app.project.Ticket;
+import com.tickit.app.ticket.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

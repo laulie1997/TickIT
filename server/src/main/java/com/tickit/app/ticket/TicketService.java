@@ -1,4 +1,4 @@
-package com.tickit.app.project;
+package com.tickit.app.ticket;
 
 import com.tickit.app.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
