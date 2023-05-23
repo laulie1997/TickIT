@@ -11,6 +11,7 @@ export class RegisterComponent {
   form: any = {
     name: null,
     surname: null,
+    username: null,
     email: null,
     password: null,
   };

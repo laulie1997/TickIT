@@ -1,8 +1,15 @@
 mat-card{
   width: 600px;
-  margin: 50px auto ;
+  margin: 50px auto;
   float: none;
 }
 .row {
+  margin: 2%;
+}
+.button-container{
+  text-align: center;
+}
+
+button {
   margin: 2%;
 }
