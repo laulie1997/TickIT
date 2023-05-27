@@ -24,50 +24,58 @@
       ><h1>{{ currentUser.username }}</h1></mat-card-header
     >
     <mat-card-content>
-      <div class="row">
-        <strong>Name: </strong>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput class="form-control" />
-          <!--    name="name"
-             [(ngModel)]="form.name"
-                required
-               #name="ngModel"> -->
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <strong>Nachname: </strong>
-        <mat-form-field>
-          <mat-label>Nachname</mat-label>
-          <input matInput class="form-control"/>
-          <!--    name="name"
-             [(ngModel)]="form.name"
-                required
-               #name="ngModel"> -->
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <strong>E-Mail: </strong>
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput class="form-control" />
-          <!--    name="name"
-             [(ngModel)]="form.name"
-                required
-               #name="ngModel"> -->
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <strong>Username: </strong>
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input matInput class="form-control" />
-          <!--    name="name"
-             [(ngModel)]="form.name"
-                required
-               #name="ngModel"> -->
-        </mat-form-field>
-      </div>
+      <form #form="ngForm">
+        <div class="row">
+          <strong>Name: </strong>
+          <mat-form-field >
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              name="name"
+              id="name"
+              [(ngModel)]="currentUser.name"
+              required
+              />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <strong>Nachname: </strong>
+          <mat-form-field>
+            <mat-label for="surname">Nachname</mat-label>
+            <input matInput
+              type="text"
+              id="surname"
+              name="surname"
+              [(ngModel)]="currentUser.surname" />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <strong>E-Mail: </strong>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              name="email"
+              id="email"
+              [(ngModel)]="currentUser.email"
+              required
+              />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <strong>Username: </strong>
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              name="username"
+              id="username"
+              [(ngModel)]="currentUser.username"
+              required
+              />
+          </mat-form-field>
+        </div>
+      </form>
     </mat-card-content>
 
     <div class="button-container">

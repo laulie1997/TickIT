@@ -13,3 +13,7 @@ mat-card{
 button {
   margin: 2%;
 }
+
+mat-form-field{
+  width: 80%;
+}

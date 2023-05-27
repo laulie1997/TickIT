@@ -10,6 +10,10 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   currentUser: any;
+  name: string;
+  surname: string;
+  email: string;
+  username: string;
   requestChange: boolean = false;
   form: any = {
     name: null,
