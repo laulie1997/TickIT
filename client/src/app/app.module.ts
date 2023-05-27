@@ -18,7 +18,6 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { UserIconComponent } from './components/user-icon/user-icon.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
@@ -31,7 +30,6 @@ import { UserComponent } from './components/user/user.component';
     RegisterComponent,
     DashboardComponent,
     LogoutComponent,
-    UserIconComponent,
     UserComponent,
   ],
   imports: [
