@@ -13,22 +13,17 @@ export class TokenStorageService {
     window.sessionStorage.clear();
   }
 
-  public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+  public getAuth(): string | null {
+    return window.sessionStorage.getItem('user');
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.removeItem('user');
+    window.sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = window.sessionStorage.getItem('user');
     if (user) {
       return JSON.parse(user);
     }
@@ -37,6 +32,6 @@ export class TokenStorageService {
   }
 
   isLoggedIn() {
-    return !!sessionStorage.getItem(USER_KEY);
+    return !!sessionStorage.getItem('user');
   }
 }
