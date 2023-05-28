@@ -2,6 +2,7 @@ package com.tickit.app.security.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.project.Project;
+import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -59,11 +60,17 @@ public class User implements UserDetails, Serializable {
     @UpdateTimestamp
     private LocalDateTime modificationDate;
 
+    @JsonIgnore
     @OneToMany(targetEntity = Project.class, mappedBy = Project.OWNER_PROPERTY)
     private Set<Project> projects;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Project.class, mappedBy = Project.MEMBERS_PROPERTY)
     private Set<Project> collaboratingProjects;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_ASSIGNEE)
+    private Set<Ticket> assignedTickets;
 
     @JsonIgnore
     @Override

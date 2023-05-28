@@ -1,5 +1,7 @@
-package com.tickit.app.project;
+package com.tickit.app.status;
 
+import com.tickit.app.project.Project;
+import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -7,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,4 +34,7 @@ public class Status {
     @ManyToOne(targetEntity = Project.class, optional = false)
     @Cascade(CascadeType.DELETE)
     private Project project;
+
+    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
+    private Set<Ticket> tickets;
 }
