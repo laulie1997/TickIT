@@ -31,10 +31,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Validate Gradle wrapper
-      run: cd server
       run: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+      working-directory: ./server
     - name: Build with Gradle
-      run: cd server
       run: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
+      working-directory: ./server
