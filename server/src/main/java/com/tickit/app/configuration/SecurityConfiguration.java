@@ -1,6 +1,9 @@
 package com.tickit.app.configuration;
 
+import com.tickit.app.security.authentication.JwtFilter;
+import com.tickit.app.security.authentication.JwtService;
 import com.tickit.app.security.user.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +28,9 @@ public class SecurityConfiguration {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
@@ -41,14 +48,25 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                )
                 .and()
                 .authenticationProvider(authProvider())
                 .logout()
                 .logoutUrl(LOGOUT_ENDPOINT)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .deleteCookies(JwtService.COOKIE_NAME)
                 .clearAuthentication(true);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
