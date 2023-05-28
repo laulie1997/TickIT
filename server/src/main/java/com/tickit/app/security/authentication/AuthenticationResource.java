@@ -1,6 +1,7 @@
 package com.tickit.app.security.authentication;
 
 import com.tickit.app.security.user.User;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +22,8 @@ public class AuthenticationResource {
     }
 
     @PostMapping("login")
-    public User login(@RequestBody LoginCredentials loginCredentials) throws Exception {
-        return authenticationService.authenticateUser(loginCredentials);
+    public User login(@RequestBody LoginCredentials loginCredentials, HttpServletResponse response) throws Exception {
+        return authenticationService.authenticateUser(loginCredentials, response);
     }
 
     @PostMapping("registration")
