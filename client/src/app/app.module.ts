@@ -21,6 +21,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
+import { ProjectComponent } from './components/project/project.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { UserComponent } from './components/user/user.component';
     DashboardComponent,
     LogoutComponent,
     UserComponent,
+    ProjectComponent,
   ],
   imports: [
     BrowserModule,
