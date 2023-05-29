@@ -10,10 +10,8 @@ import { TokenStorageService } from '../tokenStorage/token-storage.service';
 })
 export class ProjectService {
   private baseURL = '/api/v1/project/';
-  currentUser: any;
   constructor(
     private http: HttpClient,
-    private tokenStorage: TokenStorageService
   ) {}
   saveProject(name: string, description: string): Observable<Project> {
     return this.http.post<Project>(this.baseURL, {
