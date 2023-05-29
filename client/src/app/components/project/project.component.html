@@ -1,6 +1,10 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <mat-card>
-    <form>
+    <form
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      name="form">
+
       <mat-card-header>
         <h1>Neues Projekt anlegen</h1>
       </mat-card-header>
@@ -8,13 +12,21 @@
         <div class=" row">
           <mat-form-field >
             <mat-label>Projektname</mat-label>
-            <input matInput>
+            <input matInput
+                   name="projectname"
+                   [(ngModel)]="form.name"
+                   required
+                   #email="ngModel">
           </mat-form-field>
         </div>
         <div class=" row">
           <mat-form-field >
             <mat-label>Projektdaten</mat-label>
-            <textarea matInput> </textarea>
+            <textarea matInput
+                      name="projectdata"
+                      [(ngModel)]="form.description"
+                      required
+                      #email="ngModel"> </textarea>
 
           </mat-form-field>
         </div>
