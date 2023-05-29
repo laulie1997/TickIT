@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.currentUser = this.tokenStorage.getUser();
-    this.router.navigate(['user', { id: this.currentUser.id }]);
+    this.router.navigate(['user', { id: this.currentUser?.id }]);
   }
 
   changeData() {

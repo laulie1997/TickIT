@@ -49,6 +49,9 @@ export class AuthService {
       httpOptions
     );
   }
+  //get(id: any): Observable<User> {
+  // return this.http.get<User>(`${this.baseURLUser}/${id}`);
+  // }
 
   //  signOut(): Observable<User> {
   // return this.http.post<User>(this.baseURLAuth + 'logout', {}, httpOptions);

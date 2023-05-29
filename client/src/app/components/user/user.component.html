@@ -1,14 +1,14 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
   <mat-card *ngIf="!requestChange">
     <mat-card-header
-      ><h1>{{ currentUser.username }}</h1>
+      ><h1>{{ currentUser?.username }}</h1>
     </mat-card-header>
     <mat-card-content>
-      <div class="row"><strong>Name: </strong> {{ currentUser.name }}</div>
+      <div class="row"><strong>Name: </strong> {{ currentUser?.name }}</div>
       <div class="row">
-        <strong>Nachname: </strong> {{ currentUser.surname }}
+        <strong>Nachname: </strong> {{ currentUser?.surname }}
       </div>
-      <div class="row"><strong>E-Mail: </strong> {{ currentUser.email }}</div>
+      <div class="row"><strong>E-Mail: </strong> {{ currentUser?.email }}</div>
     </mat-card-content>
     <div class="button-container">
       <div class="row">
