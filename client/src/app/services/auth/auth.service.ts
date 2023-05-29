@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../api/user';
 import { TokenStorageService } from '../tokenStorage/token-storage.service';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -35,14 +36,26 @@ export class AuthService {
     username: string,
     email: string,
     password: string
-  ): Observable<any> {
-    return this.http.post(this.baseURLAuth + 'registration', {
-      name,
-      surname,
-      username,
-      email,
-      password,
-    });
+  ): Observable<User> {
+    return this.http.post<User>(
+      this.baseURLAuth + 'registration',
+      {
+        name,
+        surname,
+        username,
+        email,
+        password,
+      },
+      httpOptions
+    );
+  }
+
+  //  signOut(): Observable<User> {
+  // return this.http.post<User>(this.baseURLAuth + 'logout', {}, httpOptions);
+  // }
+
+  signOut() {
+    window.sessionStorage.clear();
   }
   updateUser(
     name: string,
@@ -50,14 +63,19 @@ export class AuthService {
     username: string,
     email: string,
     password: string
-  ): Observable<any> {
+  ): Observable<User> {
     this.currentUser = this.tokenStorage.getUser();
-    return this.http.put(this.baseURLUser + 'user/' + this.currentUser.id, {
-      name,
-      surname,
-      username,
-      email,
-      password,
-    });
+    return this.http.put<User>(
+      this.baseURLUser + 'user/' + this.currentUser.id,
+
+      {
+        name,
+        surname,
+        username,
+        email,
+        password,
+      },
+      httpOptions
+    );
   }
 }

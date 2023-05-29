@@ -21,6 +21,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
+import { httpInterceptorProviders } from './helpers/http.interceptor';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { UserComponent } from './components/user/user.component';
     ReactiveFormsModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
