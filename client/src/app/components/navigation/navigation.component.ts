@@ -29,6 +29,9 @@ export class NavigationComponent {
   navigateDashboard() {
     this.router.navigate(['dashboard']);
   }
+  navigateNewProject() {
+    this.router.navigate(['project']);
+  }
   constructor(
     private breakpointObserver: BreakpointObserver,
     private tokenStorage: TokenStorageService,
