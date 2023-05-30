@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
     name: null,
     surname: null,
     email: null,
-    password: null,
+    username: null,
   };
   selectedId: number;
   @Output() updateEvent = new EventEmitter<Data>();
@@ -39,22 +39,25 @@ export class UserComponent implements OnInit {
   }
 
   updateData() {
-    const { name, surname, username, email, password } = this.form;
-    this.authService
-      .updateUser(name, surname, username, email, password)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.requestChange = false;
-          // this.isSuccessful = true;
-          //  this.isSignUpFailed = false;
-          // if (this.isSuccessful) {
-          // }
-        }
-        // err => {
-        //   this.errorMessage = err.error.message;
-        //   this.isSignUpFailed = true;
+    const { name, surname, username, email } = this.form;
+    this.form.name = this.currentUser.name;
+    this.form.surname = this.currentUser.surname;
+    this.form.username = this.currentUser.username;
+    this.form.email = this.currentUser.email;
+    console.log(this.form);
+    this.authService.updateUser(name, surname, username, email).subscribe(
+      data => {
+        console.log(data);
+        this.requestChange = false;
+        // this.isSuccessful = true;
+        //  this.isSignUpFailed = false;
+        // if (this.isSuccessful) {
         // }
-      );
+      }
+      // err => {
+      //   this.errorMessage = err.error.message;
+      //   this.isSignUpFailed = true;
+      // }
+    );
   }
 }

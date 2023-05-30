@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class AuthService {
   private baseURLAuth = '/api/v1/security/authentication/';
-  private baseURLUser = 'api/v1/security/';
+  private baseURLUser = '/api/v1/security/';
   currentUser: any;
   constructor(
     private router: Router,
@@ -64,8 +64,7 @@ export class AuthService {
     name: string,
     surname: string,
     username: string,
-    email: string,
-    password: string
+    email: string
   ): Observable<User> {
     this.currentUser = this.tokenStorage.getUser();
     return this.http.put<User>(
@@ -76,7 +75,6 @@ export class AuthService {
         surname,
         username,
         email,
-        password,
       },
       httpOptions
     );
