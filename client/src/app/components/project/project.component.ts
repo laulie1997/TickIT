@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -18,6 +19,7 @@ export class ProjectComponent implements OnInit {
     this.projectService.saveProject(name, description).subscribe(
       data => {
         console.log(data + 'sucess');
+        this.router.navigate(['project/:id']);
       },
       error => {
         this.errorMessage = error.error.message;
@@ -25,5 +27,5 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private router: Router) {}
 }

@@ -38,10 +38,10 @@ export class NavigationComponent implements OnInit {
 
   errorMessage = '';
   ngOnInit() {
-    this.projectService.getProjects().subscribe(data => console.log(data)),
-      error => {
-        this.errorMessage = error.error.message;
-      };
+    //  this.projectService.getProjects().subscribe(data => console.log(data)),
+    //    error => {
+    //     this.errorMessage = error.error.message;
+    //   };
   }
   constructor(
     private breakpointObserver: BreakpointObserver,
