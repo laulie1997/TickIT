@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Router } from '@angular/router';
+import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 
 @Component({
   selector: 'app-project',
@@ -11,6 +12,7 @@ export class ProjectComponent implements OnInit {
   form: any = {
     name: null,
     description: null,
+    owner: null,
   };
   errorMessage = '';
   ngOnInit(): void {}
@@ -27,5 +29,9 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  constructor(
+    private projectService: ProjectService,
+    private router: Router,
+    private tokenStorage: TokenStorageService
+  ) {}
 }

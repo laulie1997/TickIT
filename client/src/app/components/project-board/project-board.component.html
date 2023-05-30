@@ -1,1 +1,46 @@
 <h1>{{project?.name}}</h1>
+
+<button mat-raised-button color="primary" *ngIf="!editProjectData" (click)="projectDataChange()" >Projektdaten bearbeiten</button>
+
+<div *ngIf="editProjectData" class="container" xmlns="http://www.w3.org/1999/html">
+  <mat-card>
+    <form
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      name="form">
+
+      <mat-card-header>
+        <h1>Projektdaten bearbeiten</h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div class=" row">
+          <mat-form-field >
+            <mat-label>Projektname</mat-label>
+            <input matInput
+                   name="projectname"
+                   [(ngModel)]="project.name"
+                   required
+                   #name="ngModel">
+          </mat-form-field>
+        </div>
+        <div class=" row">
+          <mat-form-field >
+            <mat-label>Projektdaten</mat-label>
+            <textarea matInput
+                      name="projectdata"
+                      [(ngModel)]="project.description"
+                      required
+                      #description="ngModel"> </textarea>
+
+          </mat-form-field>
+        </div>
+        <div class="button-container">
+          <div class="row">
+            <button  mat-raised-button (click)="cancel()" >Abbrechen</button>
+            <button  mat-raised-button color="primary" type="submit" >Projekt aktualisieren</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
