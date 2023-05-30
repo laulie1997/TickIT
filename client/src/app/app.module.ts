@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
+import { ProjectBoardComponent } from './components/project-board/project-board.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ProjectComponent } from './components/project/project.component';
     LogoutComponent,
     UserComponent,
     ProjectComponent,
+    ProjectBoardComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,4 +21,8 @@ export class ProjectService {
   //getProjects(): Observable<Project> {
   //  return this.http.get<Project>(this.baseURL);
   // }
+
+  getSelectedProject(id: any): Observable<Project> {
+    return this.http.get<Project>(`${this.baseURL}/${id}`);
+  }
 }
