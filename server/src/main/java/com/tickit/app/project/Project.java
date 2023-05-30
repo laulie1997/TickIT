@@ -1,5 +1,6 @@
 package com.tickit.app.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.security.user.User;
 import com.tickit.app.status.Status;
 import com.tickit.app.ticket.Ticket;
@@ -32,9 +33,11 @@ public class Project {
 
     private String description;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = User.class)
     private User owner;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = User.class)
     private Set<User> members;
 
