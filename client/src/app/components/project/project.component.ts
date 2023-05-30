@@ -15,11 +15,11 @@ export class ProjectComponent implements OnInit {
   errorMessage = '';
   ngOnInit(): void {}
   onSubmit() {
-    const { name, description, ownerID } = this.form;
-    this.projectService.saveProject(name, description).subscribe(
-      data => {
-        console.log(data + 'sucess');
-        this.router.navigate(['project/:id']);
+    const { name, description, owner } = this.form;
+    this.projectService.saveProject(name, description, owner).subscribe(
+      async data => {
+        this.projectService.getSelectedProject(data.id);
+        this.router.navigate(['project/' + data.id]);
       },
       error => {
         this.errorMessage = error.error.message;
