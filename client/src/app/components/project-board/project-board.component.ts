@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 
@@ -9,18 +9,21 @@ import { Project } from '../../api/project';
   styleUrls: ['./project-board.component.css'],
 })
 export class ProjectBoardComponent implements OnInit {
-  id: string;
+  selectedID: number;
   project: Project;
-  sub;
+  projects: Project[];
   ngOnInit() {
-    this.sub = this.activatedRoute.paramMap.subscribe(params => {
-      console.log(params);
-      this.id = params.get('id');
-      let projects = this.projectService.getSelectedProject(this.id);
-      console.log(projects);
-    });
+    this.selectedID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    console.log(this.selectedID);
+    this.readOne(this.selectedID);
   }
 
+  readOne(id: number): void {
+    this.projectService.getSelectedProject(id).subscribe(
+      (response: Project) => (this.project = response),
+      error => console.log(error)
+    );
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService
