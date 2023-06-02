@@ -11,19 +11,15 @@ import { TokenStorageService } from '../tokenStorage/token-storage.service';
 export class ProjectService {
   private baseURL = '/api/v1/project';
   constructor(private http: HttpClient) {}
-  saveProject(
-    name: string,
-    description: string,
-    owner: User
-  ): Observable<Project> {
-    return this.http.post<Project>(this.baseURL, {
-      name,
-      description,
-      owner,
-    });
+  saveProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.baseURL, project);
   }
 
   getSelectedProject(id: any): Observable<Project> {
     return this.http.get<Project>(this.baseURL + '/' + id);
+  }
+
+  updateProject(project: Project): Observable<Project> {
+    return this.http.put<Project>(this.baseURL + '/' + project.id, project);
   }
 }

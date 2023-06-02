@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
+import { User } from '../../api/user';
 
 @Component({
   selector: 'app-project-board',
@@ -15,7 +16,6 @@ export class ProjectBoardComponent implements OnInit {
   form: any = {
     name: null,
     description: null,
-    owner: null,
   };
   ngOnInit() {
     this.selectedID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -29,11 +29,15 @@ export class ProjectBoardComponent implements OnInit {
       error => console.log(error)
     );
   }
-  onSubmit() {}
+  onSubmit() {
+    this.projectService
+      .updateProject(this.project)
+      .subscribe((project: Project) => (this.project = project));
+    this.editProjectData = false;
+  }
   projectDataChange() {
     this.editProjectData = true;
   }
-
   cancel() {
     this.editProjectData = false;
   }

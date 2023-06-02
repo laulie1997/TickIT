@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
+import { Project } from '../../api/project';
 
 @Component({
   selector: 'app-project',
@@ -9,6 +10,7 @@ import { TokenStorageService } from '../../services/tokenStorage/token-storage.s
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
+  project: Project;
   form: any = {
     name: null,
     description: null,
@@ -17,8 +19,8 @@ export class ProjectComponent implements OnInit {
   errorMessage = '';
   ngOnInit(): void {}
   onSubmit() {
-    const { name, description, owner } = this.form;
-    this.projectService.saveProject(name, description, owner).subscribe(
+    this.project = this.form;
+    this.projectService.saveProject(this.project).subscribe(
       async data => {
         this.projectService.getSelectedProject(data.id);
         this.router.navigate(['project/' + data.id]);
