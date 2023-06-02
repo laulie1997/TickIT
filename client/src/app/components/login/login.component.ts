@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { Router } from '@angular/router';
 import { User } from '../../api/user';
+import { LoginCredentials } from '../../api/loginCredentials';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { User } from '../../api/user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  loginCredentials: LoginCredentials;
   form: any = {
     email: null,
     password: null,
@@ -32,12 +34,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { email, password } = this.form;
+    this.loginCredentials = this.form;
 
-    this.authService.login(email, password).subscribe(
+    this.authService.login(this.loginCredentials).subscribe(
       data => {
         this.tokenStorage.saveUser(data);
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
