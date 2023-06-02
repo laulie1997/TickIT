@@ -45,6 +45,7 @@ public class ProjectService {
      */
     @NonNull
     public Project createProject(@NonNull final Project project) {
+        project.setOwner(authenticationService.getCurrentUser());
         // TODO initialize project with default statuses
         return projectRepository.save(project);
     }
