@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { ActivatedRoute, Data, Router } from '@angular/router';
+import { User } from '../../api/user';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-user',
@@ -9,11 +11,7 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  currentUser: any;
-  name: string;
-  surname: string;
-  email: string;
-  username: string;
+  user: User;
   requestChange: boolean = false;
   form: any = {
     name: null,
@@ -25,13 +23,14 @@ export class UserComponent implements OnInit {
   @Output() updateEvent = new EventEmitter<Data>();
   constructor(
     private tokenStorage: TokenStorageService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
+    private userService: UserService
   ) {}
   ngOnInit() {
-    this.currentUser = this.tokenStorage.getUser();
-    this.router.navigate(['user', { id: this.currentUser.id }]);
+    // fetch user from api
+    const userId = this.tokenStorage.getUser().id;
+    this.userService
+      .getUser(userId)
+      .subscribe((user: User) => (this.user = user));
   }
 
   changeData() {
@@ -39,22 +38,9 @@ export class UserComponent implements OnInit {
   }
 
   updateData() {
-    const { name, surname, username, email, password } = this.form;
-    this.authService
-      .updateUser(name, surname, username, email, password)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.requestChange = false;
-          // this.isSuccessful = true;
-          //  this.isSignUpFailed = false;
-          // if (this.isSuccessful) {
-          // }
-        }
-        // err => {
-        //   this.errorMessage = err.error.message;
-        //   this.isSignUpFailed = true;
-        // }
-      );
+    this.userService
+      .updateUser(this.user)
+      .subscribe((user: User) => (this.user = user));
+    this.requestChange = false;
   }
 }
