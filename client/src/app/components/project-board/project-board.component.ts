@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { User } from '../../api/user';
@@ -41,8 +41,17 @@ export class ProjectBoardComponent implements OnInit {
   cancel() {
     this.editProjectData = false;
   }
+
+  deleteProject() {
+    this.projectService
+      .deleteProject(this.project)
+      .subscribe((project: Project) => (this.project = project));
+    alert('Projekt wurde gelöscht');
+    this.router.navigate(['dashboard']);
+  }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router
   ) {}
 }

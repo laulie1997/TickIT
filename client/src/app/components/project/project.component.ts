@@ -30,10 +30,5 @@ export class ProjectComponent implements OnInit {
       }
     );
   }
-
-  constructor(
-    private projectService: ProjectService,
-    private router: Router,
-    private tokenStorage: TokenStorageService
-  ) {}
+  constructor(private projectService: ProjectService, private router: Router) {}
 }
