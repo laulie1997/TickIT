@@ -21,6 +21,8 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
+import { ProjectComponent } from './components/project/project.component';
+import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 
 @NgModule({
@@ -32,6 +34,8 @@ import { httpInterceptorProviders } from './helpers/http.interceptor';
     DashboardComponent,
     LogoutComponent,
     UserComponent,
+    ProjectComponent,
+    ProjectBoardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,41 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <mat-card>
+    <form
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      name="form">
+
+      <mat-card-header>
+        <h1>Neues Projekt anlegen</h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div class=" row">
+          <mat-form-field >
+            <mat-label>Projektname</mat-label>
+            <input matInput
+                   name="projectname"
+                   [(ngModel)]="form.name"
+                   required
+                   #name="ngModel">
+          </mat-form-field>
+        </div>
+        <div class=" row">
+          <mat-form-field >
+            <mat-label>Projektdaten</mat-label>
+            <textarea matInput
+                      name="projectdata"
+                      [(ngModel)]="form.description"
+                      required
+                      #description="ngModel"> </textarea>
+
+          </mat-form-field>
+        </div>
+        <div class="button-container">
+          <div class="row">
+            <button  mat-raised-button type="submit" >Projekt anlegen</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
