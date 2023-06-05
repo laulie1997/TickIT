@@ -25,4 +25,8 @@ export class AuthService {
   register(user: User): Observable<User> {
     return this.http.post<User>(this.baseURLAuth + 'registration', user);
   }
+
+  signOut(): void {
+    window.sessionStorage.clear();
+  }
 }

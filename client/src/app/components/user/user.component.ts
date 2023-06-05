@@ -13,6 +13,7 @@ import { UserService } from '../../services/user/user.service';
 export class UserComponent implements OnInit {
   user: User;
   requestChange: boolean = false;
+  requestPasswordChange: boolean = false;
   form: any = {
     name: null,
     surname: null,
@@ -37,6 +38,16 @@ export class UserComponent implements OnInit {
     this.requestChange = true;
   }
 
+  changePassword() {
+    this.requestPasswordChange = true;
+  }
+
+  cancelUpdate() {
+    this.requestChange = false;
+  }
+  cancelPasswordChange() {
+    this.requestPasswordChange = false;
+  }
   updateData() {
     this.userService
       .updateUser(this.user)
