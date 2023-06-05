@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
     name: null,
     surname: null,
     email: null,
-    password: null,
+    username: null,
   };
   selectedId: number;
   @Output() updateEvent = new EventEmitter<Data>();

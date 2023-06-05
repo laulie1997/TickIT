@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
+import { httpInterceptorProviders } from './helpers/http.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { ProjectBoardComponent } from './components/project-board/project-board.
     ReactiveFormsModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
 
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
-
 @Injectable({
   providedIn: 'root',
 })
 export class TokenStorageService {
   constructor() {}
-
-  signOut(): void {
-    window.sessionStorage.clear();
-  }
 
   public getAuth(): string | null {
     return window.sessionStorage.getItem('user');
