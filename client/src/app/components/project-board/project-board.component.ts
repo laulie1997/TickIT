@@ -43,11 +43,10 @@ export class ProjectBoardComponent implements OnInit {
   }
 
   deleteProject() {
-    this.projectService
-      .deleteProject(this.project)
+    this.projectService.deleteProject(this.project.id)
       .subscribe((project: Project) => (this.project = project));
-    alert('Projekt wurde gelöscht');
-    this.router.navigate(['dashboard']);
+    //  alert('Projekt wurde gelöscht');
+    //   this.router.navigate(['dashboard']);
   }
   constructor(
     private activatedRoute: ActivatedRoute,
