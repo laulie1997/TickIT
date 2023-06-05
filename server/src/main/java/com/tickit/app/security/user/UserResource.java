@@ -1,5 +1,6 @@
 package com.tickit.app.security.user;
 
+import com.tickit.app.project.ProjectWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,10 @@ public class UserResource {
             @RequestBody PasswordChangeRequest passwordChangeRequest,
             @PathVariable Long userId) {
         return userService.changeUserPassword(passwordChangeRequest, userId);
+    }
+
+    @GetMapping("{userId}/projects")
+    public ProjectWrapper getUserProjects(@PathVariable Long userId) {
+        return new ProjectWrapper(userService.getUserProjects(userId));
     }
 }

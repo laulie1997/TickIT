@@ -1,5 +1,6 @@
 package com.tickit.app.security.user;
 
+import com.tickit.app.project.Project;
 import com.tickit.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Service to manage {@link User} entity. Implements {@link UserDetailsService} as required by Spring Security to
@@ -113,5 +117,20 @@ public class UserService implements UserDetailsService {
     private String encodePassword(@NonNull final String password) {
         var passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
+    }
+
+    /**
+     * Retrieves the projects the given user owns or belongs to
+     *
+     * @param userId user whose projects shall be fetched
+     * @return set of projects
+     */
+    @NonNull
+    public Set<Project> getUserProjects(Long userId) {
+        final var user = getUserById(userId);
+        Set<Project> projects = new HashSet<>();
+        projects.addAll(user.getCollaboratingProjects());
+        projects.addAll(user.getProjects());
+        return projects;
     }
 }
