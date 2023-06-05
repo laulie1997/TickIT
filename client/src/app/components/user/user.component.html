@@ -96,11 +96,13 @@
       <mat-form-field >
         <mat-label>Altes Passwort</mat-label>
         <input
+          type="password"
           matInput
           name="oldPassword"
           id="oldPassword"
-          required
-        />
+        required
+        [(ngModel)]="updatePasswordForm.oldPassword">
+
       </mat-form-field>
       </div>
       <div class="row">
@@ -108,19 +110,22 @@
       <mat-form-field >
         <mat-label>Neues Passwort</mat-label>
         <input
+          type="password"
           matInput
           name="newPassword"
           id="newPassword"
           required
-        />
+        [(ngModel)]="updatePasswordForm.newPassword">
+
       </mat-form-field>
+
       </div>
+    </form>
       <div class="button-container">
         <div class="row">
-          <button mat-raised-button color="primary" (click)="updateData()">Speichern</button>
+          <button mat-raised-button color="primary" (click)="updatePassword()">Speichern</button>
           <button mat-raised-button (click)="cancelPasswordChange()" >Abbrechen</button>
         </div>
       </div>
-    </form>
   </mat-card>
 </div>

@@ -4,6 +4,7 @@ import { TokenStorageService } from '../../services/tokenStorage/token-storage.s
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { User } from '../../api/user';
 import { UserService } from '../../services/user/user.service';
+import { PasswordChangeRequest } from '../../api/passwordChangeRequest';
 
 @Component({
   selector: 'app-user',
@@ -12,6 +13,7 @@ import { UserService } from '../../services/user/user.service';
 })
 export class UserComponent implements OnInit {
   user: User;
+  passwordChangeRequest: PasswordChangeRequest;
   requestChange: boolean = false;
   requestPasswordChange: boolean = false;
   form: any = {
@@ -20,7 +22,10 @@ export class UserComponent implements OnInit {
     email: null,
     username: null,
   };
-  selectedId: number;
+  updatePasswordForm: any = {
+    oldPassword: null,
+    newPassword: null,
+  };
   @Output() updateEvent = new EventEmitter<Data>();
   constructor(
     private tokenStorage: TokenStorageService,
@@ -53,5 +58,18 @@ export class UserComponent implements OnInit {
       .updateUser(this.user)
       .subscribe((user: User) => (this.user = user));
     this.requestChange = false;
+  }
+
+  updatePassword() {
+    this.passwordChangeRequest = this.updatePasswordForm;
+    const userId = this.tokenStorage.getUser().id;
+    // this.requestPasswordChange = this.updatePasswordForm;
+    this.userService
+      .updatePassword(this.passwordChangeRequest, userId)
+      .subscribe(
+        (passwordChangeRequest: PasswordChangeRequest) =>
+          (this.passwordChangeRequest = passwordChangeRequest)
+      );
+    this.requestPasswordChange = false;
   }
 }
