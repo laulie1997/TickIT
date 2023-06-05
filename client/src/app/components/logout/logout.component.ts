@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent {
   constructor(
-    private tokenStorage: TokenStorageService,
+    private authService: AuthService,
+
     private router: Router
   ) {}
   logout() {
-    this.tokenStorage.signOut();
+    this.authService.signOut();
     this.router.navigate(['']);
   }
 }
