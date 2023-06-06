@@ -58,9 +58,9 @@ public class ProjectService {
      */
     @NonNull
     public Project updateProject(@NonNull final Project project) {
-        if (!projectRepository.existsById(project.getId())) {
-            throw new ProjectNotFoundException(project.getId());
-        }
+        final var dbProject = getProject(project.getId());
+        dbProject.setName(project.getName());
+        dbProject.setDescription(project.getDescription());
         return projectRepository.save(project);
     }
 
