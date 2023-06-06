@@ -1,5 +1,5 @@
 <div class="container" xmlns="http://www.w3.org/1999/html">
-  <mat-card *ngIf="!requestChange">
+  <mat-card *ngIf="!requestChange && !requestPasswordChange" >
     <mat-card-header
       ><h1>{{ user?.username }}</h1>
     </mat-card-header>
@@ -15,7 +15,7 @@
         <button mat-raised-button (click)="changeData()">
           Nutzerdaten ändern
         </button>
-        <button mat-raised-button>Passwort ändern</button>
+        <button mat-raised-button (click)="changePassword()">Passwort ändern</button>
       </div>
     </div>
   </mat-card>
@@ -80,9 +80,52 @@
 
     <div class="button-container">
       <div class="row">
-        <button mat-raised-button (click)="updateData()">Speichern</button>
-        <button mat-raised-button>Passwort ändern</button>
+        <button mat-raised-button color="primary" (click)="updateData()">Speichern</button>
+        <button mat-raised-button (click)="cancelUpdate()" >Abbrechen</button>
       </div>
     </div>
+  </mat-card>
+
+  <mat-card *ngIf="requestPasswordChange">
+    <mat-card-header>
+      <h1>Passwort ändern</h1>
+    </mat-card-header>
+    <form #form="ngForm">
+      <div class="row">
+        <strong>Altes Passwort: </strong>
+      <mat-form-field >
+        <mat-label>Altes Passwort</mat-label>
+        <input
+          type="password"
+          matInput
+          name="oldPassword"
+          id="oldPassword"
+        required
+        [(ngModel)]="updatePasswordForm.oldPassword">
+
+      </mat-form-field>
+      </div>
+      <div class="row">
+        <strong>Neues Passwort:</strong>
+      <mat-form-field >
+        <mat-label>Neues Passwort</mat-label>
+        <input
+          type="password"
+          matInput
+          name="newPassword"
+          id="newPassword"
+          required
+        [(ngModel)]="updatePasswordForm.newPassword">
+
+      </mat-form-field>
+
+      </div>
+    </form>
+      <div class="button-container">
+        <div class="row">
+          <button mat-raised-button color="primary" (click)="updatePassword()">Speichern</button>
+          <button mat-raised-button (click)="cancelPasswordChange()" >Abbrechen</button>
+        </div>
+      </div>
   </mat-card>
 </div>
