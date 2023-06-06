@@ -1,7 +1,10 @@
-<h1>{{project?.name}}</h1>
-
-<button mat-raised-button color="primary" *ngIf="!editProjectData" (click)="projectDataChange()" >Projektdaten bearbeiten</button>
-
+<div class="container" *ngIf="!editProjectData">
+<span class="title">{{project?.name}}   </span>
+  <span>{{project?.description}}</span>
+<div class="button-container1">
+<button mat-raised-button  *ngIf="!editProjectData" (click)="projectDataChange()" >Projektdaten bearbeiten</button>
+</div>
+</div>
 <div *ngIf="editProjectData" class="container" xmlns="http://www.w3.org/1999/html">
   <mat-card>
     <form
