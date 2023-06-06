@@ -8,7 +8,6 @@
 <div *ngIf="editProjectData" class="container" xmlns="http://www.w3.org/1999/html">
   <mat-card>
     <form
-      (ngSubmit)="f.form.valid && onSubmit()"
       #f="ngForm"
       name="form">
 
@@ -40,7 +39,7 @@
         <div class="button-container">
           <div class="row">
             <button  mat-raised-button (click)="cancel()" >Abbrechen</button>
-            <button  mat-raised-button color="primary" type="submit" >Projekt aktualisieren</button>
+            <button  mat-raised-button color="primary" (click)="updateProject()" >Projekt aktualisieren</button>
             <button mat-raised-button color="warn" (click)="deleteProject()">Projekt löschen</button>
           </div>
         </div>

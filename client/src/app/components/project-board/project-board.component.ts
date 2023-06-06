@@ -30,7 +30,7 @@ export class ProjectBoardComponent implements OnInit {
     );
   }
 
-  onSubmit() {
+  updateProject() {
     this.projectService
       .updateProject(this.project)
       .subscribe((project: Project) => (this.project = project));
@@ -49,8 +49,8 @@ export class ProjectBoardComponent implements OnInit {
       .subscribe((response: any) => {
         console.log('response: ', response);
       });
-    //  alert('Projekt wurde gelöscht');
-    //   this.router.navigate(['dashboard']);
+      alert('Projekt wurde gelöscht');
+      this.router.navigate(['dashboard']);
   }
   constructor(
     private activatedRoute: ActivatedRoute,
