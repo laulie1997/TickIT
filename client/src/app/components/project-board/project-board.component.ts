@@ -29,6 +29,7 @@ export class ProjectBoardComponent implements OnInit {
       error => console.log(error)
     );
   }
+
   onSubmit() {
     this.projectService
       .updateProject(this.project)
@@ -43,8 +44,11 @@ export class ProjectBoardComponent implements OnInit {
   }
 
   deleteProject() {
-    this.projectService.deleteProject(this.project.id)
-      .subscribe((project: Project) => (this.project = project));
+    this.projectService
+      .deleteProject(this.project)
+      .subscribe((response: any) => {
+        console.log('response: ', response);
+      });
     //  alert('Projekt wurde gelöscht');
     //   this.router.navigate(['dashboard']);
   }

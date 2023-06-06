@@ -24,6 +24,7 @@ import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
+import { ProjectsComponent } from './components/projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { httpInterceptorProviders } from './helpers/http.interceptor';
     UserComponent,
     ProjectComponent,
     ProjectBoardComponent,
+    ProjectsComponent,
   ],
   imports: [
     BrowserModule,
