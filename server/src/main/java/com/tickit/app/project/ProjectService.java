@@ -84,7 +84,7 @@ public class ProjectService {
      */
     private void checkProjectOwnership(Long id) {
         final var projectOwner = getProject(id).getOwner();
-        if (projectOwner != authenticationService.getCurrentUser()) {
+        if (authenticationService.getCurrentUser() == null || projectOwner.getId() != authenticationService.getCurrentUser().getId()) {
             throw new AccessDeniedException("User " + projectOwner.getId() + " is not owner of the project");
         }
     }
