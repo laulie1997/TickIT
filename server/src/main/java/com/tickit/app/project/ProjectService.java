@@ -61,7 +61,7 @@ public class ProjectService {
         final var dbProject = getProject(project.getId());
         dbProject.setName(project.getName());
         dbProject.setDescription(project.getDescription());
-        return projectRepository.save(project);
+        return projectRepository.save(dbProject);
     }
 
     /**
