@@ -1,28 +1,38 @@
 package com.tickit.app.project;
 
 import com.tickit.app.repository.ProjectRepository;
+import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
+import com.tickit.app.status.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Service for managing {@link Project} entities
  */
 @Service
 public class ProjectService {
+    private static final List<String> DEFAULT_STATUSES = List.of("Open", "In progress", "Done");
+
     @NonNull
     private final ProjectRepository projectRepository;
+    @NonNull
+    private final StatusRepository statusRepository;
     @NonNull
     private final AuthenticationService authenticationService;
 
     @Autowired
     public ProjectService(
             @NonNull final ProjectRepository projectRepository,
-            @NonNull AuthenticationService authenticationService) {
+            @NonNull final StatusRepository statusRepository,
+            @NonNull final AuthenticationService authenticationService) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
+        this.statusRepository = statusRepository;
     }
 
     /**
@@ -46,8 +56,23 @@ public class ProjectService {
     @NonNull
     public Project createProject(@NonNull final Project project) {
         project.setOwner(authenticationService.getCurrentUser());
-        // TODO initialize project with default statuses
-        return projectRepository.save(project);
+        final var savedProject = projectRepository.save(project);
+        initializeDefaultStatuses(savedProject);
+        return getProject(project.getId());
+    }
+
+    /**
+     * Creates default statuses specified in {@link #DEFAULT_STATUSES} for the given project.
+     *
+     * @param savedProject project to create default statuses for
+     */
+    public void initializeDefaultStatuses(Project savedProject) {
+        DEFAULT_STATUSES.forEach(statusName -> {
+            final Status status = new Status();
+            status.setName(statusName);
+            status.setProject(savedProject);
+            this.statusRepository.save(status);
+        });
     }
 
     /**
