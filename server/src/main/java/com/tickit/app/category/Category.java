@@ -1,5 +1,6 @@
 package com.tickit.app.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.project.Project;
 import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
@@ -33,9 +34,11 @@ public class Category {
      */
     private String color;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_CATEGORIES)
     private Set<Ticket> tickets;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(targetEntity = Project.class, optional = false)
     @Cascade(CascadeType.DELETE)
