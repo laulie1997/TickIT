@@ -1,5 +1,6 @@
 package com.tickit.app.ticket;
 
+import com.tickit.app.category.Category;
 import com.tickit.app.project.Project;
 import com.tickit.app.security.user.User;
 import com.tickit.app.status.Status;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,6 +25,7 @@ public class Ticket {
     public static final String PROPERTY_ASSIGNEE = "assignee";
     public static final String PROPERTY_STATUS = "status";
     public static final String PROPERTY_PROJECT = "project";
+    public static final String PROPERTY_CATEGORIES = "categories";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +53,10 @@ public class Ticket {
     @ManyToOne(targetEntity = Status.class, optional = false)
     @Cascade(CascadeType.DELETE)
     private Status status;
+
+    @ManyToMany(targetEntity = Category.class)
+    @Cascade(CascadeType.DELETE)
+    private Set<Category> categories;
 
     @CreationTimestamp
     private LocalDateTime creationDate;

@@ -1,6 +1,7 @@
 package com.tickit.app.project;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tickit.app.category.Category;
 import com.tickit.app.security.user.User;
 import com.tickit.app.status.Status;
 import com.tickit.app.ticket.Ticket;
@@ -46,6 +47,9 @@ public class Project {
 
     @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_PROJECT)
     private Set<Ticket> tickets;
+
+    @OneToMany(targetEntity = Category.class, mappedBy = Category.PROPERTY_PROJECT)
+    private Set<Category> categories;
 
     @CreationTimestamp
     private LocalDateTime creationDate;
