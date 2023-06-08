@@ -25,7 +25,7 @@ import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
-
+import { StatusComponent } from './components/status/status.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +38,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
     ProjectComponent,
     ProjectBoardComponent,
     ProjectsComponent,
+    StatusComponent,
   ],
   imports: [
     BrowserModule,

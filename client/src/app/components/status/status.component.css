@@ -1,0 +1,5 @@
+mat-card-content{
+  background: lightblue;
+  overflow-y: scroll;
+  height: 650px;
+}
