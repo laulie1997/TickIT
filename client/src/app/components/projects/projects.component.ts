@@ -13,11 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   project: Project;
-  selectedID: number;
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.projectService.getAllProjects().subscribe(response => {
