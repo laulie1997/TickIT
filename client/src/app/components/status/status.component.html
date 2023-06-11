@@ -1,10 +1,37 @@
+
 <div class="container">
-  <div>
-    <div class="col-3">
-  <mat-card>
-    <mat-card-header>Status</mat-card-header>
-    <mat-card-content></mat-card-content>
-  </mat-card>
+  <div class="row">
+    <div class="col-md-3">
+      <mat-card>
+        <mat-card-header>
+          <form ngForm>
+            <mat-form-field >
+              <mat-label>Name</mat-label>
+              <input matInput
+                     type="text"
+                     class="form-control"
+                     name="statusname"
+                     [(ngModel)]="form.name"
+                     required>
+            </mat-form-field>
+            <button mat-raised-button (click)="createStatus()">+</button>
+          </form>
+        </mat-card-header>
+        <mat-card-content>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3" *ngFor="let status of statuses">
+      <mat-card>
+        <mat-card-header>
+          {{status?.name}}
+        </mat-card-header>
+        <mat-card-content></mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md">
+      One of three columns
     </div>
   </div>
 </div>
