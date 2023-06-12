@@ -40,6 +40,11 @@ public class StatusService {
         return statusRepository.save(status);
     }
 
+    @NonNull
+    public Status getStatus(@NonNull final Long id) {
+        return statusRepository.findById(id).orElseThrow(() -> new StatusNotFoundException(id));
+    }
+
     /**
      * Updates the given status
      *
@@ -49,9 +54,10 @@ public class StatusService {
      */
     @NonNull
     public Status updateStatus(@NonNull final Status status) {
-        if (!statusRepository.existsById(status.getId())) {
-            throw new StatusNotFoundException(status.getId());
-        }
+        final Status dbStatus = getStatus(status.getId());
+        dbStatus.setName(status.getName());
+        dbStatus.setIcon(status.getIcon());
+        dbStatus.setColor(status.getColor());
         return statusRepository.save(status);
     }
 
