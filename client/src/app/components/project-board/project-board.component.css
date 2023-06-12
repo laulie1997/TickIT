@@ -31,3 +31,41 @@ button{
 .button-container1{
   text-align: right;
 }
+
+/* status column */
+.status-container {
+  width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+  display: flex;
+  justify-content: flex-start;
+
+  .status-column {
+    background-color: #f5f5f5;
+    height: 100%;
+    width: 250px;
+  }
+
+  .status-title {
+    display: inline-block;
+    width: 100%;
+    color: white;
+    background-color: blueviolet;
+    font-size: 20px;
+    margin: auto 0;
+    padding: 15px 0;
+    text-align: center;
+  }
+
+  .ticket{
+    width: 230px;
+    margin: 20px 10px;
+  }
+
+  #add-column{
+    background-color: #f5f5f5;
+    min-width: 80px;
+    width: 100%;
+  }
+}
