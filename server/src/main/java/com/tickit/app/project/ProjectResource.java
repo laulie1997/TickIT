@@ -1,6 +1,7 @@
 package com.tickit.app.project;
 
 import com.tickit.app.status.StatusWrapper;
+import com.tickit.app.ticket.ProjectTicketWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,10 @@ public class ProjectResource {
     @GetMapping("{projectId}/status")
     public StatusWrapper getProjectStatuses(@PathVariable Long projectId) {
         return new StatusWrapper(projectService.getProject(projectId).getStatuses());
+    }
+
+    @GetMapping("{projectId}/ticket")
+    public ProjectTicketWrapper getProjectTickets(@PathVariable Long projectId) {
+        return new ProjectTicketWrapper(projectService.getProjectTickets(projectId));
     }
 }
