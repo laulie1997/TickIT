@@ -20,6 +20,11 @@ public class StatusResource {
         return statusService.createStatus(status);
     }
 
+    @GetMapping("{statusId}")
+    public Status getStatus(@PathVariable final Long statusId) {
+        return statusService.getStatus(statusId);
+    }
+
     @PutMapping("{statusId}")
     public Status updateStatus(@PathVariable final Long statusId, @RequestBody final Status status) {
         status.setId(statusId);
