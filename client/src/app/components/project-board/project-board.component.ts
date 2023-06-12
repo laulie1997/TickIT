@@ -9,7 +9,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { AddColumnModalComponent } from '../add-column-modal/add-column-modal.component';
+import { StatusModalComponent } from '../status-modal/status-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
@@ -113,11 +113,11 @@ export class ProjectBoardComponent implements OnInit {
     return this.statuses.find(status => status?.id == Number(statusId));
   }
 
-  openAddStatusModal() {
-    const dialogRef = this.dialog.open(AddColumnModalComponent, {
-      height: '300px',
-      width: '400px',
-      data: { projectId: this.projectId },
+  openStatusModal(statusId?: number) {
+    const dialogRef = this.dialog.open(StatusModalComponent, {
+      height: '400px',
+      width: '500px',
+      data: { projectId: this.projectId, statusId: statusId },
     });
 
     dialogRef.afterClosed().subscribe((successful: boolean) => {

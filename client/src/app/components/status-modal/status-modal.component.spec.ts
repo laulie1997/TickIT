@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddColumnModalComponent } from './add-column-modal.component';
+import { StatusModalComponent } from './status-modal.component';
 
 describe('AddColumnModalComponent', () => {
-  let component: AddColumnModalComponent;
-  let fixture: ComponentFixture<AddColumnModalComponent>;
+  let component: StatusModalComponent;
+  let fixture: ComponentFixture<StatusModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddColumnModalComponent],
+      declarations: [StatusModalComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddColumnModalComponent);
+    fixture = TestBed.createComponent(StatusModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

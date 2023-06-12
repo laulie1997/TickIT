@@ -26,9 +26,10 @@ import { ProjectBoardComponent } from './components/project-board/project-board.
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
+import { StatusModalComponent } from './components/status-modal/status-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectModalComponent } from './components/project-modal/project-modal.component';
+import { NgxColorsModule } from 'ngx-colors';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ProjectModalComponent } from './components/project-modal/project-modal.
     ProjectComponent,
     ProjectBoardComponent,
     ProjectsComponent,
-    AddColumnModalComponent,
+    StatusModalComponent,
     ProjectModalComponent,
   ],
   imports: [
@@ -64,6 +65,7 @@ import { ProjectModalComponent } from './components/project-modal/project-modal.
     RouterModule,
     DragDropModule,
     MatDialogModule,
+    NgxColorsModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
