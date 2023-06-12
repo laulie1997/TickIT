@@ -10,6 +10,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -44,6 +46,7 @@ public class Project {
 
     @JsonIgnore
     @OneToMany(targetEntity = Status.class, mappedBy = Status.PROJECT_PROPERTY)
+    @Cascade(CascadeType.DELETE)
     private Set<Status> statuses;
 
     @JsonIgnore
