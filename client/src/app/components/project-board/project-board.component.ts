@@ -11,6 +11,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { AddColumnModalComponent } from '../add-column-modal/add-column-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-project-board',
@@ -112,29 +113,6 @@ export class ProjectBoardComponent implements OnInit {
     return this.statuses.find(status => status?.id == Number(statusId));
   }
 
-  updateProject() {
-    this.projectService
-      .updateProject(this.project)
-      .subscribe((project: Project) => (this.project = project));
-    this.editProjectData = false;
-  }
-  projectDataChange() {
-    this.editProjectData = true;
-  }
-  cancel() {
-    this.editProjectData = false;
-  }
-
-  deleteProject() {
-    this.projectService
-      .deleteProject(this.project)
-      .subscribe((response: boolean) => {
-        console.log('response: ', response);
-      });
-    alert('Projekt wurde gelöscht');
-    this.router.navigate(['dashboard']);
-  }
-
   openAddStatusModal() {
     const dialogRef = this.dialog.open(AddColumnModalComponent, {
       height: '300px',
@@ -145,6 +123,20 @@ export class ProjectBoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe((successful: boolean) => {
       if (successful) {
         this.initializeStatusTicketMap();
+      }
+    });
+  }
+
+  openEditProjectModal() {
+    const dialogRef = this.dialog.open(ProjectModalComponent, {
+      height: '300px',
+      width: '400px',
+      data: { projectId: this.projectId },
+    });
+
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.fetchProject();
       }
     });
   }
