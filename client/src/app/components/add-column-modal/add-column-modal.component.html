@@ -1,0 +1,19 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Spalte hinzufügen</h2>
+  <mat-dialog-content class="dialog-content" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="z.B. Erledigt" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+    <button
+      mat-flat-button
+      [disabled]="form.invalid"
+      color="primary"
+      (click)="confirm()">
+      Hinzufügen
+    </button>
+  </mat-dialog-actions>
+</div>
