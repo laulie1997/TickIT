@@ -28,6 +28,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProjectModalComponent } from './components/project-modal/project-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProjectBoardComponent,
     ProjectsComponent,
     AddColumnModalComponent,
+    ProjectModalComponent,
   ],
   imports: [
     BrowserModule,

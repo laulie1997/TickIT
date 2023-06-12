@@ -1,18 +1,5 @@
-.dialog-container {
-  padding: 20px;
-
-  .dialog-content {
-    width: 100%;
-  }
-}
-
 mat-dialog-actions {
   position: absolute;
   bottom: 20px;
   right: 20px;
-}
-
-mat-form-field {
-  padding-top: 10px;
-  width: 100%;
 }
