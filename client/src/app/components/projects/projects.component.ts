@@ -27,7 +27,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   readOne(event: Event, project: Project) {
-    this.projectService.getSelectedProject(project.id).subscribe(response => {
+    this.projectService.getProject(project.id).subscribe(response => {
       this.project = response;
       this.router.navigate(['project/' + project.id]);
     });

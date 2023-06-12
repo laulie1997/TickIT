@@ -6,6 +6,8 @@ import { TokenStorageService } from '../tokenStorage/token-storage.service';
 import { map } from 'rxjs/operators';
 import { StatusWrapper } from 'src/app/api/statusWrapper';
 import { Status } from 'src/app/api/status';
+import { ProjectTicketWrapper } from 'src/app/api/projectTicketWrapper';
+import { Ticket } from 'src/app/api/ticket';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,7 @@ export class ProjectService {
     return this.http.post<Project>(this.baseURL, project);
   }
 
-  getSelectedProject(id: number): Observable<Project> {
+  getProject(id: number): Observable<Project> {
     return this.http.get<Project>(this.baseURL + '/' + id);
   }
 
@@ -46,5 +48,13 @@ export class ProjectService {
     return this.http
       .get<StatusWrapper>(this.baseURL + '/' + projectId + '/' + 'status')
       .pipe(map((wrapper: StatusWrapper) => wrapper?.statuses));
+  }
+
+  getProjectTickets(projectId: number): Observable<Map<string, Ticket[]>> {
+    return this.http
+      .get<ProjectTicketWrapper>(
+        this.baseURL + '/' + projectId + '/' + 'ticket'
+      )
+      .pipe(map((wrapper: ProjectTicketWrapper) => wrapper?.statusTicketMap));
   }
 }
