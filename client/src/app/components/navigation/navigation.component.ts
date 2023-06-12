@@ -59,7 +59,7 @@ export class NavigationComponent implements OnInit {
   openEditProjectModal() {
     const dialogRef = this.dialog.open(ProjectModalComponent, {
       height: '400px',
-      width: '400px',
+      width: '500px',
       data: { projectId: null },
     });
 
