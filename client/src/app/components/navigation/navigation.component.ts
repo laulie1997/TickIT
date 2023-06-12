@@ -7,6 +7,8 @@ import { TokenStorageService } from '../../services/tokenStorage/token-storage.s
 import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
+import { MatDialog } from '@angular/material/dialog';
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-navigation',
@@ -21,6 +23,27 @@ export class NavigationComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+
+  protected readonly LogoutComponent = LogoutComponent;
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private tokenStorage: TokenStorageService,
+    private router: Router,
+    private projectService: ProjectService,
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    this.fetchProjects();
+  }
+
+  fetchProjects() {
+    this.projectService
+      .getAllProjects()
+      .subscribe((projects: Project[]) => (this.projects = projects));
+  }
+
   isLoggedIn() {
     this.tokenStorage.isLoggedIn();
   }
@@ -32,23 +55,18 @@ export class NavigationComponent implements OnInit {
   navigateDashboard() {
     this.router.navigate(['dashboard']);
   }
-  navigateNewProject() {
-    this.router.navigate(['project']);
-  }
 
-  errorMessage = '';
-  ngOnInit() {
-    //  this.projectService.getProjects().subscribe(data => console.log(data)),
-    //    error => {
-    //     this.errorMessage = error.error.message;
-    //   };
-  }
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private tokenStorage: TokenStorageService,
-    private router: Router,
-    private projectService: ProjectService
-  ) {}
+  openEditProjectModal() {
+    const dialogRef = this.dialog.open(ProjectModalComponent, {
+      height: '400px',
+      width: '400px',
+      data: { projectId: null },
+    });
 
-  protected readonly LogoutComponent = LogoutComponent;
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.fetchProjects();
+      }
+    });
+  }
 }
