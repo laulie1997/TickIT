@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
-import { map } from 'rxjs/operators';
-import { User } from '../../api/user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-projects',
@@ -13,23 +13,39 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   project: Project;
-  selectedID: number;
+  projectId: number;
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) {}
+
   ngOnInit(): void {
-    this.projectService.getAllProjects().subscribe(response => {
-      this.projects = Object.values(response);
-      console.log(this.projects);
-    });
+    this.fetchProjects();
   }
 
-  readOne(event: Event, project: Project) {
-    this.projectService.getSelectedProject(project.id).subscribe(response => {
-      this.project = response;
-      this.router.navigate(['project/' + project.id]);
+  fetchProjects() {
+    this.projectService
+      .getAllProjects()
+      .subscribe((projects: Project[]) => (this.projects = projects));
+  }
+
+  openProjectDetails(projectId: number) {
+    this.router.navigate(['project/' + projectId]);
+  }
+
+  openEditProjectModal(projectId: number) {
+    const dialogRef = this.dialog.open(ProjectModalComponent, {
+      height: '400px',
+      width: '400px',
+      data: { projectId: projectId },
+    });
+
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.fetchProjects();
+      }
     });
   }
 }

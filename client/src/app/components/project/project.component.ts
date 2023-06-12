@@ -22,7 +22,7 @@ export class ProjectComponent implements OnInit {
     this.project = this.form;
     this.projectService.saveProject(this.project).subscribe(
       async data => {
-        this.projectService.getSelectedProject(data.id);
+        this.projectService.getProject(data.id);
         this.router.navigate(['project/' + data.id]);
       },
       error => {

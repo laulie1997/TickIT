@@ -1,0 +1,35 @@
+<div [formGroup]="form" class="dialog-container">
+  <h2 mat-dialog-title>{{ dialogTitle }}</h2>
+  <mat-form-field appearance="outline">
+    <mat-label>Projektname</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Projektdaten</mat-label>
+    <textarea matInput formControlName="description"> </textarea>
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions>
+  <div class="dialog-actions">
+    <div class="left-actions">
+      <button
+        *ngIf="editMode"
+        mat-stroked-button
+        color="warn"
+        (click)="deleteProject()">
+        Löschen
+      </button>
+    </div>
+    <div class="right-actions">
+      <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+      <button
+        mat-flat-button
+        [disabled]="form?.invalid"
+        color="primary"
+        (click)="saveProject()">
+        Speichern
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>

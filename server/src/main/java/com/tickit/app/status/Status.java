@@ -1,5 +1,6 @@
 package com.tickit.app.status;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.project.Project;
 import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
@@ -10,13 +11,14 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Status {
+public class Status implements Serializable {
 
     public static final String PROJECT_PROPERTY = "project";
 
@@ -35,6 +37,7 @@ public class Status {
     @Cascade(CascadeType.DELETE)
     private Project project;
 
+    @JsonIgnore
     @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
     private Set<Ticket> tickets;
 }
