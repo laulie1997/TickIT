@@ -30,6 +30,7 @@ import { TicketdataComponent } from './components/ticketdata/ticketdata.componen
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ProjectsComponent,
     TicketComponent,
     TicketdataComponent,
+    TicketsmallComponent,
   ],
   imports: [
     BrowserModule,
