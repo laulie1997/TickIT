@@ -9,7 +9,14 @@
     [cdkDropListConnectedTo]="connectedTo"
     (cdkDropListDropped)="drop($event)"
     (cdkDropDropped)="dropped($event)">
-    <div class="status-title">{{ status?.key?.name }}</div>
+    <div
+      class="status-title box-shadow"
+      [style.background-color]="status.key?.color ? status.key?.color : ''"
+      (click)="openStatusModal(status?.key?.id)">
+      <span>
+        {{ status?.key?.name }}
+      </span>
+    </div>
     <mat-card *ngFor="let ticket of status?.value" cdkDrag class="ticket">
       <mat-card-header>
         <mat-card-title>
@@ -18,11 +25,11 @@
       </mat-card-header>
     </mat-card>
   </div>
-  <div id="add-column">
+  <div id="add-column box-shadow">
     <button
       mat-icon-button
       aria-label="Spalte hinzufügen"
-      (click)="openAddStatusModal()">
+      (click)="openStatusModal()">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
