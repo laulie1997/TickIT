@@ -8,6 +8,7 @@ import { StatusWrapper } from 'src/app/api/statusWrapper';
 import { Status } from 'src/app/api/status';
 import { ProjectTicketWrapper } from 'src/app/api/projectTicketWrapper';
 import { Ticket } from 'src/app/api/ticket';
+import { ProjectWrapper } from 'src/app/api/projectWrapper';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class ProjectService {
       .get<{ projects: Project[] }>(
         this.baseURLUser + '/' + userId + '/projects'
       )
-      .pipe(map(response => response.projects));
+      .pipe(map((wrapper: ProjectWrapper) => wrapper.projects));
   }
 
   updateProject(project: Project): Observable<Project> {
