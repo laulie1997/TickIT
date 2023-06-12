@@ -1,0 +1,13 @@
+mat-form-field{
+  width: 80%;
+}
+.input-container{
+  text-align: center;
+}
+
+.button-container{
+  align-content: center;
+}
+ button{
+   margin: 5px;
+ }

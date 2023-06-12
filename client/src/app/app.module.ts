@@ -26,6 +26,10 @@ import { ProjectBoardComponent } from './components/project-board/project-board.
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { TicketComponent } from './components/ticket/ticket.component';
+import { TicketdataComponent } from './components/ticketdata/ticketdata.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ import { TicketComponent } from './components/ticket/ticket.component';
     ProjectBoardComponent,
     ProjectsComponent,
     TicketComponent,
+    TicketdataComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,9 @@ import { TicketComponent } from './components/ticket/ticket.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
