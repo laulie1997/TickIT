@@ -12,13 +12,14 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Setter
 @Getter
-public class Category {
+public class Category implements Serializable {
 
     public static final String PROPERTY_PROJECT = "project";
 
