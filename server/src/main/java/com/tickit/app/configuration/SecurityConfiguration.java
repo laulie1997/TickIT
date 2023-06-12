@@ -3,7 +3,6 @@ package com.tickit.app.configuration;
 import com.tickit.app.security.authentication.JwtFilter;
 import com.tickit.app.security.authentication.JwtService;
 import com.tickit.app.security.user.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,14 +50,6 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, ex) -> {
-                            response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    ex.getMessage()
-                            );
-                        }
-                )
                 .and()
                 .authenticationProvider(authProvider())
                 .logout()
