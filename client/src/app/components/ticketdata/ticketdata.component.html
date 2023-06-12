@@ -1,31 +1,33 @@
 <h1 mat-dialog-title>Ticket</h1>
 <div mat-dialog-content>
+  <form #f="ngForm">
   <div class="input-container">
   <div class="row">
   <mat-form-field>
     <mat-label>Ticketname</mat-label>
-    <input matInput [(ngModel)]="ticket.title">
+    <input name="title" matInput [(ngModel)]="form.title">
   </mat-form-field>
   </div>
 <div class="row">
   <mat-form-field>
     <mat-label>Beschreibung</mat-label>
-    <textarea matInput [(ngModel)]="ticket.description"></textarea>
+    <textarea name="description" matInput [(ngModel)]="form.description"></textarea>
   </mat-form-field>
 </div>
   <div class="row">
     <mat-form-field>
       <mat-label>Fällig</mat-label>
-      <input matInput [(ngModel)]="ticket.dueDate" [matDatepicker]="picker" placeholder="Choose a date">
+      <input name="dueDate" matInput [(ngModel)]="form.dueDate" [matDatepicker]="picker" placeholder="Choose a date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
   </div>
+  </form>
 <div class="button-container">
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="ticket.status" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="createTicket()">Ok</button>
 </div>
 </div>
 </div>
