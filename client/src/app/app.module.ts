@@ -25,6 +25,9 @@ import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
     ProjectComponent,
     ProjectBoardComponent,
     ProjectsComponent,
+    AddColumnModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
+    DragDropModule,
+    MatDialogModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
