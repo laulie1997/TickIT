@@ -1,5 +1,6 @@
 package com.tickit.app.ticket;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.category.Category;
 import com.tickit.app.project.Project;
 import com.tickit.app.security.user.User;
@@ -13,13 +14,14 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Ticket {
+public class Ticket implements Serializable {
 
     public static final String PROPERTY_CREATED_BY = "createdBy";
     public static final String PROPERTY_ASSIGNEE = "assignee";
@@ -44,6 +46,7 @@ public class Ticket {
     @ManyToOne(targetEntity = User.class)
     private User assignee;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(targetEntity = Project.class, optional = false)
     @Cascade(CascadeType.DELETE)

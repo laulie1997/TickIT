@@ -4,12 +4,17 @@ import com.tickit.app.repository.ProjectRepository;
 import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
 import com.tickit.app.status.Status;
+import com.tickit.app.ticket.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service for managing {@link Project} entities
@@ -112,5 +117,14 @@ public class ProjectService {
         if (authenticationService.getCurrentUser() == null || projectOwner.getId() != authenticationService.getCurrentUser().getId()) {
             throw new AccessDeniedException("User " + projectOwner.getId() + " is not owner of the project");
         }
+    }
+
+    public Map<String, List<Ticket>> getProjectTickets(Long id) {
+        final Map<String, List<Ticket>> ticketMap = new HashMap<>();
+        final Set<Ticket> tickets = getProject(id).getTickets();
+        final Set<Status> statuses = getProject(id).getStatuses();
+        statuses.forEach(status -> ticketMap.put(
+                String.valueOf(status.getId()), tickets.stream().filter(ticket -> ticket.getStatus() == status).collect(Collectors.toList())));
+        return ticketMap;
     }
 }

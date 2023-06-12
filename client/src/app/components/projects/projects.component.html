@@ -1,11 +1,16 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-<h1>Meine Projekte</h1>
+      <h1>Meine Projekte</h1>
     </mat-card-header>
 
-<mat-nav-list class="row" *ngFor="let project of projects">
-  <a mat-list-item (click)="readOne($event, project)">{{project.name}}</a>
-</mat-nav-list>
+    <mat-nav-list class="row" *ngFor="let project of projects">
+      <a mat-list-item (click)="openProjectDetails(project?.id)">
+        {{ project?.name }}
+      </a>
+      <button mat-icon-button (click)="openEditProjectModal(project?.id)">
+        <mat-icon aria-label="Edit project">edit</mat-icon>
+      </button>
+    </mat-nav-list>
   </mat-card>
 </div>

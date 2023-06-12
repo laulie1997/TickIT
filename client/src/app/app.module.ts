@@ -25,12 +25,6 @@ import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { TicketComponent } from './components/ticket/ticket.component';
-import { TicketdataComponent } from './components/ticketdata/ticketdata.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +38,8 @@ import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.compo
     ProjectComponent,
     ProjectBoardComponent,
     ProjectsComponent,
+    AddColumnModalComponent,
+    ProjectModalComponent,
     TicketComponent,
     TicketdataComponent,
     TicketsmallComponent,
@@ -65,9 +61,6 @@ import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.compo
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
