@@ -1,5 +1,6 @@
 package com.tickit.app.project;
 
+import com.tickit.app.status.StatusWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class ProjectResource {
     @DeleteMapping("{projectId}")
     public boolean deleteProject(@PathVariable Long projectId) {
         return projectService.deleteProject(projectId);
+    }
+
+    @GetMapping("{projectId}/status")
+    public StatusWrapper getProjectStatuses(@PathVariable Long projectId) {
+        return new StatusWrapper(projectService.getProject(projectId).getStatuses());
     }
 }
