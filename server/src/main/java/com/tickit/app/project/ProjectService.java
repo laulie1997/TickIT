@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ProjectService {
-    private static final List<String> DEFAULT_STATUSES = List.of("Open", "In progress", "Done");
+    private static final List<String> DEFAULT_STATUSES = List.of("Offen", "In Arbeit", "Erledigt");
 
     @NonNull
     private final ProjectRepository projectRepository;

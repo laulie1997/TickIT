@@ -15,8 +15,8 @@ export class StatusService {
     return this.http.post<Status>(this.baseURL, status);
   }
 
-  deleteStatus(status: Status): Observable<boolean> {
-    return this.http.delete<boolean>(this.baseURL + '/' + status.id);
+  deleteStatus(statusId: number): Observable<boolean> {
+    return this.http.delete<boolean>(this.baseURL + '/' + statusId);
   }
 
   getStatus(id: number): Observable<Status> {

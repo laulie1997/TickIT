@@ -1,6 +1,6 @@
 <div class="status-container">
   <div
-    *ngFor="let status of ticketStatusMap | keyvalue"
+    *ngFor="let status of ticketStatusMap | keyvalue; let odd = odd"
     cdkDropList
     [id]="status.key.name"
     cdkDrop
@@ -8,8 +8,21 @@
     [cdkDropListData]="status.value"
     [cdkDropListConnectedTo]="connectedTo"
     (cdkDropListDropped)="drop($event)"
-    (cdkDropDropped)="dropped($event)">
-    <div class="status-title">{{ status?.key?.name }}</div>
+    (cdkDropDropped)="dropped($event)"
+    [ngClass]="{ 'alternate-background': odd }">
+    <div
+      class="status-header box-shadow"
+      [style.background-color]="status.key?.color ? status.key?.color : ''"
+      (click)="openStatusModal(status?.key?.id)">
+      <div *ngIf="status?.key?.icon" class="status-icon">
+        <mat-icon>
+          {{ status.key.icon }}
+        </mat-icon>
+      </div>
+      <div class="status-title">
+        {{ status?.key?.name }}
+      </div>
+    </div>
     <mat-card *ngFor="let ticket of status?.value" cdkDrag class="ticket">
       <mat-card-header>
         <mat-card-title>
@@ -18,12 +31,15 @@
       </mat-card-header>
     </mat-card>
   </div>
-  <div id="add-column">
-    <button
-      mat-icon-button
-      aria-label="Spalte hinzufügen"
-      (click)="openAddStatusModal()">
-      <mat-icon>add_circle</mat-icon>
-    </button>
+  <div id="add-column" class="box-shadow">
+    <div class="add-button">
+      <button
+        mat-button
+        aria-label="Spalte hinzufügen"
+        (click)="openStatusModal()">
+        <mat-icon>add</mat-icon>
+        Status hinzufügen
+      </button>
+    </div>
   </div>
 </div>

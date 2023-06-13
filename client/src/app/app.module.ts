@@ -26,6 +26,9 @@ import { ProjectBoardComponent } from './components/project-board/project-board.
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { StatusModalComponent } from './components/status-modal/status-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectModalComponent } from './components/project-modal/project-modal.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { TicketdataComponent } from './components/ticketdata/ticketdata.component';
@@ -35,6 +38,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { ProjectNameComponent } from './components/project-name/project-name.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxColorsModule } from 'ngx-colors';
+import { MatSelectModule } from '@angular/material/select';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -50,10 +56,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ProjectsComponent,
     AddColumnModalComponent,
     ProjectModalComponent,
-    TicketComponent,
-    TicketdataComponent,
-    TicketsmallComponent,
-    ProjectNameComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,10 +74,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
+    DragDropModule,
     MatDialogModule,
-    MatDatepickerModule,
-    CdkDropList,
-    MatSnackBarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

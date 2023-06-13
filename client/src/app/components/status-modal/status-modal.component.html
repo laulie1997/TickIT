@@ -1,0 +1,59 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>
+    {{ editMode ? 'Status bearbeiten' : 'Status hinzufügen' }}
+  </h2>
+  <mat-dialog-content [formGroup]="form" class="dialog-content">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="z.B. Erledigt" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Icon</mat-label>
+      <mat-select formControlName="icon">
+        <mat-option *ngFor="let icon of icons" [value]="icon.value">
+          <mat-icon>{{ icon.value }}</mat-icon>
+          {{ icon.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-label>Farbe auswählen</mat-label>
+    <div class="color-picker">
+      <ngx-colors
+        *ngIf="form.get('color')"
+        ngx-colors-trigger
+        [format]="'hex'"
+        [hideTextInput]="true"
+        [hideColorPicker]="true"
+        [palette]="colorPalette"
+        style="display: inline-block; margin: 5px"
+        formControlName="color"></ngx-colors>
+      <span>{{ form.get('color').value }}</span>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="dialog-actions">
+      <div>
+        <button
+          *ngIf="editMode"
+          mat-stroked-button
+          color="warn"
+          (click)="deleteStatus()">
+          Löschen
+        </button>
+      </div>
+      <div>
+        <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+        <button
+          mat-flat-button
+          [disabled]="form.invalid"
+          color="primary"
+          (click)="confirm()">
+          Speichern
+        </button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

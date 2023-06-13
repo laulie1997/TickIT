@@ -13,7 +13,6 @@ export class ProjectModalComponent implements OnInit {
   form: UntypedFormGroup;
   project: Project = {};
   editMode: boolean;
-  dialogTitle = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { projectId: number },
@@ -23,23 +22,16 @@ export class ProjectModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data.projectId);
     this.editMode = this.data.projectId != null;
-    this.dialogTitle = this.editMode
-      ? 'Projekt bearbeiten'
-      : 'Projekt erstellen';
     if (this.editMode) {
       this.projectService
         .getProject(this.data.projectId)
         .subscribe((project: Project) => {
           this.project = project;
-          console.log('fetched', this.project);
           this.buildForm();
         });
     }
     this.buildForm();
-
-    console.log(this.project);
   }
 
   saveProject() {

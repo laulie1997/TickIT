@@ -8,8 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -34,7 +32,6 @@ public class Status implements Serializable {
     private String icon;
 
     @ManyToOne(targetEntity = Project.class, optional = false)
-    @Cascade(CascadeType.DELETE)
     private Project project;
 
     @JsonIgnore
