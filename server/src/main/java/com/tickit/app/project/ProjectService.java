@@ -5,6 +5,7 @@ import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
 import com.tickit.app.status.Status;
 import com.tickit.app.ticket.Ticket;
+import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
@@ -29,15 +30,19 @@ public class ProjectService {
     private final StatusRepository statusRepository;
     @NonNull
     private final AuthenticationService authenticationService;
+    @NonNull
+    private final TicketService ticketService;
 
     @Autowired
     public ProjectService(
             @NonNull final ProjectRepository projectRepository,
             @NonNull final StatusRepository statusRepository,
-            @NonNull final AuthenticationService authenticationService) {
+            @NonNull final AuthenticationService authenticationService,
+            @NonNull TicketService ticketService) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
+        this.ticketService = ticketService;
     }
 
     /**
@@ -126,5 +131,11 @@ public class ProjectService {
         statuses.forEach(status -> ticketMap.put(
                 String.valueOf(status.getId()), tickets.stream().filter(ticket -> ticket.getStatus() == status).collect(Collectors.toList())));
         return ticketMap;
+    }
+
+    @NonNull
+    public Ticket createTicketForProject(Long projectId, Ticket ticket) {
+        ticket.setProject(getProject(projectId));
+        return ticketService.createTicket(ticket);
     }
 }

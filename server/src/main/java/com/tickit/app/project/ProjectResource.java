@@ -2,6 +2,7 @@ package com.tickit.app.project;
 
 import com.tickit.app.status.StatusWrapper;
 import com.tickit.app.ticket.ProjectTicketWrapper;
+import com.tickit.app.ticket.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +47,10 @@ public class ProjectResource {
     @GetMapping("{projectId}/ticket")
     public ProjectTicketWrapper getProjectTickets(@PathVariable Long projectId) {
         return new ProjectTicketWrapper(projectService.getProjectTickets(projectId));
+    }
+
+    @PostMapping("{projectId}/ticket")
+    public Ticket createTicketForProject(@PathVariable Long projectId, @RequestBody Ticket ticket) {
+        return projectService.createTicketForProject(projectId, ticket);
     }
 }
