@@ -25,7 +25,6 @@ import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatusModalComponent } from './components/status-modal/status-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -53,7 +52,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ProjectComponent,
     ProjectBoardComponent,
     ProjectsComponent,
-    AddColumnModalComponent,
     ProjectModalComponent,
     TicketComponent,
     TicketdataComponent,
