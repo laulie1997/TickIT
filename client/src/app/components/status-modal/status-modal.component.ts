@@ -13,7 +13,13 @@ export class StatusModalComponent implements OnInit {
   form: UntypedFormGroup;
   editMode: boolean;
   status: Status = {};
-  icons: string[] = ['task_alt', 'emoji_objects', 'rocket', 'rotate_right'];
+  icons: Icon[] = [
+    { value: '', label: '--' },
+    { value: 'task_alt', label: 'task' },
+    { value: 'emoji_objects', label: 'bulb' },
+    { value: 'rocket', label: 'rocket' },
+    { value: 'rotate_right', label: 'progress' },
+  ];
   readonly defaultColor = '#292929';
   readonly colorPalette: string[] = [
     '#ffa726',
@@ -77,7 +83,7 @@ export class StatusModalComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: [this.status?.name || '', Validators.required],
       color: [this.status.color || this.defaultColor],
-      icon: [this.status?.icon || '--'],
+      icon: [this.status?.icon || ''],
     });
     console.log(this.form);
   }
@@ -91,4 +97,9 @@ export class StatusModalComponent implements OnInit {
       this.form.get('icon').setValue(this.status.icon);
     }
   }
+}
+
+interface Icon {
+  value: string;
+  label: string;
 }

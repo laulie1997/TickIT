@@ -11,10 +11,9 @@
     <mat-form-field>
       <mat-label>Icon</mat-label>
       <mat-select formControlName="icon">
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let icon of icons" [value]="icon">
-          <mat-icon>{{ icon }}</mat-icon>
-          {{ icon }}
+        <mat-option *ngFor="let icon of icons" [value]="icon.value">
+          <mat-icon>{{ icon.value }}</mat-icon>
+          {{ icon.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
