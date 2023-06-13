@@ -115,7 +115,7 @@ export class ProjectBoardComponent implements OnInit {
 
   openStatusModal(statusId?: number) {
     const dialogRef = this.dialog.open(StatusModalComponent, {
-      height: '400px',
+      height: '480px',
       width: '500px',
       data: { projectId: this.projectId, statusId: statusId },
     });
