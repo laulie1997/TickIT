@@ -25,6 +25,15 @@ import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { AddColumnModalComponent } from './components/add-column-modal/add-column-modal.component';
+import { ProjectModalComponent } from './components/project-modal/project-modal.component';
+import { TicketComponent } from './components/ticket/ticket.component';
+import { TicketdataComponent } from './components/ticketdata/ticketdata.component';
+import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CdkDropList } from '@angular/cdk/drag-drop';
+import { ProjectNameComponent } from './components/project-name/project-name.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +52,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
     TicketComponent,
     TicketdataComponent,
     TicketsmallComponent,
+    ProjectNameComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +71,9 @@ import { ProjectsComponent } from './components/projects/projects.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    CdkDropList,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

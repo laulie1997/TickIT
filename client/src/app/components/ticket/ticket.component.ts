@@ -14,12 +14,13 @@ import { Ticket } from '../../api/ticket';
 })
 export class TicketComponent {
   ticket: Ticket;
+  ticketId: number;
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TicketdataComponent, {
       width: '500px',
-      data: {},
+      data: { ticketId: this.ticketId },
     });
 
     dialogRef.afterClosed().subscribe(result => {

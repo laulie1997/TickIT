@@ -1,33 +1,35 @@
-<h1 mat-dialog-title>Ticket</h1>
-<div mat-dialog-content>
-  <form #f="ngForm">
-  <div class="input-container">
-  <div class="row">
-  <mat-form-field>
+<div [formGroup]="form" class="dialog-container">
+  <h2 mat-dialog-title>{{ dialogTitle }}</h2>
+  <mat-form-field appearance="outline">
     <mat-label>Ticketname</mat-label>
-    <input name="title" matInput [(ngModel)]="form.title">
+    <input matInput formControlName="name" />
   </mat-form-field>
-  </div>
-<div class="row">
-  <mat-form-field>
-    <mat-label>Beschreibung</mat-label>
-    <textarea name="description" matInput [(ngModel)]="form.description"></textarea>
+  <mat-form-field appearance="outline">
+    <mat-label>Ticket Beschreibung</mat-label>
+    <textarea matInput formControlName="description"> </textarea>
   </mat-form-field>
 </div>
-  <div class="row">
-    <mat-form-field>
-      <mat-label>Fällig</mat-label>
-      <input name="dueDate" matInput [(ngModel)]="form.dueDate" [matDatepicker]="picker" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+
+<mat-dialog-actions>
+  <div class="dialog-actions">
+    <div class="left-actions">
+      <button
+        *ngIf="editMode"
+        mat-stroked-button
+        color="warn"
+        (click)="deleteTicket()">
+        Löschen
+      </button>
+    </div>
+    <div class="right-actions">
+      <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+      <button
+        mat-flat-button
+        [disabled]="form?.invalid"
+        color="primary"
+        (click)="saveTicket()">
+        Speichern
+      </button>
+    </div>
   </div>
-  </div>
-  </form>
-<div class="button-container">
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button (click)="createTicket()">Ok</button>
-</div>
-</div>
-</div>
+</mat-dialog-actions>
