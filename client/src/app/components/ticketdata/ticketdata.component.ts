@@ -23,7 +23,8 @@ export class TicketdataComponent implements OnInit {
     public dialogRef: MatDialogRef<Ticket>,
     private ticketService: TicketService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { ticketId: number }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { ticketId: number; projectId: number; statusId: number }
   ) {}
 
   onNoClick(): void {
@@ -31,21 +32,17 @@ export class TicketdataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data.ticketId);
     this.editMode = this.data.ticketId != null;
     this.dialogTitle = this.editMode ? 'Ticket bearbeiten' : 'Ticket erstellen';
+    this.buildForm();
     if (this.editMode) {
       this.ticketService
         .getSelectedTicket(this.data.ticketId)
         .subscribe((ticket: Ticket) => {
           this.ticket = ticket;
-          console.log('fetched', this.ticket);
-          this.buildForm();
+          this.updateForm();
         });
     }
-    this.buildForm();
-
-    console.log(this.ticket);
   }
 
   private buildForm() {
@@ -60,9 +57,20 @@ export class TicketdataComponent implements OnInit {
   saveTicket() {
     this.ticket.title = this.form.get('name').value;
     this.ticket.description = this.form.get('description').value;
+    if (!this.editMode) {
+      this.ticket.project = { id: this.data.projectId };
+      this.ticket.status = { id: this.data.statusId };
+    }
     (this.editMode
       ? this.ticketService.updateTicket(this.ticket)
       : this.ticketService.saveTicket(this.ticket)
     ).subscribe(() => this.dialogRef.close(true));
+  }
+
+  private updateForm(): void {
+    this.form.get('name').setValue(this.ticket?.title);
+    if (this.ticket.description) {
+      this.form.get('description').setValue(this.ticket?.description);
+    }
   }
 }
