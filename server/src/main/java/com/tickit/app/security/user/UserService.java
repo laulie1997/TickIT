@@ -2,6 +2,7 @@ package com.tickit.app.security.user;
 
 import com.tickit.app.project.Project;
 import com.tickit.app.repository.UserRepository;
+import com.tickit.app.ticket.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -132,5 +133,17 @@ public class UserService implements UserDetailsService {
         projects.addAll(user.getCollaboratingProjects());
         projects.addAll(user.getProjects());
         return projects;
+    }
+
+    /**
+     * Retrieves the tickets which are assigned to the given user
+     *
+     * @param userId user whose assigned tickets shall be fetched
+     * @return set of tickets
+     */
+    @NonNull
+    public Set<Ticket> getUserTickets(Long userId) {
+        final var user = getUserById(userId);
+        return user.getAssignedTickets();
     }
 }

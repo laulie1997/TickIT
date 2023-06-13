@@ -33,7 +33,6 @@ import { ProjectModalComponent } from './components/project-modal/project-modal.
 import { TicketComponent } from './components/ticket/ticket.component';
 import { TicketdataComponent } from './components/ticketdata/ticketdata.component';
 import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { ProjectNameComponent } from './components/project-name/project-name.component';
@@ -56,6 +55,11 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ProjectsComponent,
     AddColumnModalComponent,
     ProjectModalComponent,
+    TicketComponent,
+    TicketdataComponent,
+    TicketsmallComponent,
+    StatusModalComponent,
+    ProjectNameComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,8 +80,19 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     RouterModule,
     DragDropModule,
     MatDialogModule,
+    MatDatepickerModule,
+    CdkDropList,
+    MatSnackBarModule,
+    NgxColorsModule,
+    MatSelectModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
