@@ -3,17 +3,18 @@ mat-card{
   margin: 50px auto;
   float: none;
 }
-.row {
-  margin: 2%;
-}
-.button-container{
-  text-align: center;
+
+mat-dialog-actions {
+  padding: 20px;
 }
 
-button {
-  margin: 2%;
+.dialog-actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 mat-form-field{
-  width: 80%;
+  width: 90%;
+  margin-left: 5%;
 }

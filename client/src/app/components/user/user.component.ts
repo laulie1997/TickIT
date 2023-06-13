@@ -5,6 +5,7 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import { User } from '../../api/user';
 import { UserService } from '../../services/user/user.service';
 import { PasswordChangeRequest } from '../../api/passwordChangeRequest';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user',
@@ -29,7 +30,8 @@ export class UserComponent implements OnInit {
   @Output() updateEvent = new EventEmitter<Data>();
   constructor(
     private tokenStorage: TokenStorageService,
-    private userService: UserService
+    private userService: UserService,
+    private _snackBar: MatSnackBar
   ) {}
   ngOnInit() {
     // fetch user from api
@@ -58,6 +60,7 @@ export class UserComponent implements OnInit {
       .updateUser(this.user)
       .subscribe((user: User) => (this.user = user));
     this.requestChange = false;
+    this.openSnackBar('Userdaten wurden aktualisiert', 'schließen');
   }
 
   updatePassword() {
@@ -71,5 +74,10 @@ export class UserComponent implements OnInit {
           (this.passwordChangeRequest = passwordChangeRequest)
       );
     this.requestPasswordChange = false;
+    this.openSnackBar('Passwort wurde geändert', 'schließen');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000 });
   }
 }

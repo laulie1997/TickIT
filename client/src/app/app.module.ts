@@ -34,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { ProjectNameComponent } from './components/project-name/project-name.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ProjectNameComponent } from './components/project-name/project-name.com
     MatDialogModule,
     MatDatepickerModule,
     CdkDropList,
+    MatSnackBarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
