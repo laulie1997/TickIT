@@ -13,6 +13,7 @@ export class StatusModalComponent implements OnInit {
   form: UntypedFormGroup;
   editMode: boolean;
   status: Status = {};
+  icons: string[] = ['task_alt', 'emoji_objects', 'rocket', 'rotate_right'];
   readonly defaultColor = '#292929';
   readonly colorPalette: string[] = [
     '#ffa726',
@@ -55,6 +56,7 @@ export class StatusModalComponent implements OnInit {
   confirm() {
     this.status.name = this.form.get('name').value;
     this.status.color = this.form.get('color').value;
+    this.status.icon = this.form.get('icon').value;
     if (!this.editMode) {
       this.status.project = { id: this.data.projectId };
     }
@@ -75,6 +77,7 @@ export class StatusModalComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: [this.status?.name || '', Validators.required],
       color: [this.status.color || this.defaultColor],
+      icon: [this.status?.icon || '--'],
     });
     console.log(this.form);
   }
@@ -82,7 +85,10 @@ export class StatusModalComponent implements OnInit {
   private updateForm(): void {
     this.form.get('name').setValue(this.status?.name);
     if (this.status.color) {
-      this.form.get('color').setValue(this.status?.color);
+      this.form.get('color').setValue(this.status.color);
+    }
+    if (this.status.icon) {
+      this.form.get('icon').setValue(this.status.icon);
     }
   }
 }

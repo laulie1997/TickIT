@@ -3,11 +3,23 @@
     {{ editMode ? 'Status bearbeiten' : 'Status hinzufügen' }}
   </h2>
   <mat-dialog-content [formGroup]="form" class="dialog-content">
-    <mat-form-field appearance="outline">
+    <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="z.B. Erledigt" />
     </mat-form-field>
-    <p><b>Farbe auswählen:</b></p>
+
+    <mat-form-field>
+      <mat-label>Icon</mat-label>
+      <mat-select formControlName="icon">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <mat-icon>{{ icon }}</mat-icon>
+          {{ icon }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-label>Farbe auswählen</mat-label>
     <div class="color-picker">
       <ngx-colors
         *ngIf="form.get('color')"
@@ -21,6 +33,7 @@
       <span>{{ form.get('color').value }}</span>
     </div>
   </mat-dialog-content>
+
   <mat-dialog-actions>
     <div class="dialog-actions">
       <div>
