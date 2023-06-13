@@ -14,12 +14,7 @@ public class TicketResource {
     public TicketResource(@NonNull final TicketService ticketService) {
         this.ticketService = ticketService;
     }
-
-    @PostMapping
-    public Ticket createTicket(@RequestBody final Ticket ticket) {
-        return ticketService.createTicket(ticket);
-    }
-
+    
     @GetMapping("{ticketId}")
     public Ticket getTicket(@PathVariable final Long ticketId) {
         return ticketService.getTicket(ticketId);
