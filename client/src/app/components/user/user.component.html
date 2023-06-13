@@ -1,33 +1,10 @@
-<div class="container" xmlns="http://www.w3.org/1999/html">
-  <mat-card *ngIf="!requestChange && !requestPasswordChange" >
-    <mat-card-header
-      ><h1>{{ user?.username }}</h1>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row"><strong>Name: </strong> {{ user?.name }}</div>
-      <div class="row">
-        <strong>Nachname: </strong> {{ user?.surname }}
-      </div>
-      <div class="row"><strong>E-Mail: </strong> {{ user?.email }}</div>
-    </mat-card-content>
-    <div class="button-container">
-      <div class="row">
-        <button mat-raised-button (click)="changeData()">
-          Nutzerdaten ändern
-        </button>
-        <button mat-raised-button (click)="changePassword()">Passwort ändern</button>
-      </div>
-    </div>
-  </mat-card>
-  <mat-card *ngIf="requestChange">
-    <mat-card-header
-      ><h1>Userdaten ändern</h1></mat-card-header
-    >
+<mat-card *ngIf="!requestPasswordChange">
+<mat-card-header
+      ><h1>Userdaten ändern</h1></mat-card-header>
     <mat-card-content>
       <form #form="ngForm">
         <div class="row">
-          <strong>Name: </strong>
-          <mat-form-field >
+          <mat-form-field appearance="outline" >
             <mat-label>Name</mat-label>
             <input
               matInput
@@ -39,8 +16,7 @@
           </mat-form-field>
         </div>
         <div class="row">
-          <strong>Nachname: </strong>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label for="surname">Nachname</mat-label>
             <input matInput
               type="text"
@@ -50,8 +26,7 @@
           </mat-form-field>
         </div>
         <div class="row">
-          <strong>E-Mail: </strong>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
               matInput
@@ -63,8 +38,7 @@
           </mat-form-field>
         </div>
         <div class="row">
-          <strong>Username: </strong>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input
               matInput
@@ -78,12 +52,12 @@
       </form>
     </mat-card-content>
 
-    <div class="button-container">
-      <div class="row">
+  <mat-dialog-actions>
+    <div class="dialog-actions">
         <button mat-raised-button color="primary" (click)="updateData()">Speichern</button>
-        <button mat-raised-button (click)="cancelUpdate()" >Abbrechen</button>
-      </div>
+        <button mat-raised-button (click)="changePassword()" >Passwort ändern</button>
     </div>
+  </mat-dialog-actions>
   </mat-card>
 
   <mat-card *ngIf="requestPasswordChange">
@@ -92,8 +66,7 @@
     </mat-card-header>
     <form #form="ngForm">
       <div class="row">
-        <strong>Altes Passwort: </strong>
-      <mat-form-field >
+      <mat-form-field appearance="outline">
         <mat-label>Altes Passwort</mat-label>
         <input
           type="password"
@@ -106,8 +79,7 @@
       </mat-form-field>
       </div>
       <div class="row">
-        <strong>Neues Passwort:</strong>
-      <mat-form-field >
+      <mat-form-field appearance="outline" >
         <mat-label>Neues Passwort</mat-label>
         <input
           type="password"
@@ -121,11 +93,11 @@
 
       </div>
     </form>
-      <div class="button-container">
-        <div class="row">
+    <mat-dialog-actions>
+      <div class="dialog-actions">
           <button mat-raised-button color="primary" (click)="updatePassword()">Speichern</button>
           <button mat-raised-button (click)="cancelPasswordChange()" >Abbrechen</button>
-        </div>
       </div>
+    </mat-dialog-actions>
   </mat-card>
-</div>
+
