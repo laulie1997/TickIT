@@ -30,6 +30,8 @@ import { StatusModalComponent } from './components/status-modal/status-modal.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectModalComponent } from './components/project-modal/project-modal.component';
 import { NgxColorsModule } from 'ngx-colors';
+import { MatSelectModule } from '@angular/material/select';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -66,8 +68,15 @@ import { NgxColorsModule } from 'ngx-colors';
     DragDropModule,
     MatDialogModule,
     NgxColorsModule,
+    MatSelectModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
