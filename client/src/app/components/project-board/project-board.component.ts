@@ -44,12 +44,10 @@ export class ProjectBoardComponent implements OnInit {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.fetchProject();
     this.initializeStatusTicketMap();
-    console.log(this.ticketStatusMap);
     this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
   }
 
   onTicketDropped(event: CdkDragDrop<Ticket[]>) {
-    console.log(event);
     const statusId: number = +event.container.id;
     const ticketId = (event.item.data as Ticket)?.id;
 
@@ -71,25 +69,6 @@ export class ProjectBoardComponent implements OnInit {
     this.ticketService
       .updateTicketStatus(ticketId, statusId)
       .subscribe(() => this.initializeStatusTicketMap());
-  }
-
-  dropped(event: any) {
-    console.log('dropped', event);
-    console.log('dropped', event.previousContainer, event.container);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   fetchProject(): void {

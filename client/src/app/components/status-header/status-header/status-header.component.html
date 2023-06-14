@@ -1,0 +1,12 @@
+<div
+  class="status-header box-shadow"
+  [style.background-color]="status?.color ? status.color : ''">
+  <div *ngIf="status?.icon" class="status-icon">
+    <mat-icon>
+      {{ status.icon }}
+    </mat-icon>
+  </div>
+  <div class="status-title">
+    {{ status?.name }}
+  </div>
+</div>
