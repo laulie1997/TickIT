@@ -1,17 +1,24 @@
 package com.tickit.app.ticket;
 
 import com.tickit.app.repository.TicketRepository;
+import com.tickit.app.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TicketService {
+    @NonNull
     private final TicketRepository ticketRepository;
+    @NonNull
+    private final StatusService statusService;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository) {
+    public TicketService(
+            @NonNull TicketRepository ticketRepository,
+            @NonNull StatusService statusService) {
         this.ticketRepository = ticketRepository;
+        this.statusService = statusService;
     }
 
     /**
@@ -32,10 +39,18 @@ public class TicketService {
 
     @NonNull
     public Ticket updateTicket(@NonNull final Ticket ticket) {
-        if (!ticketRepository.existsById(ticket.getId())) {
-            throw new TicketNotFoundException(ticket.getId());
-        }
-        return ticketRepository.save(ticket);
+        final Ticket dbTicket = getTicket(ticket.getId());
+        dbTicket.setDescription(ticket.getDescription());
+        dbTicket.setTitle(ticket.getTitle());
+        dbTicket.setStatus(ticket.getStatus());
+        return ticketRepository.save(dbTicket);
+    }
+
+    @NonNull
+    public Ticket updateTicketStatus(@NonNull final Long ticketId, @NonNull final Long statusId) {
+        final Ticket dbTicket = getTicket(ticketId);
+        dbTicket.setStatus(statusService.getStatus(statusId));
+        return ticketRepository.save(dbTicket);
     }
 
     public boolean deleteTicket(@NonNull final Long id) {

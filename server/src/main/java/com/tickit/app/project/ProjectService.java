@@ -4,9 +4,11 @@ import com.tickit.app.repository.ProjectRepository;
 import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
 import com.tickit.app.status.Status;
+import com.tickit.app.status.StatusNotFoundException;
 import com.tickit.app.ticket.Ticket;
 import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class ProjectService {
             @NonNull final ProjectRepository projectRepository,
             @NonNull final StatusRepository statusRepository,
             @NonNull final AuthenticationService authenticationService,
-            @NonNull TicketService ticketService) {
+            @Lazy @NonNull TicketService ticketService) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
@@ -135,6 +137,11 @@ public class ProjectService {
 
     @NonNull
     public Ticket createTicketForProject(Long projectId, Ticket ticket) {
+        final var statusId = ticket.getStatus().getId();
+        if (statusId == 0L) {
+            throw new IllegalArgumentException("Ticket status must be set");
+        }
+        ticket.setStatus(statusRepository.findById(statusId).orElseThrow(() -> new StatusNotFoundException(statusId)));
         ticket.setProject(getProject(projectId));
         return ticketService.createTicket(ticket);
     }

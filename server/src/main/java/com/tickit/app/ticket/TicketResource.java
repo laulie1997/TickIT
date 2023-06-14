@@ -14,7 +14,7 @@ public class TicketResource {
     public TicketResource(@NonNull final TicketService ticketService) {
         this.ticketService = ticketService;
     }
-    
+
     @GetMapping("{ticketId}")
     public Ticket getTicket(@PathVariable final Long ticketId) {
         return ticketService.getTicket(ticketId);
@@ -24,6 +24,11 @@ public class TicketResource {
     public Ticket updateTicket(@PathVariable final Long ticketId, @RequestBody final Ticket ticket) {
         ticket.setId(ticketId);
         return ticketService.updateTicket(ticket);
+    }
+
+    @PostMapping("{ticketId}/status/{statusId}")
+    public Ticket updateTicketStatus(@PathVariable final Long ticketId, @PathVariable final Long statusId) {
+        return ticketService.updateTicketStatus(ticketId, statusId);
     }
 
     @DeleteMapping("{ticketId}")

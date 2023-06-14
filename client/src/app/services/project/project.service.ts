@@ -58,4 +58,14 @@ export class ProjectService {
       )
       .pipe(map((wrapper: ProjectTicketWrapper) => wrapper?.statusTicketMap));
   }
+
+  createTicketForProject(
+    projectId: number,
+    ticket: Ticket
+  ): Observable<Ticket> {
+    return this.http.post<Ticket>(
+      this.baseURL + '/' + projectId + '/' + 'ticket',
+      ticket
+    );
+  }
 }

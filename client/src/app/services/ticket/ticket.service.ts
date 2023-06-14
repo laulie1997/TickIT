@@ -6,7 +6,8 @@ import { Ticket } from '../../api/ticket';
   providedIn: 'root',
 })
 export class TicketService {
-  baseURL: string = '/api/v1/ticket';
+  readonly baseURL = '/api/v1/ticket';
+
   constructor(private http: HttpClient) {}
 
   saveTicket(ticket: Ticket): Observable<Ticket> {
@@ -18,6 +19,13 @@ export class TicketService {
 
   updateTicket(ticket: Ticket): Observable<Ticket> {
     return this.http.put<Ticket>(this.baseURL + '/' + ticket.id, ticket);
+  }
+
+  updateTicketStatus(ticketId: number, statusId: number): Observable<Ticket> {
+    return this.http.post<Ticket>(
+      this.baseURL + '/' + ticketId + '/' + 'status' + '/' + statusId,
+      {}
+    );
   }
 
   deleteTicket(ticket: Ticket): Observable<boolean> {
