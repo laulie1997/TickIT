@@ -29,7 +29,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatusModalComponent } from './components/status-modal/status-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProjectModalComponent } from './components/project-modal/project-modal.component';
-import { TicketComponent } from './components/ticket/ticket.component';
 import { TicketModalComponent } from './components/ticket-modal/ticket-modal.component';
 import { TicketCardComponent } from './components/ticket-card/ticket-card.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -38,6 +37,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxColorsModule } from 'ngx-colors';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { StatusHeaderComponent } from './components/status-header/status-header/status-header.component';
 
 @NgModule({
   declarations: [
@@ -52,10 +52,10 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ProjectBoardComponent,
     ProjectsComponent,
     ProjectModalComponent,
-    TicketComponent,
     TicketModalComponent,
     TicketCardComponent,
     StatusModalComponent,
+    StatusHeaderComponent,
   ],
   imports: [
     BrowserModule,
