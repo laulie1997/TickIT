@@ -1,21 +1,21 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
-import { TicketdataComponent } from '../ticketdata/ticketdata.component';
+import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 
 @Component({
   selector: 'app-ticketsmall',
-  templateUrl: './ticketsmall.component.html',
-  styleUrls: ['./ticketsmall.component.css'],
+  templateUrl: './ticket-card.component.html',
+  styleUrls: ['./ticket-card.component.css'],
 })
-export class TicketsmallComponent {
+export class TicketCardComponent {
   @Input() ticket: Ticket;
 
   constructor(public dialog: MatDialog, private ticketService: TicketService) {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TicketdataComponent, {
+    const dialogRef = this.dialog.open(TicketModalComponent, {
       width: '500px',
       data: { ticketId: this.ticket.id },
     });

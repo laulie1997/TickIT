@@ -4,7 +4,7 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { TicketdataComponent } from '../ticketdata/ticketdata.component';
+import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { Ticket } from '../../api/ticket';
 
 @Component({
@@ -18,7 +18,7 @@ export class TicketComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TicketdataComponent, {
+    const dialogRef = this.dialog.open(TicketModalComponent, {
       width: '500px',
       data: { ticketId: this.ticketId },
     });

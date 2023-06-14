@@ -2,16 +2,15 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
 import { TicketService } from '../../services/ticket/ticket.service';
-import { Project } from '../../api/project';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project/project.service';
 
 @Component({
   selector: 'app-ticketdata',
-  templateUrl: './ticketdata.component.html',
-  styleUrls: ['./ticketdata.component.css'],
+  templateUrl: './ticket-modal.component.html',
+  styleUrls: ['./ticket-modal.component.css'],
 })
-export class TicketdataComponent implements OnInit {
+export class TicketModalComponent implements OnInit {
   form: any = {
     title: null,
     description: null,

@@ -12,7 +12,7 @@ import {
 import { StatusModalComponent } from '../status-modal/status-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
-import { TicketdataComponent } from '../ticketdata/ticketdata.component';
+import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { StatusService } from 'src/app/services/status/status.service';
 
@@ -37,7 +37,6 @@ export class ProjectBoardComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private ticketService: TicketService,
-    private statusService: StatusService,
     public dialog: MatDialog
   ) {}
 
@@ -152,14 +151,14 @@ export class ProjectBoardComponent implements OnInit {
   }
 
   openAddTicketDialog(statusId: number): void {
-    const dialogRef = this.dialog.open(TicketdataComponent, {
+    const dialogRef = this.dialog.open(TicketModalComponent, {
       width: '500px',
       data: { ticketId: null, projectId: this.project.id, statusId: statusId },
     });
 
     dialogRef.afterClosed().subscribe(successful => {
       if (successful) {
-        this.fetchProject();
+        this.initializeStatusTicketMap();
       }
     });
   }
