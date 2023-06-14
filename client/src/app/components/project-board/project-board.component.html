@@ -9,19 +9,9 @@
     [cdkDropListConnectedTo]="connectedTo"
     (cdkDropListDropped)="onTicketDropped($event)"
     [ngClass]="{ 'alternate-background': odd }">
-    <div
-      class="status-header box-shadow"
-      [style.background-color]="status.key?.color ? status.key?.color : ''"
-      (click)="openStatusModal(status?.key?.id)">
-      <div *ngIf="status?.key?.icon" class="status-icon">
-        <mat-icon>
-          {{ status.key.icon }}
-        </mat-icon>
-      </div>
-      <div class="status-title">
-        {{ status?.key?.name }}
-      </div>
-    </div>
+    <app-status-header
+      (click)="openStatusModal(status?.key?.id)"
+      [status]="status?.key"></app-status-header>
     <div class="ticket-container">
       <app-ticketsmall
         *ngFor="let ticket of status?.value"
@@ -29,15 +19,15 @@
         [cdkDragData]="ticket"
         cdkDrag
         class="ticket"></app-ticketsmall>
-    </div>
-    <div class="add-ticket">
-      <button
-        mat-mini-fab
-        color="accent"
-        aria-label="Add ticket"
-        (click)="openAddTicketDialog(status?.key?.id)">
-        <mat-icon>add</mat-icon>
-      </button>
+      <div class="add-ticket">
+        <button
+          mat-mini-fab
+          color="accent"
+          aria-label="Add ticket"
+          (click)="openAddTicketDialog(status?.key?.id)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
   <div id="add-column" class="box-shadow">

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,6 +39,15 @@ public class UserService implements UserDetailsService {
     @NonNull
     public User getUserById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    /**
+     * Retrieves all users
+     *
+     * @return List of users
+     */
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     /**

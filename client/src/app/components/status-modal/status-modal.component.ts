@@ -79,13 +79,11 @@ export class StatusModalComponent implements OnInit {
   }
 
   private buildForm(): void {
-    console.log(this.status);
     this.form = this.formBuilder.group({
       name: [this.status?.name || '', Validators.required],
       color: [this.status.color || this.defaultColor],
       icon: [this.status?.icon || ''],
     });
-    console.log(this.form);
   }
 
   private updateForm(): void {

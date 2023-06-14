@@ -18,6 +18,11 @@ public class UserResource {
         this.userService = userService;
     }
 
+    @GetMapping
+    public UserWrapper getUsers() {
+        return new UserWrapper(userService.getUsers());
+    }
+
     @GetMapping("{userId}")
     public User getUser(@PathVariable Long userId) {
         return userService.getUserById(userId);
