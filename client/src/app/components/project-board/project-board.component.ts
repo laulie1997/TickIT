@@ -12,6 +12,9 @@ import {
 import { StatusModalComponent } from '../status-modal/status-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
+import { TicketdataComponent } from '../ticketdata/ticketdata.component';
+import { TicketService } from 'src/app/services/ticket/ticket.service';
+import { StatusService } from 'src/app/services/status/status.service';
 
 @Component({
   selector: 'app-project-board',
@@ -33,8 +36,9 @@ export class ProjectBoardComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
-    public dialog: MatDialog,
-    private router: Router
+    private ticketService: TicketService,
+    private statusService: StatusService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -45,9 +49,11 @@ export class ProjectBoardComponent implements OnInit {
     this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
   }
 
-  drop(event: CdkDragDrop<any>) {
-    console.log('lol', event);
-    console.log('dropped', event.previousContainer.id, event.container.id);
+  onTicketDropped(event: CdkDragDrop<Ticket[]>) {
+    console.log(event);
+    const statusId: number = +event.container.id;
+    const ticketId = (event.item.data as Ticket)?.id;
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -62,6 +68,10 @@ export class ProjectBoardComponent implements OnInit {
         event.currentIndex
       );
     }
+
+    this.ticketService
+      .updateTicketStatus(ticketId, statusId)
+      .subscribe(() => this.initializeStatusTicketMap());
   }
 
   dropped(event: any) {
@@ -135,6 +145,19 @@ export class ProjectBoardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.fetchProject();
+      }
+    });
+  }
+
+  openAddTicketDialog(statusId: number): void {
+    const dialogRef = this.dialog.open(TicketdataComponent, {
+      width: '500px',
+      data: { ticketId: null, projectId: this.project.id, statusId: statusId },
+    });
+
+    dialogRef.afterClosed().subscribe(successful => {
       if (successful) {
         this.fetchProject();
       }

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
 import { TicketdataComponent } from '../ticketdata/ticketdata.component';
-import { Project } from '../../api/project';
-import { TicketService } from '../../services/ticket/ticket.service';
+import { TicketService } from 'src/app/services/ticket/ticket.service';
 
 @Component({
   selector: 'app-ticketsmall',
@@ -11,25 +10,26 @@ import { TicketService } from '../../services/ticket/ticket.service';
   styleUrls: ['./ticketsmall.component.css'],
 })
 export class TicketsmallComponent {
-  ticket: Ticket;
-  ticketId: number;
+  @Input() ticket: Ticket;
+
   constructor(public dialog: MatDialog, private ticketService: TicketService) {}
+
   openDialog(): void {
     const dialogRef = this.dialog.open(TicketdataComponent, {
       width: '500px',
-      data: { ticketId: this.ticketId },
+      data: { ticketId: this.ticket.id },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.ticket = result;
+    dialogRef.afterClosed().subscribe(successful => {
+      if (successful) {
+        this.fetchTicket();
+      }
     });
   }
 
-  readOne(event: Event, ticket: Ticket) {
-    this.ticketService.getSelectedTicket(ticket.id).subscribe(response => {
-      this.ticket = response;
-      this.openDialog();
-    });
+  fetchTicket() {
+    this.ticketService
+      .getSelectedTicket(this.ticket.id)
+      .subscribe((ticket: Ticket) => (this.ticket = ticket));
   }
 }

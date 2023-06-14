@@ -1,14 +1,13 @@
-<div class="status-container">
+<div class="status-container" cdkDropListGroup>
   <div
     *ngFor="let status of ticketStatusMap | keyvalue; let odd = odd"
     cdkDropList
-    [id]="status.key.name"
+    [id]="status.key.id.toString()"
     cdkDrop
     class="status-column"
     [cdkDropListData]="status.value"
     [cdkDropListConnectedTo]="connectedTo"
-    (cdkDropListDropped)="drop($event)"
-    (cdkDropDropped)="dropped($event)"
+    (cdkDropListDropped)="onTicketDropped($event)"
     [ngClass]="{ 'alternate-background': odd }">
     <div
       class="status-header box-shadow"
@@ -23,13 +22,23 @@
         {{ status?.key?.name }}
       </div>
     </div>
-    <mat-card *ngFor="let ticket of status?.value" cdkDrag class="ticket">
-      <mat-card-header>
-        <mat-card-title>
-          {{ ticket?.title }}
-        </mat-card-title>
-      </mat-card-header>
-    </mat-card>
+    <div class="ticket-container">
+      <app-ticketsmall
+        *ngFor="let ticket of status?.value"
+        [ticket]="ticket"
+        [cdkDragData]="ticket"
+        cdkDrag
+        class="ticket"></app-ticketsmall>
+    </div>
+    <div class="add-ticket">
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="Add ticket"
+        (click)="openAddTicketDialog(status?.key?.id)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
   </div>
   <div id="add-column" class="box-shadow">
     <div class="add-button">
