@@ -34,7 +34,6 @@ import { TicketdataComponent } from './components/ticketdata/ticketdata.componen
 import { TicketsmallComponent } from './components/ticketsmall/ticketsmall.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CdkDropList } from '@angular/cdk/drag-drop';
-import { ProjectNameComponent } from './components/project-name/project-name.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxColorsModule } from 'ngx-colors';
 import { MatSelectModule } from '@angular/material/select';
@@ -57,7 +56,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     TicketdataComponent,
     TicketsmallComponent,
     StatusModalComponent,
-    ProjectNameComponent,
   ],
   imports: [
     BrowserModule,
