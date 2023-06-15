@@ -151,10 +151,4 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
         ticket.setProject(getProject(projectId));
         return ticketService.createTicket(ticket);
     }
-
-    @Override
-    public void onApplicationEvent(@NonNull final ProjectUpdateEvent event) {
-        final var message = "Project with id " + event.getProjectId() + " was updated";
-        messagingTemplate.convertAndSend("/topic/project", message);
-    }
 }
