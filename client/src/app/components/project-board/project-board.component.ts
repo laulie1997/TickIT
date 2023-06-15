@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { Status } from 'src/app/api/status';
@@ -14,14 +14,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { StatusService } from 'src/app/services/status/status.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-project-board',
   templateUrl: './project-board.component.html',
   styleUrls: ['./project-board.component.css'],
 })
-export class ProjectBoardComponent implements OnInit {
+export class ProjectBoardComponent implements OnInit, OnDestroy {
   projectId: number;
   project: Project;
   editProjectData = false;
@@ -32,6 +33,8 @@ export class ProjectBoardComponent implements OnInit {
   ticketStatusMap: Map<Status, Array<Ticket>> = new Map();
   statuses: Status[] = [];
   connectedTo: string[] = [];
+  socket: WebSocket;
+  stompClient: Stomp.client;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,6 +48,19 @@ export class ProjectBoardComponent implements OnInit {
     this.fetchProject();
     this.initializeStatusTicketMap();
     this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
+
+    this.socket = new SockJS('http://localhost:8080/sba-websocket');
+    this.stompClient = Stomp.over(this.socket);
+
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subscribe('/topic/project', response =>
+        this.initializeStatusTicketMap()
+      );
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stompClient.unsubscribe();
   }
 
   onTicketDropped(event: CdkDragDrop<Ticket[]>) {
