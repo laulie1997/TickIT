@@ -49,11 +49,13 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     this.initializeStatusTicketMap();
     this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
 
+    const endpoint: string = '/topic/project/' + this.projectId;
+
     this.socket = new SockJS('http://localhost:8080/sba-websocket');
     this.stompClient = Stomp.over(this.socket);
 
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe('/topic/project', response =>
+      this.stompClient.subscribe(endpoint, response =>
         this.initializeStatusTicketMap()
       );
     });
