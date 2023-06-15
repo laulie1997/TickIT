@@ -8,8 +8,10 @@ import com.tickit.app.status.StatusNotFoundException;
 import com.tickit.app.ticket.Ticket;
 import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,9 @@ import java.util.stream.Collectors;
  * Service for managing {@link Project} entities
  */
 @Service
-public class ProjectService {
+public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
     private static final List<String> DEFAULT_STATUSES = List.of("Offen", "In Arbeit", "Erledigt");
+    private static final String PROJECT_UPDATE_ENDPOINT = "/ws/update";
 
     @NonNull
     private final ProjectRepository projectRepository;
@@ -34,17 +37,20 @@ public class ProjectService {
     private final AuthenticationService authenticationService;
     @NonNull
     private final TicketService ticketService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     public ProjectService(
             @NonNull final ProjectRepository projectRepository,
             @NonNull final StatusRepository statusRepository,
             @NonNull final AuthenticationService authenticationService,
-            @Lazy @NonNull TicketService ticketService) {
+            @Lazy @NonNull TicketService ticketService,
+            SimpMessagingTemplate messagingTemplate) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
         this.ticketService = ticketService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     /**
@@ -144,5 +150,11 @@ public class ProjectService {
         ticket.setStatus(statusRepository.findById(statusId).orElseThrow(() -> new StatusNotFoundException(statusId)));
         ticket.setProject(getProject(projectId));
         return ticketService.createTicket(ticket);
+    }
+
+    @Override
+    public void onApplicationEvent(@NonNull final ProjectUpdateEvent event) {
+        final var message = "Project with id " + event.getProjectId() + " was updated";
+        messagingTemplate.convertAndSend("/topic/project", message);
     }
 }
