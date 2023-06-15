@@ -8,10 +8,9 @@ import com.tickit.app.status.StatusNotFoundException;
 import com.tickit.app.ticket.Ticket;
 import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +24,8 @@ import java.util.stream.Collectors;
  * Service for managing {@link Project} entities
  */
 @Service
-public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
+public class ProjectService {
     private static final List<String> DEFAULT_STATUSES = List.of("Offen", "In Arbeit", "Erledigt");
-    private static final String PROJECT_UPDATE_ENDPOINT = "/ws/update";
 
     @NonNull
     private final ProjectRepository projectRepository;
@@ -37,7 +35,8 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
     private final AuthenticationService authenticationService;
     @NonNull
     private final TicketService ticketService;
-    private final SimpMessagingTemplate messagingTemplate;
+    @NonNull
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public ProjectService(
@@ -45,12 +44,12 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
             @NonNull final StatusRepository statusRepository,
             @NonNull final AuthenticationService authenticationService,
             @Lazy @NonNull TicketService ticketService,
-            SimpMessagingTemplate messagingTemplate) {
+            @NonNull ApplicationEventPublisher applicationEventPublisher) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
         this.ticketService = ticketService;
-        this.messagingTemplate = messagingTemplate;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -84,7 +83,7 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
      *
      * @param savedProject project to create default statuses for
      */
-    public void initializeDefaultStatuses(Project savedProject) {
+    private void initializeDefaultStatuses(Project savedProject) {
         DEFAULT_STATUSES.forEach(statusName -> {
             final Status status = new Status();
             status.setName(statusName);
@@ -104,7 +103,9 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
         final var dbProject = getProject(project.getId());
         dbProject.setName(project.getName());
         dbProject.setDescription(project.getDescription());
-        return projectRepository.save(dbProject);
+        final Project savedProject = projectRepository.save(dbProject);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(dbProject.getId()));
+        return savedProject;
     }
 
     /**
@@ -143,12 +144,14 @@ public class ProjectService implements ApplicationListener<ProjectUpdateEvent> {
 
     @NonNull
     public Ticket createTicketForProject(Long projectId, Ticket ticket) {
-        final var statusId = ticket.getStatus().getId();
+        final Long statusId = ticket.getStatus().getId();
         if (statusId == 0L) {
             throw new IllegalArgumentException("Ticket status must be set");
         }
         ticket.setStatus(statusRepository.findById(statusId).orElseThrow(() -> new StatusNotFoundException(statusId)));
         ticket.setProject(getProject(projectId));
-        return ticketService.createTicket(ticket);
+        final Ticket savedTicket = ticketService.createTicket(ticket);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
+        return savedTicket;
     }
 }
