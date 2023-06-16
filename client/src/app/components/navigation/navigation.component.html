@@ -5,8 +5,8 @@
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+    [opened]="isSidenavOpen">
+    <mat-toolbar >Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item (click)="navigateDashboard()">Home</a>
     </mat-nav-list>
@@ -20,15 +20,14 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    <mat-toolbar>
+      <button *ngIf="!isSidenavOpen" mat-icon-button (click)="toggleSidenav()">
+        <mat-icon>menu</mat-icon>
       </button>
+      <button *ngIf="isSidenavOpen" mat-icon-button (click)="toggleSidenav()">
+        <mat-icon >arrow_back</mat-icon>
+      </button>
+      <span *ngIf="!router.url.includes('/project/')">TICKIT</span>
       <div *ngIf="router.url.includes('/project/')">
         <app-project-dropdown></app-project-dropdown>
       </div>

@@ -17,6 +17,7 @@ import { ProjectModalComponent } from '../project-modal/project-modal.component'
 })
 export class NavigationComponent implements OnInit {
   projects: Project[];
+  isSidenavOpen = false;
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -68,5 +69,8 @@ export class NavigationComponent implements OnInit {
         this.fetchProjects();
       }
     });
+  }
+  toggleSidenav() {
+    this.isSidenavOpen = !this.isSidenavOpen;
   }
 }
