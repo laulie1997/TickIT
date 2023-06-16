@@ -1,8 +1,10 @@
 package com.tickit.app.status;
 
 import com.tickit.app.project.ProjectService;
+import com.tickit.app.project.ProjectUpdateEvent;
 import com.tickit.app.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,17 @@ public class StatusService {
     private final StatusRepository statusRepository;
     @NonNull
     private final ProjectService projectService;
+    @NonNull
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public StatusService(
             @NonNull StatusRepository statusRepository,
-            @NonNull ProjectService projectService) {
+            @NonNull ProjectService projectService,
+            @NonNull ApplicationEventPublisher applicationEventPublisher) {
         this.statusRepository = statusRepository;
         this.projectService = projectService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -37,7 +43,9 @@ public class StatusService {
         }
         final var project = projectService.getProject(status.getProject().getId());
         status.setProject(project);
-        return statusRepository.save(status);
+        final var savedStatus = statusRepository.save(status);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(project.getId()));
+        return savedStatus;
     }
 
     @NonNull
@@ -58,7 +66,9 @@ public class StatusService {
         dbStatus.setName(status.getName());
         dbStatus.setIcon(status.getIcon());
         dbStatus.setColor(status.getColor());
-        return statusRepository.save(status);
+        final Status savedStatus = statusRepository.save(status);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(status.getProject().getId()));
+        return savedStatus;
     }
 
     /**
@@ -69,7 +79,9 @@ public class StatusService {
      */
     public boolean deleteStatus(@NonNull final Long id) {
         // TODO all tickets with the status will be deleted
+        final Long projectId = getStatus(id).getProject().getId();
         statusRepository.deleteById(id);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
         return true;
     }
 }

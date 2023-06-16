@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
 public class ProjectTicketWrapper {
 
-    Map<String, List<Ticket>> statusTicketMap;
+    List<StatusTicketDto> statusTicketMap;
 
-    public ProjectTicketWrapper(Map<String, List<Ticket>> statusTicketMap) {
+    public ProjectTicketWrapper(List<StatusTicketDto> statusTicketMap) {
         this.statusTicketMap = statusTicketMap;
     }
 }

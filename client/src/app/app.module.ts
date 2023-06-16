@@ -83,6 +83,7 @@ import { StatusHeaderComponent } from './components/status-header/status-header/
     MatSelectModule,
   ],
   providers: [
+    ProjectBoardComponent,
     httpInterceptorProviders,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
