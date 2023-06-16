@@ -16,6 +16,7 @@ import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import { StatusTicketDto } from 'src/app/api/statusTicketDto';
 
 @Component({
   selector: 'app-project-board',
@@ -30,7 +31,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     name: null,
     description: null,
   };
-  ticketStatusMap: Map<Status, Array<Ticket>> = new Map();
+  ticketStatusMap: StatusTicketDto[] = [];
   statuses: Status[] = [];
   connectedTo: string[] = [];
   socket: WebSocket;
@@ -46,8 +47,8 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.fetchProject();
-    this.initializeStatusTicketMap();
-    this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
+    this.fetchProjectTickets();
+    this.ticketStatusMap.forEach(dto => this.connectedTo.push(dto.status.name));
 
     const endpoint: string = '/topic/project/' + this.projectId;
 
@@ -56,7 +57,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
     this.stompClient.connect({}, frame => {
       this.stompClient.subscribe(endpoint, response =>
-        this.initializeStatusTicketMap()
+        this.fetchProjectTickets()
       );
     });
   }
@@ -86,7 +87,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
     this.ticketService
       .updateTicketStatus(ticketId, statusId)
-      .subscribe(() => this.initializeStatusTicketMap());
+      .subscribe(() => this.fetchProjectTickets());
   }
 
   fetchProject(): void {
@@ -95,28 +96,12 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
       .subscribe((response: Project) => (this.project = response));
   }
 
-  initializeStatusTicketMap(): void {
-    this.ticketStatusMap.clear();
-    this.projectService
-      .getProjectStatuses(this.projectId)
-      .subscribe((statuses: Status[]) => {
-        this.statuses = statuses;
-        this.fetchProjectTickets();
-      });
-  }
-
   fetchProjectTickets(): void {
     this.projectService
       .getProjectTickets(this.projectId)
-      .subscribe((tickets: Map<string, Ticket[]>) => {
-        Object.keys(tickets).forEach(key => {
-          this.ticketStatusMap.set(this.findStatusById(key), tickets[key]);
-        });
+      .subscribe((tickets: StatusTicketDto[]) => {
+        this.ticketStatusMap = tickets;
       });
-  }
-
-  private findStatusById(statusId: string): Status {
-    return this.statuses.find(status => status?.id == Number(statusId));
   }
 
   openStatusModal(statusId?: number) {
@@ -128,7 +113,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((successful: boolean) => {
       if (successful) {
-        this.initializeStatusTicketMap();
+        this.fetchProjectTickets();
       }
     });
   }
@@ -155,7 +140,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(successful => {
       if (successful) {
-        this.initializeStatusTicketMap();
+        this.fetchProjectTickets();
       }
     });
   }
