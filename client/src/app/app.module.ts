@@ -40,6 +40,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { StatusHeaderComponent } from './components/status-header/status-header/status-header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProjectDropdownComponent } from './components/project-dropdown/project-dropdown.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { CategoriesModalComponent } from './components/categories-modal/categories-modal.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { ProjectDropdownComponent } from './components/project-dropdown/project-
     StatusModalComponent,
     StatusHeaderComponent,
     ProjectDropdownComponent,
+    CategoriesComponent,
+    CategoriesModalComponent,
   ],
   imports: [
     BrowserModule,
