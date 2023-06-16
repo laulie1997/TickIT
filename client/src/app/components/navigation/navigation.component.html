@@ -30,7 +30,9 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>client</span>
+      <div *ngIf="router.url.includes('/project/')">
+        <app-project-dropdown></app-project-dropdown>
+      </div>
       <div class="button-container" *ngIf="isLoggedIn">
         <button mat-button (click)="navigateUser()">meine Daten</button>
         <app-logout></app-logout>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { LogoutComponent } from '../logout/logout.component';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private tokenStorage: TokenStorageService,
-    private router: Router,
+    public router: Router,
     private projectService: ProjectService,
     public dialog: MatDialog
   ) {}

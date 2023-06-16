@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { Status } from 'src/app/api/status';
@@ -14,7 +14,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
-import { StatusService } from 'src/app/services/status/status.service';
 
 @Component({
   selector: 'app-project-board',
@@ -24,7 +23,6 @@ import { StatusService } from 'src/app/services/status/status.service';
 export class ProjectBoardComponent implements OnInit {
   projectId: number;
   project: Project;
-  editProjectData = false;
   form: any = {
     name: null,
     description: null,
@@ -42,6 +40,7 @@ export class ProjectBoardComponent implements OnInit {
 
   ngOnInit() {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.projectService.emitProjectId(this.projectId);
     this.fetchProject();
     this.initializeStatusTicketMap();
     this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));

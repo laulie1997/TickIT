@@ -38,6 +38,8 @@ import { NgxColorsModule } from 'ngx-colors';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { StatusHeaderComponent } from './components/status-header/status-header/status-header.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProjectDropdownComponent } from './components/project-dropdown/project-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { StatusHeaderComponent } from './components/status-header/status-header/
     TicketCardComponent,
     StatusModalComponent,
     StatusHeaderComponent,
+    ProjectDropdownComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,7 @@ import { StatusHeaderComponent } from './components/status-header/status-header/
     MatSnackBarModule,
     NgxColorsModule,
     MatSelectModule,
+    MatMenuModule,
   ],
   providers: [
     httpInterceptorProviders,

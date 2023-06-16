@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Project } from '../../api/project';
 import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from '../tokenStorage/token-storage.service';
@@ -16,10 +16,14 @@ import { ProjectWrapper } from 'src/app/api/projectWrapper';
 export class ProjectService {
   private baseURL = '/api/v1/project';
   private baseURLUser = '/api/v1/security/user';
+  private projectIdSubject = new Subject<number>();
+  projectId$ = this.projectIdSubject.asObservable();
+
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorageService
   ) {}
+
   saveProject(project: Project): Observable<Project> {
     return this.http.post<Project>(this.baseURL, project);
   }
@@ -67,5 +71,9 @@ export class ProjectService {
       this.baseURL + '/' + projectId + '/' + 'ticket',
       ticket
     );
+  }
+
+  emitProjectId(projectId: number): void {
+    this.projectIdSubject.next(projectId);
   }
 }

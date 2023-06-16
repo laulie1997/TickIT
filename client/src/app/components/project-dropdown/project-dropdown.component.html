@@ -1,0 +1,15 @@
+<button mat-button class="nameButton" [matMenuTriggerFor]="project">{{projectName}}</button>
+<mat-menu #project="matMenu">
+  <button mat-menu-item (click)="openEditProjectModal(this.projectId)">Projektdaten bearbeiten</button>
+  <button mat-menu-item [matMenuTriggerFor]="categories">Kategorien</button>
+</mat-menu>
+
+
+
+<mat-menu #categories="matMenu">
+  <button mat-menu-item>A</button>
+  <button mat-menu-item>B</button>
+  <button mat-menu-item>C</button>
+</mat-menu>
+
+
