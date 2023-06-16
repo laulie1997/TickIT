@@ -8,8 +8,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -37,4 +40,10 @@ public class Status implements Serializable {
     @JsonIgnore
     @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
     private Set<Ticket> tickets;
+
+    @CreationTimestamp
+    private LocalDateTime creationDate;
+
+    @UpdateTimestamp
+    private LocalDateTime modificationDate;
 }

@@ -5,6 +5,7 @@ import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
 import com.tickit.app.status.Status;
 import com.tickit.app.status.StatusNotFoundException;
+import com.tickit.app.ticket.StatusTicketDto;
 import com.tickit.app.ticket.Ticket;
 import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Service for managing {@link Project} entities
@@ -133,13 +132,18 @@ public class ProjectService {
         }
     }
 
-    public Map<String, List<Ticket>> getProjectTickets(Long id) {
-        final Map<String, List<Ticket>> ticketMap = new HashMap<>();
-        final Set<Ticket> tickets = getProject(id).getTickets();
-        final Set<Status> statuses = getProject(id).getStatuses();
-        statuses.forEach(status -> ticketMap.put(
-                String.valueOf(status.getId()), tickets.stream().filter(ticket -> ticket.getStatus() == status).collect(Collectors.toList())));
-        return ticketMap;
+    public List<StatusTicketDto> getProjectTickets(Long id) {
+        final var project = getProject(id);
+        final List<StatusTicketDto> statusTicketDtos = new ArrayList<>();
+        final var statuses = project.getStatuses();
+        statuses.forEach(status -> {
+            final List<Ticket> tickets = new ArrayList<>(status.getTickets());
+            Collections.sort(tickets);
+            final var dto = new StatusTicketDto(status, tickets);
+            statusTicketDtos.add(dto);
+        });
+        Collections.sort(statusTicketDtos);
+        return statusTicketDtos;
     }
 
     @NonNull
