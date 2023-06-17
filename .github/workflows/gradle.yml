@@ -10,8 +10,6 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 permissions:
   contents: read
@@ -23,6 +21,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    # Build frontend
+    - name: Prepare client
+      run: mv -f client/* .
+    - name: Set up node.js
+      uses: actions/setup-node@v3.3.0
+      with:
+        node-version: '18'
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build:prod
+    # Build server
     - name: Prepare server
       run: mv -f server/* .
     - name: Set up JDK 17
