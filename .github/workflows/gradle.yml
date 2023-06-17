@@ -38,6 +38,12 @@ jobs:
       with:
         name: Build Artifact
         path: dist/client
+    - name: Make dir
+      run: mkdir server/src/main/resources/static
+    - name: Move artifacts to server
+      run: mv -f dist/client/* server/src/main/resources/static
+    - name: Remove client
+      run: rm -r ./!(server)/
     # Build server
     - name: Prepare server
       run: mv -f server/* .
