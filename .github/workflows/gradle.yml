@@ -43,7 +43,7 @@ jobs:
     - name: Move artifacts to server
       run: mv -f dist/client/* server/src/main/resources/static
     - name: Remove client
-      run: rm -v !(server)
+      run: rm -r !(server)
     # Build server
     - name: Prepare server
       run: mv -f server/* .
