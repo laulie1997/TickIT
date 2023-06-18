@@ -1,20 +1,22 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from '../services/error/error.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
+  constructor(private errorService: ErrorService) {}
   handleError(error: any): void {
-    console.error('An error occurred:', error);
+    this.errorService.showErrorMessage('An error occurred');
     if (error instanceof HttpErrorResponse) {
       if (error.status === 404) {
-        console.error('Resource not found:', error.url);
+        this.errorService.showErrorMessage('Resource not found');
       } else if (error.status === 500) {
-        console.error('Internal Server Error:', error.message);
+        this.errorService.showErrorMessage('Internal Server Error');
       }
     } else if (error instanceof TypeError) {
-      console.error('Type Error:', error.message);
+      this.errorService.showErrorMessage('Type Error');
     } else {
-      console.error('Unknown Error:', error);
+      this.errorService.showErrorMessage('Unknown Error');
     }
   }
 }
