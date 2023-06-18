@@ -38,7 +38,8 @@ import { NgxColorsModule } from 'ngx-colors';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { StatusHeaderComponent } from './components/status-header/status-header/status-header.component';
-
+import { ErrorHandler } from '@angular/core';
+import { GlobalErrorHandler } from './handler/error-handler';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +90,7 @@ import { StatusHeaderComponent } from './components/status-header/status-header/
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [AppComponent],
 })
