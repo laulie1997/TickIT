@@ -6,17 +6,17 @@ import { ErrorService } from '../services/error/error.service';
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(private errorService: ErrorService) {}
   handleError(error: any): void {
-    this.errorService.showErrorMessage('An error occurred');
+    this.errorService.showErrorMessage('Es ist ein Fehler aufgetreten');
     if (error instanceof HttpErrorResponse) {
       if (error.status === 404) {
-        this.errorService.showErrorMessage('Resource not found');
+        this.errorService.showErrorMessage('Die Seite konnte nicht gefunden werden');
       } else if (error.status === 500) {
-        this.errorService.showErrorMessage('Internal Server Error');
+        this.errorService.showErrorMessage('Interner Server Fehler');
       }
     } else if (error instanceof TypeError) {
-      this.errorService.showErrorMessage('Type Error');
+      console.log('Type Error:', error);
     } else {
-      this.errorService.showErrorMessage('Unknown Error');
+      this.errorService.showErrorMessage('Es ist ein unbekannter Fehler aufgetreten');
     }
   }
 }
