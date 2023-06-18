@@ -1,12 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import { Project } from '../../api/project';
 import { ProjectService } from '../../services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Category } from '../../api/category';
 import { CategoryService } from '../../services/category/category.service';
 import { CategoriesModalComponent } from '../categories-modal/categories-modal.component';
