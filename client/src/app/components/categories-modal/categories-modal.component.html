@@ -1,1 +1,35 @@
-<p>categories-modal works!</p>
+<div class="dialog-container">
+  <h2 mat-dialog-title>
+    {{ editMode ? 'Kategorie bearbeiten' : 'Kategorie erstellen' }}
+  </h2>
+  <mat-dialog-content [formGroup]="form" class="dialog-content">
+    <mat-form-field appearance="outline">
+      <mat-label>Kategoriename</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+  <mat-dialog-actions>
+    <div class="dialog-actions">
+      <div>
+        <button
+          *ngIf="editMode"
+          mat-stroked-button
+          color="warn"
+          (click)="deleteCategory()">
+          Löschen
+        </button>
+      </div>
+      <div>
+        <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+        <button
+          mat-flat-button
+          [disabled]="form?.invalid"
+          color="primary"
+          (click)="saveCategory()">
+          Speichern
+        </button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+  </mat-dialog-content>
+</div>

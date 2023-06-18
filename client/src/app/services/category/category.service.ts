@@ -11,35 +11,42 @@ import { ProjectService } from '../project/project.service';
 export class CategoryService {
   project: Project;
   projectId: any;
-  private baseURL: string = '/api/v1/project/';
+  private baseURL: string = '/api/v1/project';
   constructor(
     private http: HttpClient,
     private projectService: ProjectService
   ) {}
 
-  getCategories(): Observable<Category[]> {
-    this.setProjectId();
+  getCategories(projectId: any): Observable<Category[]> {
     return this.http.get<Category[]>(
-      this.baseURL + '/'+ this.projectId + '/category'
+      this.baseURL + '/' + projectId + '/category'
     );
   }
 
-  createCategory(category: Category): Observable<Category> {
-    this.setProjectId();
+  getCategory(id: number): Observable<Category> {
+    return this.http.get<Category>(
+      this.baseURL + '/' + this.projectId + '/category/' + 'categoryID'
+    );
+  }
+
+  createCategory(projectId: any, category: Category): Observable<Category> {
     return this.http.post<Category>(
-      this.baseURL + '/'+ this.projectId + '/category',
+      this.baseURL + '/' + projectId + '/category',
       category
     );
   }
 
-  deleteCategory(id: number): Observable<boolean> {
-    this.setProjectId();
-    return this.http.delete<boolean>(this.baseURL + '/' + this.projectId + '/category/'+ id);
+  deleteCategory(category: Category): Observable<boolean> {
+    return this.http.delete<boolean>(
+      this.baseURL + '/' + this.projectId + '/category/' + category.id
+    );
   }
 
-  updateCategory(category: Category): Observable<Category>{
-    this.setProjectId();
-    return this.http.put<Category>(this.baseURL + '/' + this.projectId + '/category/'+ category.id, category)
+  updateCategory(category: Category): Observable<Category> {
+    return this.http.put<Category>(
+      this.baseURL + '/' + this.projectId + '/category/' + category.id,
+      category
+    );
   }
 
   setProjectId() {

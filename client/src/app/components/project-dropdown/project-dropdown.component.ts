@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { Project } from '../../api/project';
@@ -7,6 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { Category } from '../../api/category';
+import { CategoryService } from '../../services/category/category.service';
+import { CategoriesModalComponent } from '../categories-modal/categories-modal.component';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-project-dropdown',
@@ -14,23 +18,28 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./project-dropdown.component.css'],
 })
 export class ProjectDropdownComponent implements OnInit {
-  project: Project;
-  projectName: string;
+  categories: Category[] = [];
   projectId: number;
   projectIdSubscription: Subscription;
+  @Input() category: Category;
+  @Input() project: Project;
+  form: UntypedFormGroup;
 
   constructor(
     private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private categoryService: CategoryService
   ) {}
+
   ngOnInit() {
     this.projectIdSubscription = this.projectService.projectId$.subscribe(
       projectId => {
         this.projectId = projectId;
         console.log(projectId);
-        this.getProjectName(projectId);
+        this.getProjectName();
+        this.fetchCategories(projectId);
       }
     );
   }
@@ -41,12 +50,32 @@ export class ProjectDropdownComponent implements OnInit {
       width: '500px',
       data: { projectId: projectId },
     });
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.getProjectName();
+      }
+    });
   }
 
-  getProjectName(id: any) {
+  getProjectName() {
     this.projectService.getProject(this.projectId).subscribe(project => {
       this.project = project;
-      this.projectName = project.name;
+    });
+  }
+
+  fetchCategories(projectId: any) {
+    this.categoryService
+      .getCategories(projectId)
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+        console.log(this.categories);
+      });
+  }
+
+  openEditCategoryModal(): void {
+    const dialogRef = this.dialog.open(CategoriesModalComponent, {
+      width: '500px',
+      data: {},
     });
   }
 }
