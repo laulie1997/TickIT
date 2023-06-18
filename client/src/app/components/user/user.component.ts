@@ -69,14 +69,12 @@ export class UserComponent implements OnInit {
     // this.requestPasswordChange = this.updatePasswordForm;
     this.userService
       .updatePassword(this.passwordChangeRequest, userId)
-      .subscribe(
-        (passwordChangeRequest: PasswordChangeRequest) =>
-          (this.passwordChangeRequest = passwordChangeRequest)
-      );
-    this.requestPasswordChange = false;
-    this.openSnackBar('Passwort wurde geändert', 'schließen');
+      .subscribe((passwordChangeRequest: PasswordChangeRequest) => {
+        this.passwordChangeRequest = passwordChangeRequest;
+        this.requestPasswordChange = false;
+        this.openSnackBar('Passwort wurde geändert', 'schließen');
+      });
   }
-
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000 });
   }
