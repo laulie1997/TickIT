@@ -1,5 +1,6 @@
 package com.tickit.app.project;
 
+import com.tickit.app.security.user.UserWrapper;
 import com.tickit.app.status.StatusWrapper;
 import com.tickit.app.ticket.ProjectTicketWrapper;
 import com.tickit.app.ticket.Ticket;
@@ -49,8 +50,18 @@ public class ProjectResource {
         return new ProjectTicketWrapper(projectService.getProjectTickets(projectId));
     }
 
+    @GetMapping("{projectId}/users")
+    public UserWrapper getProjectMembers(@PathVariable Long projectId) {
+        return new UserWrapper(projectService.getProjectMembers(projectId));
+    }
+
     @PostMapping("{projectId}/ticket")
     public Ticket createTicketForProject(@PathVariable Long projectId, @RequestBody Ticket ticket) {
         return projectService.createTicketForProject(projectId, ticket);
+    }
+
+    @PutMapping("{projectId}/assignUsers")
+    public Project updateUserAssignment(@PathVariable Long projectId, @RequestBody ProjectUserAssignment projectUserAssignment) {
+        return projectService.updateUserAssignment(projectId, projectUserAssignment);
     }
 }

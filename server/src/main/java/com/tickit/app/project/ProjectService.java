@@ -3,6 +3,8 @@ package com.tickit.app.project;
 import com.tickit.app.repository.ProjectRepository;
 import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
+import com.tickit.app.security.user.User;
+import com.tickit.app.security.user.UserService;
 import com.tickit.app.status.Status;
 import com.tickit.app.status.StatusNotFoundException;
 import com.tickit.app.ticket.StatusTicketDto;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service for managing {@link Project} entities
@@ -35,6 +39,8 @@ public class ProjectService {
     @NonNull
     private final TicketService ticketService;
     @NonNull
+    private final UserService userService;
+    @NonNull
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
@@ -43,11 +49,13 @@ public class ProjectService {
             @NonNull final StatusRepository statusRepository,
             @NonNull final AuthenticationService authenticationService,
             @Lazy @NonNull TicketService ticketService,
+            @NonNull UserService userService,
             @NonNull ApplicationEventPublisher applicationEventPublisher) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
         this.ticketService = ticketService;
+        this.userService = userService;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -157,5 +165,26 @@ public class ProjectService {
         final Ticket savedTicket = ticketService.createTicket(ticket);
         applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
         return savedTicket;
+    }
+
+    @NonNull
+    public Project updateUserAssignment(Long projectId, ProjectUserAssignment projectUserAssignment) {
+        final Project project = getProject(projectId);
+        final Set<User> users = projectUserAssignment.getUserIds()
+                                        .stream()
+                                        .map(userService::getUserById)
+                                        .collect(Collectors.toSet());
+        project.setMembers(users);
+        final Project savedProject = updateProject(project);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
+        return savedProject;
+    }
+
+    @NonNull
+    public List<User> getProjectMembers(Long projectId) {
+        final var project = getProject(projectId);
+        final List<User> users = new ArrayList<>(project.getMembers());
+        users.add(project.getOwner());
+        return users;
     }
 }
