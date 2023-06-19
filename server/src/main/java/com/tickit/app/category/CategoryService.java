@@ -1,5 +1,6 @@
 package com.tickit.app.category;
 
+import com.tickit.app.project.ProjectService;
 import com.tickit.app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -14,10 +15,15 @@ import java.util.List;
 public class CategoryService {
     @NonNull
     private final CategoryRepository categoryRepository;
+    @NonNull
+    private final ProjectService projectService;
 
     @Autowired
-    public CategoryService(@NonNull final CategoryRepository categoryRepository) {
+    public CategoryService(
+            @NonNull final CategoryRepository categoryRepository,
+            @NonNull ProjectService projectService) {
         this.categoryRepository = categoryRepository;
+        this.projectService = projectService;
     }
 
     /**
@@ -39,7 +45,8 @@ public class CategoryService {
      * @return saved category
      */
     @NonNull
-    public Category createCategory(@NonNull final Category category) {
+    public Category createCategory(@NonNull final Long projectId, @NonNull final Category category) {
+        category.setProject(projectService.getProject(projectId));
         return categoryRepository.save(category);
     }
 
