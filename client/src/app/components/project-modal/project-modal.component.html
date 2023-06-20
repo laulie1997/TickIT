@@ -1,39 +1,43 @@
 <div class="dialog-container">
-  <h2 mat-dialog-title>
-    {{ editMode ? 'Projekt bearbeiten' : 'Projekt erstellen' }}
-  </h2>
-  <mat-dialog-content [formGroup]="form" class="dialog-content">
-    <mat-form-field appearance="outline">
-      <mat-label>Projektname</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Projektdaten</mat-label>
-      <textarea matInput formControlName="description"> </textarea>
-    </mat-form-field>
-  </mat-dialog-content>
-
-  <mat-dialog-actions>
-    <div class="dialog-actions">
-      <div>
-        <button
-          *ngIf="editMode"
-          mat-stroked-button
-          color="warn"
-          (click)="deleteProject()">
-          Löschen
-        </button>
-      </div>
-      <div>
-        <button mat-stroked-button mat-dialog-close>Abbrechen</button>
-        <button
-          mat-flat-button
-          [disabled]="form?.invalid"
-          color="primary"
-          (click)="saveProject()">
-          Speichern
-        </button>
-      </div>
+  <div class="dialog-header">
+    <h2 mat-dialog-title>
+      {{ editMode ? 'Projekt bearbeiten' : 'Projekt erstellen' }}
+    </h2>
+    <div class="dialog-header-actions">
+      <button
+        *ngIf="editMode"
+        mat-icon-button
+        color="warn"
+        (click)="deleteProject()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button cdkFocusInitial mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-  </mat-dialog-actions>
+  </div>
+  <mat-dialog-content class="dialog-content">
+    <ng-container *ngIf="editMode">
+      <mat-tab-group>
+        <mat-tab label="Daten">
+          <div class="tab-content">
+            <app-project-form
+              [projectId]="projectId"
+              [editMode]="editMode"
+              (actionFinished)="onActionFinished($event)">
+            </app-project-form>
+          </div>
+        </mat-tab>
+        <mat-tab label="Mitglieder"> Content 2 </mat-tab>
+        <mat-tab label="Kategorien"> Content 3 </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+    <ng-container *ngIf="!editMode">
+      <app-project-form
+        [projectId]="projectId"
+        [editMode]="editMode"
+        (actionFinished)="onActionFinished($event)">
+      </app-project-form>
+    </ng-container>
+  </mat-dialog-content>
 </div>

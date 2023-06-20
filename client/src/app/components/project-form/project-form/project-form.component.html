@@ -1,0 +1,24 @@
+<ng-container [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Projektname</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Projektdaten</mat-label>
+    <textarea matInput formControlName="description"> </textarea>
+  </mat-form-field>
+</ng-container>
+
+<mat-dialog-actions>
+  <div class="dialog-single-action">
+    <div>
+      <button
+        mat-flat-button
+        [disabled]="form?.invalid"
+        color="primary"
+        (click)="saveProject()">
+        Speichern
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>

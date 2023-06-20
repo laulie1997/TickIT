@@ -44,15 +44,11 @@ export class ProjectDropdownComponent implements OnInit {
 
   openEditProjectModal(projectId: number) {
     const dialogRef = this.dialog.open(ProjectModalComponent, {
-      height: '400px',
-      width: '500px',
+      height: '450px',
+      width: '600px',
       data: { projectId: projectId },
     });
-    dialogRef.afterClosed().subscribe((successful: boolean) => {
-      if (successful) {
-        this.getProjectName();
-      }
-    });
+    dialogRef.afterClosed().subscribe(() => this.getProjectName());
   }
 
   getProjectName() {
