@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Ticket implements Serializable {
+public class Ticket implements Serializable, Comparable<Ticket> {
 
     public static final String PROPERTY_CREATED_BY = "createdBy";
     public static final String PROPERTY_ASSIGNEE = "assignee";
@@ -66,4 +66,9 @@ public class Ticket implements Serializable {
 
     @UpdateTimestamp
     private LocalDateTime modificationDate;
+
+    @Override
+    public int compareTo(Ticket o) {
+        return Long.compare(getId(), o.getId());
+    }
 }

@@ -42,6 +42,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ProjectDropdownComponent } from './components/project-dropdown/project-dropdown.component';
 import { CategoriesModalComponent } from './components/categories-modal/categories-modal.component';
 
+import { ErrorHandler } from '@angular/core';
+import { GlobalErrorHandler } from './handler/error-handler';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,11 +91,13 @@ import { CategoriesModalComponent } from './components/categories-modal/categori
     MatMenuModule,
   ],
   providers: [
+    ProjectBoardComponent,
     httpInterceptorProviders,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [AppComponent],
 })

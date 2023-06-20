@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { Status } from 'src/app/api/status';
@@ -14,22 +14,27 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { StatusTicketDto } from 'src/app/api/statusTicketDto';
 
 @Component({
   selector: 'app-project-board',
   templateUrl: './project-board.component.html',
   styleUrls: ['./project-board.component.css'],
 })
-export class ProjectBoardComponent implements OnInit {
+export class ProjectBoardComponent implements OnInit, OnDestroy {
   projectId: number;
   project: Project;
   form: any = {
     name: null,
     description: null,
   };
-  ticketStatusMap: Map<Status, Array<Ticket>> = new Map();
+  ticketStatusMap: StatusTicketDto[] = [];
   statuses: Status[] = [];
   connectedTo: string[] = [];
+  socket: WebSocket;
+  stompClient: Stomp.client;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,8 +47,23 @@ export class ProjectBoardComponent implements OnInit {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.projectService.emitProjectId(this.projectId);
     this.fetchProject();
-    this.initializeStatusTicketMap();
-    this.ticketStatusMap.forEach((_, key) => this.connectedTo.push(key.name));
+    this.fetchProjectTickets();
+    this.ticketStatusMap.forEach(dto => this.connectedTo.push(dto.status.name));
+
+    const endpoint: string = '/topic/project/' + this.projectId;
+
+    this.socket = new SockJS('http://localhost:8080/sba-websocket');
+    this.stompClient = Stomp.over(this.socket);
+
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subscribe(endpoint, response =>
+        this.fetchProjectTickets()
+      );
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stompClient.unsubscribe();
   }
 
   onTicketDropped(event: CdkDragDrop<Ticket[]>) {
@@ -67,7 +87,7 @@ export class ProjectBoardComponent implements OnInit {
 
     this.ticketService
       .updateTicketStatus(ticketId, statusId)
-      .subscribe(() => this.initializeStatusTicketMap());
+      .subscribe(() => this.fetchProjectTickets());
   }
 
   fetchProject(): void {
@@ -76,28 +96,12 @@ export class ProjectBoardComponent implements OnInit {
       .subscribe((response: Project) => (this.project = response));
   }
 
-  initializeStatusTicketMap(): void {
-    this.ticketStatusMap.clear();
-    this.projectService
-      .getProjectStatuses(this.projectId)
-      .subscribe((statuses: Status[]) => {
-        this.statuses = statuses;
-        this.fetchProjectTickets();
-      });
-  }
-
   fetchProjectTickets(): void {
     this.projectService
       .getProjectTickets(this.projectId)
-      .subscribe((tickets: Map<string, Ticket[]>) => {
-        Object.keys(tickets).forEach(key => {
-          this.ticketStatusMap.set(this.findStatusById(key), tickets[key]);
-        });
+      .subscribe((tickets: StatusTicketDto[]) => {
+        this.ticketStatusMap = tickets;
       });
-  }
-
-  private findStatusById(statusId: string): Status {
-    return this.statuses.find(status => status?.id == Number(statusId));
   }
 
   openStatusModal(statusId?: number) {
@@ -109,7 +113,7 @@ export class ProjectBoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((successful: boolean) => {
       if (successful) {
-        this.initializeStatusTicketMap();
+        this.fetchProjectTickets();
       }
     });
   }
@@ -136,7 +140,7 @@ export class ProjectBoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(successful => {
       if (successful) {
-        this.initializeStatusTicketMap();
+        this.fetchProjectTickets();
       }
     });
   }

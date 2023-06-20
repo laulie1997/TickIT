@@ -9,6 +9,7 @@ import { Status } from 'src/app/api/status';
 import { ProjectTicketWrapper } from 'src/app/api/projectTicketWrapper';
 import { Ticket } from 'src/app/api/ticket';
 import { ProjectWrapper } from 'src/app/api/projectWrapper';
+import { StatusTicketDto } from 'src/app/api/statusTicketDto';
 
 @Injectable({
   providedIn: 'root',
@@ -55,12 +56,17 @@ export class ProjectService {
       .pipe(map((wrapper: StatusWrapper) => wrapper?.statuses));
   }
 
-  getProjectTickets(projectId: number): Observable<Map<string, Ticket[]>> {
+  getProjectTickets(projectId: number): Observable<StatusTicketDto[]> {
     return this.http
       .get<ProjectTicketWrapper>(
         this.baseURL + '/' + projectId + '/' + 'ticket'
       )
-      .pipe(map((wrapper: ProjectTicketWrapper) => wrapper?.statusTicketMap));
+      .pipe(
+        map((wrapper: ProjectTicketWrapper) => {
+          console.log('w', wrapper);
+          return wrapper?.statusTicketMap;
+        })
+      );
   }
 
   createTicketForProject(

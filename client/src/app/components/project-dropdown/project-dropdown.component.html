@@ -1,12 +1,15 @@
 <button mat-button class="nameButton" [matMenuTriggerFor]="projectItem" >{{project?.name}}</button>
 <mat-menu #projectItem="matMenu">
   <button mat-menu-item (click)="openEditProjectModal(this.projectId)">Projektdaten bearbeiten</button>
-  <button mat-menu-item [matMenuTriggerFor]="categories">Kategorien</button>
+  <button mat-menu-item [matMenuTriggerFor]="categories1">Kategorien</button>
 </mat-menu>
 
 
 
-<mat-menu #categories="matMenu">
+<mat-menu #categories1="matMenu">
+  <!--<div *ngFor="let category of categories">
+  <button mat-menu-item >{{category.name}}</button>
+  </div> -->
   <button mat-menu-item (click)="openEditCategoryModal()">
     <mat-icon>add</mat-icon>
     Neue Kategorie

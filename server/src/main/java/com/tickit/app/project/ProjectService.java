@@ -3,19 +3,23 @@ package com.tickit.app.project;
 import com.tickit.app.repository.ProjectRepository;
 import com.tickit.app.repository.StatusRepository;
 import com.tickit.app.security.authentication.AuthenticationService;
+import com.tickit.app.security.user.User;
+import com.tickit.app.security.user.UserService;
 import com.tickit.app.status.Status;
 import com.tickit.app.status.StatusNotFoundException;
+import com.tickit.app.ticket.StatusTicketDto;
 import com.tickit.app.ticket.Ticket;
 import com.tickit.app.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,17 +38,25 @@ public class ProjectService {
     private final AuthenticationService authenticationService;
     @NonNull
     private final TicketService ticketService;
+    @NonNull
+    private final UserService userService;
+    @NonNull
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public ProjectService(
             @NonNull final ProjectRepository projectRepository,
             @NonNull final StatusRepository statusRepository,
             @NonNull final AuthenticationService authenticationService,
-            @Lazy @NonNull TicketService ticketService) {
+            @Lazy @NonNull TicketService ticketService,
+            @NonNull UserService userService,
+            @NonNull ApplicationEventPublisher applicationEventPublisher) {
         this.projectRepository = projectRepository;
         this.authenticationService = authenticationService;
         this.statusRepository = statusRepository;
         this.ticketService = ticketService;
+        this.userService = userService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -78,7 +90,7 @@ public class ProjectService {
      *
      * @param savedProject project to create default statuses for
      */
-    public void initializeDefaultStatuses(Project savedProject) {
+    private void initializeDefaultStatuses(Project savedProject) {
         DEFAULT_STATUSES.forEach(statusName -> {
             final Status status = new Status();
             status.setName(statusName);
@@ -98,7 +110,9 @@ public class ProjectService {
         final var dbProject = getProject(project.getId());
         dbProject.setName(project.getName());
         dbProject.setDescription(project.getDescription());
-        return projectRepository.save(dbProject);
+        final Project savedProject = projectRepository.save(dbProject);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(dbProject.getId()));
+        return savedProject;
     }
 
     /**
@@ -126,23 +140,51 @@ public class ProjectService {
         }
     }
 
-    public Map<String, List<Ticket>> getProjectTickets(Long id) {
-        final Map<String, List<Ticket>> ticketMap = new HashMap<>();
-        final Set<Ticket> tickets = getProject(id).getTickets();
-        final Set<Status> statuses = getProject(id).getStatuses();
-        statuses.forEach(status -> ticketMap.put(
-                String.valueOf(status.getId()), tickets.stream().filter(ticket -> ticket.getStatus() == status).collect(Collectors.toList())));
-        return ticketMap;
+    public List<StatusTicketDto> getProjectTickets(Long id) {
+        final var project = getProject(id);
+        final List<StatusTicketDto> statusTicketDtos = new ArrayList<>();
+        final var statuses = project.getStatuses();
+        statuses.forEach(status -> {
+            final List<Ticket> tickets = new ArrayList<>(status.getTickets());
+            Collections.sort(tickets);
+            final var dto = new StatusTicketDto(status, tickets);
+            statusTicketDtos.add(dto);
+        });
+        Collections.sort(statusTicketDtos);
+        return statusTicketDtos;
     }
 
     @NonNull
     public Ticket createTicketForProject(Long projectId, Ticket ticket) {
-        final var statusId = ticket.getStatus().getId();
+        final Long statusId = ticket.getStatus().getId();
         if (statusId == 0L) {
             throw new IllegalArgumentException("Ticket status must be set");
         }
         ticket.setStatus(statusRepository.findById(statusId).orElseThrow(() -> new StatusNotFoundException(statusId)));
         ticket.setProject(getProject(projectId));
-        return ticketService.createTicket(ticket);
+        final Ticket savedTicket = ticketService.createTicket(ticket);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
+        return savedTicket;
+    }
+
+    @NonNull
+    public Project updateUserAssignment(Long projectId, ProjectUserAssignment projectUserAssignment) {
+        final Project project = getProject(projectId);
+        final Set<User> users = projectUserAssignment.getUserIds()
+                                        .stream()
+                                        .map(userService::getUserById)
+                                        .collect(Collectors.toSet());
+        project.setMembers(users);
+        final Project savedProject = updateProject(project);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
+        return savedProject;
+    }
+
+    @NonNull
+    public List<User> getProjectMembers(Long projectId) {
+        final var project = getProject(projectId);
+        final List<User> users = new ArrayList<>(project.getMembers());
+        users.add(project.getOwner());
+        return users;
     }
 }

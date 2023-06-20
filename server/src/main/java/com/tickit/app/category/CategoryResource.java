@@ -21,8 +21,8 @@ public class CategoryResource {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody final Category category) {
-        return categoryService.createCategory(category);
+    public Category createCategory(@PathVariable final Long projectId, @RequestBody final Category category) {
+        return categoryService.createCategory(projectId, category);
     }
 
     @DeleteMapping("{categoryId}")

@@ -1,5 +1,5 @@
-import { Ticket } from './ticket';
+import { StatusTicketDto } from './statusTicketDto';
 
 export interface ProjectTicketWrapper {
-  statusTicketMap?: Map<string, Ticket[]>;
+  statusTicketMap?: Array<StatusTicketDto>;
 }

@@ -1,8 +1,10 @@
 package com.tickit.app.ticket;
 
+import com.tickit.app.project.ProjectUpdateEvent;
 import com.tickit.app.repository.TicketRepository;
 import com.tickit.app.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +14,17 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     @NonNull
     private final StatusService statusService;
+    @NonNull
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public TicketService(
             @NonNull TicketRepository ticketRepository,
-            @NonNull StatusService statusService) {
+            @NonNull StatusService statusService,
+            @NonNull ApplicationEventPublisher applicationEventPublisher) {
         this.ticketRepository = ticketRepository;
         this.statusService = statusService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -50,7 +56,9 @@ public class TicketService {
     public Ticket updateTicketStatus(@NonNull final Long ticketId, @NonNull final Long statusId) {
         final Ticket dbTicket = getTicket(ticketId);
         dbTicket.setStatus(statusService.getStatus(statusId));
-        return ticketRepository.save(dbTicket);
+        final var savedTicket = ticketRepository.save(dbTicket);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(savedTicket.getProject().getId()));
+        return savedTicket;
     }
 
     public boolean deleteTicket(@NonNull final Long id) {

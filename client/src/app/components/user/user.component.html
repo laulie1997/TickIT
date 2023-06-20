@@ -95,7 +95,7 @@
     </form>
     <mat-dialog-actions>
       <div class="dialog-actions">
-          <button mat-raised-button color="primary" (click)="updatePassword()">Speichern</button>
+          <button mat-raised-button color="primary" (click)="updatePassword()" [disabled]="!form.valid">Speichern</button>
           <button mat-raised-button (click)="cancelPasswordChange()" >Abbrechen</button>
       </div>
     </mat-dialog-actions>
