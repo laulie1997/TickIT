@@ -34,18 +34,4 @@ export class ProjectsComponent implements OnInit {
   openProjectDetails(projectId: number) {
     this.router.navigate(['project/' + projectId]);
   }
-
-  openEditProjectModal(projectId: number) {
-    const dialogRef = this.dialog.open(ProjectModalComponent, {
-      height: '400px',
-      width: '500px',
-      data: { projectId: projectId },
-    });
-
-    dialogRef.afterClosed().subscribe((successful: boolean) => {
-      if (successful) {
-        this.fetchProjects();
-      }
-    });
-  }
 }

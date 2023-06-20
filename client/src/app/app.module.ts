@@ -41,9 +41,10 @@ import { StatusHeaderComponent } from './components/status-header/status-header/
 import { MatMenuModule } from '@angular/material/menu';
 import { ProjectDropdownComponent } from './components/project-dropdown/project-dropdown.component';
 import { CategoriesModalComponent } from './components/categories-modal/categories-modal.component';
-
+import { MatTabsModule } from '@angular/material/tabs';
 import { ErrorHandler } from '@angular/core';
 import { GlobalErrorHandler } from './handler/error-handler';
+import { ProjectFormComponent } from './components/project-form/project-form/project-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { GlobalErrorHandler } from './handler/error-handler';
     StatusHeaderComponent,
     ProjectDropdownComponent,
     CategoriesModalComponent,
+    ProjectFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +91,7 @@ import { GlobalErrorHandler } from './handler/error-handler';
     NgxColorsModule,
     MatSelectModule,
     MatMenuModule,
+    MatTabsModule,
   ],
   providers: [
     ProjectBoardComponent,
@@ -97,7 +100,7 @@ import { GlobalErrorHandler } from './handler/error-handler';
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],
 })

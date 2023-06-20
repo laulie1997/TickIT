@@ -10,49 +10,27 @@ import { ProjectService } from 'src/app/services/project/project.service';
   styleUrls: ['./project-modal.component.css'],
 })
 export class ProjectModalComponent implements OnInit {
-  form: UntypedFormGroup;
-  project: Project = {};
+  projectId: number;
   editMode: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { projectId: number },
-    public dialogRef: MatDialogRef<ProjectModalComponent>,
     private projectService: ProjectService,
-    private formBuilder: FormBuilder
+    public dialogRef: MatDialogRef<ProjectModalComponent>
   ) {}
 
   ngOnInit(): void {
     this.editMode = this.data.projectId != null;
-    if (this.editMode) {
-      this.projectService
-        .getProject(this.data.projectId)
-        .subscribe((project: Project) => {
-          this.project = project;
-          this.buildForm();
-        });
-    }
-    this.buildForm();
+    this.projectId = this.data.projectId;
   }
 
-  saveProject() {
-    this.project.name = this.form.get('name').value;
-    this.project.description = this.form.get('description').value;
-    (this.editMode
-      ? this.projectService.updateProject(this.project)
-      : this.projectService.saveProject(this.project)
-    ).subscribe(() => this.dialogRef.close(true));
+  onActionFinished(event: boolean) {
+    this.dialogRef.close(true);
   }
 
   deleteProject() {
-    this.projectService.deleteProject(this.project).subscribe(() => {
-      this.dialogRef.close(true);
-    });
-  }
-
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      name: [this.project.name || '', [Validators.required]],
-      description: [this.project.description || ''],
-    });
+    this.projectService
+      .deleteProject(this.projectId)
+      .subscribe(() => this.dialogRef.close());
   }
 }

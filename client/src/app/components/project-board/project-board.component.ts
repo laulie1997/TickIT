@@ -118,20 +118,6 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
     });
   }
 
-  openEditProjectModal() {
-    const dialogRef = this.dialog.open(ProjectModalComponent, {
-      height: '300px',
-      width: '400px',
-      data: { projectId: this.projectId },
-    });
-
-    dialogRef.afterClosed().subscribe((successful: boolean) => {
-      if (successful) {
-        this.fetchProject();
-      }
-    });
-  }
-
   openAddTicketDialog(statusId: number): void {
     const dialogRef = this.dialog.open(TicketModalComponent, {
       width: '500px',
