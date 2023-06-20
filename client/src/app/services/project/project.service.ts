@@ -46,8 +46,8 @@ export class ProjectService {
     return this.http.put<Project>(this.baseURL + '/' + project.id, project);
   }
 
-  deleteProject(project: Project): Observable<boolean> {
-    return this.http.delete<boolean>(this.baseURL + '/' + project.id);
+  deleteProject(projectId: number): Observable<boolean> {
+    return this.http.delete<boolean>(this.baseURL + '/' + projectId);
   }
 
   getProjectStatuses(projectId: number): Observable<Status[]> {
