@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { Status } from 'src/app/api/status';
@@ -26,7 +26,6 @@ import { StatusTicketDto } from 'src/app/api/statusTicketDto';
 export class ProjectBoardComponent implements OnInit, OnDestroy {
   projectId: number;
   project: Project;
-  editProjectData = false;
   form: any = {
     name: null,
     description: null,
@@ -46,6 +45,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.projectService.emitProjectId(this.projectId);
     this.fetchProject();
     this.fetchProjectTickets();
     this.ticketStatusMap.forEach(dto => this.connectedTo.push(dto.status.name));

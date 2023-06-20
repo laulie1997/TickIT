@@ -8,6 +8,7 @@
   margin-bottom: 10px;
   vertical-align: center;
   cursor: pointer;
+}
 
   .status-title {
     align-self: center;
@@ -18,4 +19,4 @@
     height: 24px;
     margin-right: 10px;
   }
-}
+
