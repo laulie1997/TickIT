@@ -168,23 +168,20 @@ public class ProjectService {
     }
 
     @NonNull
-    public Project updateUserAssignment(Long projectId, ProjectUserAssignment projectUserAssignment) {
+    public List<User> updateProjectMembership(Long projectId, ProjectMembership projectMembership) {
         final Project project = getProject(projectId);
-        final Set<User> users = projectUserAssignment.getUserIds()
+        final Set<User> users = projectMembership.getUserIds()
                                         .stream()
                                         .map(userService::getUserById)
                                         .collect(Collectors.toSet());
         project.setMembers(users);
         final Project savedProject = updateProject(project);
         applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
-        return savedProject;
+        return getProjectMembers(savedProject.getId());
     }
 
     @NonNull
     public List<User> getProjectMembers(Long projectId) {
-        final var project = getProject(projectId);
-        final List<User> users = new ArrayList<>(project.getMembers());
-        users.add(project.getOwner());
-        return users;
+        return projectRepository.getProjectOwnerAndMember(projectId);
     }
 }
