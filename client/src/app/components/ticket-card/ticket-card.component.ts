@@ -5,7 +5,7 @@ import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 
 @Component({
-  selector: 'app-ticketsmall',
+  selector: 'app-ticket-card',
   templateUrl: './ticket-card.component.html',
   styleUrls: ['./ticket-card.component.css'],
 })

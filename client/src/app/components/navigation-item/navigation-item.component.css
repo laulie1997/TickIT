@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #fff !important;
+  padding: 12px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+  margin-right: 15px;
+}
+
+.label {
+  font-size: 18px;
+  font-weight: bold;
+}

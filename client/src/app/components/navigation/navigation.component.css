@@ -3,11 +3,9 @@
 }
 
 .sidenav {
-  width: 200px;
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
+  width: 300px;
+  background-color: #2a3033;
+  padding: 0 8px;
 }
 
 .mat-toolbar.mat-primary {
@@ -15,16 +13,27 @@
   top: 0;
   z-index: 1;
 }
-.button-container{
-  position:absolute; top:10px; right:5px;
+.button-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
- button {
- padding: 2%;
- }
- .project-button-container{
-   width: 90%;
-   margin-left: 5%;
- }
- mat-toolbar{
-   background: powderblue;
- }
+button {
+  padding: 2%;
+}
+.nav-button-container {
+  padding: 0 18px;
+}
+.nav-button {
+  width: 100%;
+}
+mat-toolbar {
+  background: powderblue;
+}
+.header-logo {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding-left: 24px;
+  color: #fff;
+  font-size: 40px;
+}
