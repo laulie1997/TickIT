@@ -1,0 +1,35 @@
+<button mat-stroked-button (click)="openAddMembersModal()">Hinzufügen</button>
+<div class="list-wrapper">
+  <mat-list>
+    <mat-list-item *ngFor="let user of projectMembers">
+      <div class="list-item-action">
+        <div>
+          <span matListItemTitle>{{ user?.name }} {{ user?.surname }}</span>
+          <span matListItemLine>{{ user?.email }}</span>
+        </div>
+        <span
+          [matTooltip]="
+            isProjectOwner(user?.id)
+              ? 'Der Benutzer kann nicht entfernt werden, da er Projekteigentümer ist'
+              : ''
+          ">
+          <button
+            mat-icon-button
+            [disabled]="isProjectOwner(user?.id)"
+            (click)="removeProjectMember(user?.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
+<mat-dialog-actions>
+  <div class="dialog-single-action">
+    <div>
+      <button mat-flat-button color="primary" (click)="saveProjectMembers()">
+        Speichern
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>
