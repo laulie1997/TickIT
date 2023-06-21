@@ -60,8 +60,8 @@ public class ProjectResource {
         return projectService.createTicketForProject(projectId, ticket);
     }
 
-    @PutMapping("{projectId}/assignUsers")
-    public Project updateUserAssignment(@PathVariable Long projectId, @RequestBody ProjectUserAssignment projectUserAssignment) {
-        return projectService.updateUserAssignment(projectId, projectUserAssignment);
+    @PutMapping("{projectId}/membership")
+    public UserWrapper updateProjectMembership(@PathVariable Long projectId, @RequestBody ProjectMembership projectMembership) {
+        return new UserWrapper(projectService.updateProjectMembership(projectId, projectMembership));
     }
 }
