@@ -1,0 +1,20 @@
+.widget-container {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 50px;
+}
+
+.widget-headline {
+  display: flex;
+  justify-content: space-between;
+
+  > button {
+    margin-bottom: 16px;
+  }
+}

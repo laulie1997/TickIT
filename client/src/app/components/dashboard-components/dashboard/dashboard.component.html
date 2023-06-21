@@ -1,0 +1,24 @@
+<div class="widget-wrapper">
+  <div class="widget-container">
+    <div class="widget-headline">
+      <h1 class="md-display-3">Meine Projekte</h1>
+      <button mat-icon-button (click)="openCreateProjectModal()" color="accent">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <p *ngIf="projects?.length < 1">
+      Sie besitzen keine eigenen Projekte und sind nicht Mitglied eines
+      bestehenden Projekts.
+    </p>
+    <app-project-preview
+      *ngFor="let project of projects"
+      [project]="project"></app-project-preview>
+  </div>
+  <div class="widget-container">
+    <h1 class="md-display-3">Meine Tickets</h1>
+    <p *ngIf="tickets?.length < 1">Sie haben keine offenen Tickets.</p>
+    <app-ticketsmall
+      *ngFor="let ticket of tickets"
+      [ticket]="ticket"></app-ticketsmall>
+  </div>
+</div>
