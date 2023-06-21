@@ -28,7 +28,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ProjectService {
-    private static final List<String> DEFAULT_STATUSES = List.of("Offen", "In Arbeit", "Erledigt");
+    private static final List<Status> DEFAULT_STATUSES = List.of(
+            new Status("Offen", "ffa726", "bulb"),
+            new Status("In Arbeit", "#66bb6a", "rotate_right"),
+            new Status("Erledigt", "7e57c2", "task")
+    );
 
     @NonNull
     private final ProjectRepository projectRepository;
@@ -91,9 +95,7 @@ public class ProjectService {
      * @param savedProject project to create default statuses for
      */
     private void initializeDefaultStatuses(Project savedProject) {
-        DEFAULT_STATUSES.forEach(statusName -> {
-            final Status status = new Status();
-            status.setName(statusName);
+        DEFAULT_STATUSES.forEach(status -> {
             status.setProject(savedProject);
             this.statusRepository.save(status);
         });

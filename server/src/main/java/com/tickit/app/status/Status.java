@@ -46,4 +46,10 @@ public class Status implements Serializable {
 
     @UpdateTimestamp
     private LocalDateTime modificationDate;
+
+    public Status(String name, String color, String icon) {
+        this.name = name;
+        this.color = color;
+        this.icon = icon;
+    }
 }
