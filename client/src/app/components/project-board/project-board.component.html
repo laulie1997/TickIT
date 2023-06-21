@@ -13,12 +13,12 @@
       (click)="openStatusModal(dto.status?.id)"
       [status]="dto.status"></app-status-header>
     <div class="ticket-container">
-      <app-ticketsmall
+      <app-ticket-card
         *ngFor="let ticket of dto.tickets"
         [ticket]="ticket"
         [cdkDragData]="ticket"
         cdkDrag
-        class="ticket"></app-ticketsmall>
+        class="ticket"></app-ticket-card>
       <div class="add-ticket">
         <button
           mat-mini-fab
@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div id="add-column" class="box-shadow">
+  <div id="add-column" class="mat-elevation-z3">
     <div class="add-button">
       <button
         mat-button

@@ -6,28 +6,33 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="isSidenavOpen">
-    <mat-toolbar >Menu</mat-toolbar>
+    <div class="header-logo">TickIT</div>
     <mat-nav-list>
-      <a mat-list-item (click)="navigateDashboard()">Home</a>
+      <app-navigation-item
+        (click)="navigateDashboard()"
+        [label]="'Dashboard'"
+        [icon]="'home'"></app-navigation-item>
     </mat-nav-list>
-    <div class="project-button-container">
+    <div class="nav-button-container">
       <button
-        mat-raised-button
-        color="primary"
+        class="nav-button"
+        mat-fab
+        extended
+        color="accent"
         (click)="openEditProjectModal()">
-        Neues Projekt anlegen
+        <mat-icon>add</mat-icon>Projekt erstellen
       </button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar>
+    <mat-toolbar class="mat-elevation-z3">
       <button *ngIf="!isSidenavOpen" mat-icon-button (click)="toggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
       <button *ngIf="isSidenavOpen" mat-icon-button (click)="toggleSidenav()">
-        <mat-icon >arrow_back</mat-icon>
+        <mat-icon>arrow_back</mat-icon>
       </button>
-      <span *ngIf="!router.url.includes('/project/')">TICKIT</span>
+      <span *ngIf="!router.url.includes('/project/')">TickIT</span>
       <div *ngIf="router.url.includes('/project/')">
         <app-project-dropdown></app-project-dropdown>
       </div>

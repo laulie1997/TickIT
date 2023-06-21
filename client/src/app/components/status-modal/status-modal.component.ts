@@ -19,6 +19,9 @@ export class StatusModalComponent implements OnInit {
     { value: 'emoji_objects', label: 'bulb' },
     { value: 'rocket', label: 'rocket' },
     { value: 'rotate_right', label: 'progress' },
+    { value: 'favorite', label: 'favorite' },
+    { value: 'report', label: 'report' },
+    { value: 'work', label: 'work' },
   ];
   readonly defaultColor = '#292929';
   readonly colorPalette: string[] = [

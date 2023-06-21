@@ -48,6 +48,7 @@ import { ProjectFormComponent } from './components/project-form/project-form/pro
 import { ProjectMembersComponent } from './components/project-members/project-members.component';
 import { UserSelectionModalComponent } from './components/user-selection-modal/user-selection-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NavigationItemComponent } from './components/navigation-item/navigation-item.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ProjectFormComponent,
     ProjectMembersComponent,
     UserSelectionModalComponent,
+    NavigationItemComponent,
   ],
   imports: [
     BrowserModule,
