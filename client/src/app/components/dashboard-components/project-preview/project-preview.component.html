@@ -1,0 +1,9 @@
+<mat-card
+  class="project-preview"
+  mat-button
+  (click)="openProjectDetails(project?.id)">
+  <mat-card-header>
+    <mat-card-title>{{ project?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ project?.description }}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>

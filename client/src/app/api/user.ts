@@ -8,8 +8,8 @@ export interface User {
   email?: string;
   password?: string;
 
-  projects: Array<Project>;
-  collaboratingProjects: Array<Project>;
-  creationDate: Date;
-  modificationDate: Date;
+  projects?: Array<Project>;
+  collaboratingProjects?: Array<Project>;
+  creationDate?: Date;
+  modificationDate?: Date;
 }

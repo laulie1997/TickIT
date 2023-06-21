@@ -9,6 +9,7 @@ import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-navigation',
@@ -31,7 +32,7 @@ export class NavigationComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private tokenStorage: TokenStorageService,
     public router: Router,
-    private projectService: ProjectService,
+    private userService: UserService,
     public dialog: MatDialog
   ) {}
 
@@ -40,8 +41,8 @@ export class NavigationComponent implements OnInit {
   }
 
   fetchProjects() {
-    this.projectService
-      .getAllProjects()
+    this.userService
+      .getUserProjects(this.tokenStorage.getCurrentUserId())
       .subscribe((projects: Project[]) => (this.projects = projects));
   }
 

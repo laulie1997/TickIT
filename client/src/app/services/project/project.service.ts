@@ -19,7 +19,6 @@ import { ProjectMembership } from 'src/app/api/projectMembership';
 })
 export class ProjectService {
   private baseURL = '/api/v1/project';
-  private baseURLUser = '/api/v1/security/user';
   private projectIdSubject = new Subject<number>();
   projectId$ = this.projectIdSubject.asObservable();
 
@@ -34,13 +33,6 @@ export class ProjectService {
 
   getProject(id: number): Observable<Project> {
     return this.http.get<Project>(this.baseURL + '/' + id);
-  }
-
-  getAllProjects(): Observable<Project[]> {
-    const userId = this.tokenStorage.getUser().id;
-    return this.http
-      .get<ProjectWrapper>(this.baseURLUser + '/' + userId + '/projects')
-      .pipe(map((wrapper: ProjectWrapper) => wrapper.projects));
   }
 
   updateProject(project: Project): Observable<Project> {

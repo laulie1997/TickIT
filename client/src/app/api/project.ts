@@ -8,6 +8,8 @@ export interface Project {
   name?: string;
   description?: string;
   owner?: User;
+  // transient field
+  ownerId?: number;
   members?: Array<User>;
   statuses?: Array<Status>;
   tickets?: Array<Ticket>;

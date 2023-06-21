@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard-components/dashboard/dashboard.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -24,7 +24,7 @@ import { UserComponent } from './components/user/user.component';
 import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
-import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectPreviewComponent } from './components/dashboard-components/project-preview/project-preview.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { StatusModalComponent } from './components/status-modal/status-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -60,7 +60,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     UserComponent,
     ProjectComponent,
     ProjectBoardComponent,
-    ProjectsComponent,
+    ProjectPreviewComponent,
     ProjectModalComponent,
     TicketModalComponent,
     TicketCardComponent,
