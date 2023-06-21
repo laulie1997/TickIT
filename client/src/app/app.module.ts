@@ -45,6 +45,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ErrorHandler } from '@angular/core';
 import { GlobalErrorHandler } from './handler/error-handler';
 import { ProjectFormComponent } from './components/project-form/project-form/project-form.component';
+import { ProjectMembersComponent } from './components/project-members/project-members.component';
+import { UserSelectionModalComponent } from './components/user-selection-modal/user-selection-modal.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +69,8 @@ import { ProjectFormComponent } from './components/project-form/project-form/pro
     ProjectDropdownComponent,
     CategoriesModalComponent,
     ProjectFormComponent,
+    ProjectMembersComponent,
+    UserSelectionModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +98,7 @@ import { ProjectFormComponent } from './components/project-form/project-form/pro
     MatSelectModule,
     MatMenuModule,
     MatTabsModule,
+    MatTooltipModule,
   ],
   providers: [
     ProjectBoardComponent,

@@ -10,8 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,13 +38,15 @@ public class Project {
     @ManyToOne(targetEntity = User.class)
     private User owner;
 
+    @Transient
+    private Long ownerId;
+
     @JsonIgnore
     @ManyToMany(targetEntity = User.class)
     private Set<User> members;
 
     @JsonIgnore
     @OneToMany(targetEntity = Status.class, mappedBy = Status.PROJECT_PROPERTY)
-    @Cascade(CascadeType.DELETE)
     private Set<Status> statuses;
 
     @JsonIgnore
@@ -62,4 +62,8 @@ public class Project {
 
     @UpdateTimestamp
     private LocalDateTime modificationDate;
+
+    public Long getOwnerId() {
+        return owner.getId();
+    }
 }

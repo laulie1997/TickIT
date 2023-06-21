@@ -1,0 +1,9 @@
+.list-wrapper {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.list-item-action {
+  display: flex;
+  justify-content:space-between;
+}

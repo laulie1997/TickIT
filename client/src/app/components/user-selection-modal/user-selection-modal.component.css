@@ -1,0 +1,4 @@
+.list-wrapper {
+  height: 280px;
+  overflow-y: scroll;
+}

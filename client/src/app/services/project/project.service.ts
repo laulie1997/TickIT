@@ -10,6 +10,9 @@ import { ProjectTicketWrapper } from 'src/app/api/projectTicketWrapper';
 import { Ticket } from 'src/app/api/ticket';
 import { ProjectWrapper } from 'src/app/api/projectWrapper';
 import { StatusTicketDto } from 'src/app/api/statusTicketDto';
+import { UserWrapper } from 'src/app/api/userWrapper';
+import { User } from 'src/app/api/user';
+import { ProjectMembership } from 'src/app/api/projectMembership';
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +39,7 @@ export class ProjectService {
   getAllProjects(): Observable<Project[]> {
     const userId = this.tokenStorage.getUser().id;
     return this.http
-      .get<{ projects: Project[] }>(
-        this.baseURLUser + '/' + userId + '/projects'
-      )
+      .get<ProjectWrapper>(this.baseURLUser + '/' + userId + '/projects')
       .pipe(map((wrapper: ProjectWrapper) => wrapper.projects));
   }
 
@@ -63,7 +64,6 @@ export class ProjectService {
       )
       .pipe(
         map((wrapper: ProjectTicketWrapper) => {
-          console.log('w', wrapper);
           return wrapper?.statusTicketMap;
         })
       );
@@ -81,5 +81,20 @@ export class ProjectService {
 
   emitProjectId(projectId: number): void {
     this.projectIdSubject.next(projectId);
+  }
+
+  getProjectMembers(projectId: number): Observable<User[]> {
+    return this.http
+      .get<UserWrapper>(this.baseURL + '/' + projectId + '/users')
+      .pipe(map((wrapper: UserWrapper) => wrapper.users));
+  }
+
+  updateProjectMembership(
+    projectId: number,
+    membership: ProjectMembership
+  ): Observable<User[]> {
+    return this.http
+      .put<UserWrapper>(`${this.baseURL}/${projectId}/membership`, membership)
+      .pipe(map((wrapper: UserWrapper) => wrapper.users));
   }
 }
