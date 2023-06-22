@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectService {
     private static final List<Status> DEFAULT_STATUSES = List.of(
-            new Status("Offen", "ffa726", "bulb"),
+            new Status("Offen", "#ffa726", "emoji_objects"),
             new Status("In Arbeit", "#66bb6a", "rotate_right"),
-            new Status("Erledigt", "7e57c2", "task")
+            new Status("Erledigt", "#7e57c2", "task_alt")
     );
 
     @NonNull
