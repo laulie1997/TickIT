@@ -2,7 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Project } from '../../api/project';
 import { ProjectService } from '../../services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProjectModalComponent } from '../project-modal/project-modal.component';
+import {
+  ProjectModalComponent,
+  ProjectModification,
+  ProjectModificationOperation,
+} from '../project-modal/project-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Category } from '../../api/category';
@@ -48,7 +52,14 @@ export class ProjectDropdownComponent implements OnInit {
       width: '700px',
       data: { projectId: projectId },
     });
-    dialogRef.afterClosed().subscribe(() => this.getProjectName());
+
+    dialogRef.afterClosed().subscribe((result: ProjectModification) => {
+      if (result.operation === ProjectModificationOperation.EDITED) {
+        this.getProjectName();
+      } else if (result?.operation === ProjectModificationOperation.DELETED) {
+        this.router.navigate(['dashboard']);
+      }
+    });
   }
 
   getProjectName() {

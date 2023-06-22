@@ -16,7 +16,7 @@ export class StatusModalComponent implements OnInit {
   icons: Icon[] = [
     { value: '', label: '--' },
     { value: 'task_alt', label: 'task' },
-    { value: 'emoji_objects', label: 'bulb' },
+    { value: 'emoji_objects', label: 'idea' },
     { value: 'rocket', label: 'rocket' },
     { value: 'rotate_right', label: 'progress' },
     { value: 'favorite', label: 'favorite' },
