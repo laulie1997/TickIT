@@ -54,7 +54,6 @@ public class Ticket implements Serializable, Comparable<Ticket> {
 
     @NotNull
     @ManyToOne(targetEntity = Status.class, optional = false)
-    @Cascade(CascadeType.DELETE)
     private Status status;
 
     @ManyToMany(targetEntity = Category.class)

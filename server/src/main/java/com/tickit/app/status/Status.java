@@ -38,7 +38,7 @@ public class Status implements Serializable {
     private Project project;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
+    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS, cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 
     @CreationTimestamp
