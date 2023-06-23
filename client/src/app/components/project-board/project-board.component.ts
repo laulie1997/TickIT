@@ -1,4 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  ParamMap,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
@@ -11,12 +17,12 @@ import {
 } from '@angular/cdk/drag-drop';
 import { StatusModalComponent } from '../status-modal/status-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { StatusTicketDto } from 'src/app/api/statusTicketDto';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-project-board',
@@ -35,6 +41,7 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   connectedTo: string[] = [];
   socket: WebSocket;
   stompClient: Stomp.client;
+  public destroyed = new Subject<any>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -44,6 +51,22 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.initializeProjectBoard();
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.get('id')) {
+        this.stompClient.unsubscribe();
+        this.initializeProjectBoard();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stompClient.unsubscribe();
+    this.destroyed.next(null);
+    this.destroyed.complete();
+  }
+
+  initializeProjectBoard() {
     this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.projectService.emitProjectId(this.projectId);
     this.fetchProject();
@@ -60,10 +83,6 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
         this.fetchProjectTickets()
       );
     });
-  }
-
-  ngOnDestroy(): void {
-    this.stompClient.unsubscribe();
   }
 
   onTicketDropped(event: CdkDragDrop<Ticket[]>) {

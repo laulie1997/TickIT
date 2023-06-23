@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Status } from 'src/app/api/status';
+import { ProjectService } from 'src/app/services/project/project.service';
 import { StatusService } from 'src/app/services/status/status.service';
 
 @Component({
@@ -46,6 +47,7 @@ export class StatusModalComponent implements OnInit {
     public data: { projectId: number; statusId: number },
     public dialogRef: MatDialogRef<StatusModalComponent>,
     private statusService: StatusService,
+    private projectService: ProjectService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -66,12 +68,12 @@ export class StatusModalComponent implements OnInit {
     this.status.name = this.form.get('name').value;
     this.status.color = this.form.get('color').value;
     this.status.icon = this.form.get('icon').value;
-    if (!this.editMode) {
-      this.status.project = { id: this.data.projectId };
-    }
     (this.editMode
       ? this.statusService.updateStatus(this.status)
-      : this.statusService.createStatus(this.status)
+      : this.projectService.createStatusForProject(
+          this.data.projectId,
+          this.status
+        )
     ).subscribe(() => this.dialogRef.close(true));
   }
 
