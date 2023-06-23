@@ -6,7 +6,6 @@ import { DashboardComponent } from './components/dashboard-components/dashboard/
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginGuard } from './guards/login/login.guard';
 import { UserComponent } from './components/user/user.component';
-import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 
 const routes: Routes = [
@@ -33,11 +32,6 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'project',
-    component: ProjectComponent,
     canActivate: [AuthGuard],
   },
   {
