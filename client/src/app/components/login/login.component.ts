@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   };
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
 
   constructor(
     private authService: AuthService,
@@ -35,18 +34,11 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.loginCredentials = this.form;
 
-    this.authService.login(this.loginCredentials).subscribe(
-      data => {
-        this.tokenStorage.saveUser(data);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        console.log(this.tokenStorage.getUser());
-        this.router.navigate(['dashboard']);
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    );
+    this.authService.login(this.loginCredentials).subscribe(data => {
+      this.tokenStorage.saveUser(data);
+      this.isLoginFailed = false;
+      this.isLoggedIn = true;
+      this.router.navigate(['dashboard']);
+    });
   }
 }

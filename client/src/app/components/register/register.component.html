@@ -1,95 +1,91 @@
-<div class = "container"><mat-card>
-  <form
-    *ngIf="!isSuccessful"
-    name="form"
-    (ngSubmit)="f.form.valid && onSubmit()"
-    #f="ngForm"
-    novalidate
-  >
-    <mat-card-header>
-      <h1>Registrieren</h1>
-    </mat-card-header>
-    <mat-card-content>
-            <div class=" row">
-  <mat-form-field >
-    <mat-label>Vorname</mat-label>
-    <input matInput
-      type="text"
-      class="form-control"
-      name="name"
-      [(ngModel)]="form.name"
-      required
-      #name="ngModel">
-  </mat-form-field>
-      </div>
-      <div class="row">
-  <mat-form-field >
-    <mat-label>Nachname</mat-label>
-    <input matInput
-           type="text"
-           class="form-control"
-           name="surname"
-           [(ngModel)]="form.surname"
-           required
-           minlength="3"
-           maxlength="20"
-           #surname="ngModel">
-  </mat-form-field>
-      </div>
-      <div class=" row">
-        <mat-form-field >
-          <mat-label>Email</mat-label>
-          <input matInput
-                 type="email"
-                 class="form-control"
-                 name="email"
-                 [(ngModel)]="form.email"
-                 required
-                 email
-                 #email="ngModel">
-        </mat-form-field>
-      </div>
-      <div class=" row">
-  <mat-form-field >
-    <mat-label>Username</mat-label>
-    <input matInput
-           type="text"
-           class="form-control"
-           name="username"
-           [(ngModel)]="form.username"
-           required
-           #username="ngModel">
-  </mat-form-field>
-      </div>
-      <div class=" row">
-  <mat-form-field >
-    <mat-label>Password</mat-label>
-    <input matInput
-           type="password"
-           class="form-control"
-           name="password"
-           [(ngModel)]="form.password"
-           required
-           minlength="6"
-           #password="ngModel">
-  </mat-form-field>
-      </div>
-      <!--       <div class=" row">
-   <mat-form-field >
-     <mat-label>Passwort bestätigen</mat-label>
-     <input matInput>
-   </mat-form-field>
-      </div> -->
-      <div class="button-container">
-      <div class="row">
-        <button mat-raised-button type="submit" >Registrieren</button>
+<div class="container light-grey-background">
+  <mat-card>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate>
+      <mat-card-header>
+        <h1>Registrieren</h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Vorname</mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="name"
+              [(ngModel)]="form.name"
+              required
+              #name="ngModel" />
+          </mat-form-field>
         </div>
-              <div class="row">
-        <a href="">Zurück zum Login</a>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Nachname</mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="surname"
+              [(ngModel)]="form.surname"
+              required
+              minlength="3"
+              maxlength="20"
+              #surname="ngModel" />
+          </mat-form-field>
         </div>
-      </div>
-    </mat-card-content>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>E-Mail-Adresse</mat-label>
+            <input
+              matInput
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              #email="ngModel" />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Benutzername</mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              name="username"
+              [(ngModel)]="form.username"
+              required
+              #username="ngModel" />
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              #password="ngModel" />
+          </mat-form-field>
+        </div>
+        <div class="dialog-actions">
+          <a mat-stroked-button [routerLink]="['/']">Zurück zum Login</a>
+          <button mat-flat-button color="primary" type="submit">
+            Registrieren
+          </button>
+        </div>
+      </mat-card-content>
     </form>
   </mat-card>
 </div>
-

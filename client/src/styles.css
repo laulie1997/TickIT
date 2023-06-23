@@ -50,3 +50,7 @@ mat-form-field {
   width: 100%;
   justify-content: end;
 }
+
+.light-grey-background {
+  background: rgba(0, 0, 0, 0.15);
+}

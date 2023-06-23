@@ -21,7 +21,7 @@ export class TicketModalComponent implements OnInit {
   dialogTitle = '';
 
   constructor(
-    public dialogRef: MatDialogRef<Ticket>,
+    public dialogRef: MatDialogRef<TicketModalComponent>,
     private ticketService: TicketService,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
