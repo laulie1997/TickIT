@@ -11,10 +11,6 @@ export class StatusService {
 
   constructor(private http: HttpClient) {}
 
-  createStatus(status: Status): Observable<Status> {
-    return this.http.post<Status>(this.baseURL, status);
-  }
-
   deleteStatus(statusId: number): Observable<boolean> {
     return this.http.delete<boolean>(this.baseURL + '/' + statusId);
   }

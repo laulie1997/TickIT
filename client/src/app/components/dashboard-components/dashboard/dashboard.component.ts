@@ -4,7 +4,12 @@ import { Project } from 'src/app/api/project';
 import { Ticket } from 'src/app/api/ticket';
 import { TokenStorageService } from 'src/app/services/tokenStorage/token-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { ProjectModalComponent } from '../../project-modal/project-modal.component';
+import {
+  ProjectModalComponent,
+  ProjectModification,
+  ProjectModificationOperation,
+} from '../../project-modal/project-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +24,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private userService: UserService,
     private tokenStorage: TokenStorageService,
-    private dialog: MatDialog,
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +49,12 @@ export class DashboardComponent implements OnInit {
       data: { projectId: null },
     });
 
-    dialogRef.afterClosed().subscribe((successful: boolean) => {
-      if (successful) {
-        this.fetchUserProjectsAndTickets();
+    dialogRef.afterClosed().subscribe((result: ProjectModification) => {
+      if (
+        result?.operation === ProjectModificationOperation.CREATED &&
+        result?.projectId
+      ) {
+        this.router.navigate(['project/' + result.projectId]);
       }
     });
   }

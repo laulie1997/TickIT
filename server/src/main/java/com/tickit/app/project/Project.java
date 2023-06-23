@@ -46,11 +46,11 @@ public class Project {
     private Set<User> members;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Status.class, mappedBy = Status.PROJECT_PROPERTY)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private Set<Status> statuses;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_PROJECT)
+    @OneToMany(mappedBy = Ticket.PROPERTY_PROJECT, cascade = CascadeType.REMOVE)
     private Set<Ticket> tickets;
 
     @JsonIgnore

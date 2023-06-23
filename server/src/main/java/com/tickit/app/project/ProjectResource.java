@@ -1,6 +1,8 @@
 package com.tickit.app.project;
 
 import com.tickit.app.security.user.UserWrapper;
+import com.tickit.app.status.Status;
+import com.tickit.app.status.StatusService;
 import com.tickit.app.status.StatusWrapper;
 import com.tickit.app.ticket.ProjectTicketWrapper;
 import com.tickit.app.ticket.Ticket;
@@ -13,10 +15,15 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectResource {
     @NonNull
     private final ProjectService projectService;
+    @NonNull
+    private final StatusService statusService;
 
     @Autowired
-    public ProjectResource(@NonNull final ProjectService projectService) {
+    public ProjectResource(
+            @NonNull final ProjectService projectService,
+            @NonNull final StatusService statusService) {
         this.projectService = projectService;
+        this.statusService = statusService;
     }
 
     @PostMapping
@@ -38,6 +45,11 @@ public class ProjectResource {
     @DeleteMapping("{projectId}")
     public boolean deleteProject(@PathVariable Long projectId) {
         return projectService.deleteProject(projectId);
+    }
+
+    @PostMapping("{projectId}/status")
+    public Status createStatus(@PathVariable Long projectId, @RequestBody final Status status) {
+        return statusService.createStatus(projectId, status);
     }
 
     @GetMapping("{projectId}/status")

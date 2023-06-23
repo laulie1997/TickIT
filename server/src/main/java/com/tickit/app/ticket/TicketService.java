@@ -62,7 +62,9 @@ public class TicketService {
     }
 
     public boolean deleteTicket(@NonNull final Long id) {
+        final Long projectId = getTicket(id).getProject().getId();
         ticketRepository.deleteById(id);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));
         return true;
     }
 }

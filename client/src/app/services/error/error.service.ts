@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ErrorService {
   constructor(private snackBar: MatSnackBar) {}
   showErrorMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, 'Schließen', {
       duration: 3000,
       panelClass: 'error-toast',
     });

@@ -34,11 +34,14 @@ public class Status implements Serializable {
 
     private String icon;
 
+    @NotNull
+    @JsonIgnore
     @ManyToOne(targetEntity = Project.class, optional = false)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project project;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS)
+    @OneToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_STATUS, cascade = CascadeType.REMOVE)
     private Set<Ticket> tickets;
 
     @CreationTimestamp

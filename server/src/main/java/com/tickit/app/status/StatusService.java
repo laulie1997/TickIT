@@ -37,11 +37,8 @@ public class StatusService {
      * @return saved status
      */
     @NonNull
-    public Status createStatus(@NonNull final Status status) {
-        if (status.getProject() == null || status.getProject().getId() == 0L) {
-            throw new IllegalArgumentException("Project id must be provided");
-        }
-        final var project = projectService.getProject(status.getProject().getId());
+    public Status createStatus(@NonNull final Long projectId, @NonNull final Status status) {
+        final var project = projectService.getProject(projectId);
         status.setProject(project);
         final var savedStatus = statusRepository.save(status);
         applicationEventPublisher.publishEvent(new ProjectUpdateEvent(project.getId()));
@@ -66,8 +63,8 @@ public class StatusService {
         dbStatus.setName(status.getName());
         dbStatus.setIcon(status.getIcon());
         dbStatus.setColor(status.getColor());
-        final Status savedStatus = statusRepository.save(status);
-        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(status.getProject().getId()));
+        final Status savedStatus = statusRepository.save(dbStatus);
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(savedStatus.getProject().getId()));
         return savedStatus;
     }
 
@@ -78,7 +75,6 @@ public class StatusService {
      * @return {@code true} if deletion was successful
      */
     public boolean deleteStatus(@NonNull final Long id) {
-        // TODO all tickets with the status will be deleted
         final Long projectId = getStatus(id).getProject().getId();
         statusRepository.deleteById(id);
         applicationEventPublisher.publishEvent(new ProjectUpdateEvent(projectId));

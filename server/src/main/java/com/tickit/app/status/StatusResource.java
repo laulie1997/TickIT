@@ -15,11 +15,6 @@ public class StatusResource {
         this.statusService = statusService;
     }
 
-    @PostMapping
-    public Status createStatus(@RequestBody final Status status) {
-        return statusService.createStatus(status);
-    }
-
     @GetMapping("{statusId}")
     public Status getStatus(@PathVariable final Long statusId) {
         return statusService.getStatus(statusId);

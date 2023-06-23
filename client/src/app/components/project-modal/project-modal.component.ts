@@ -24,13 +24,27 @@ export class ProjectModalComponent implements OnInit {
     this.projectId = this.data.projectId;
   }
 
-  onActionFinished(event: boolean) {
-    this.dialogRef.close(true);
+  onActionFinished(event: ProjectModification) {
+    this.dialogRef.close(event);
   }
 
   deleteProject() {
-    this.projectService
-      .deleteProject(this.projectId)
-      .subscribe(() => this.dialogRef.close());
+    this.projectService.deleteProject(this.projectId).subscribe(() =>
+      this.dialogRef.close({
+        operation: ProjectModificationOperation.DELETED,
+        projectId: this.projectId,
+      })
+    );
   }
+}
+
+export enum ProjectModificationOperation {
+  DELETED = 'DELETED',
+  EDITED = 'EDITED',
+  CREATED = 'CREATED',
+}
+
+export interface ProjectModification {
+  operation: ProjectModificationOperation;
+  projectId?: number;
 }

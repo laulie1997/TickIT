@@ -2,6 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Project } from 'src/app/api/project';
 import { ProjectService } from 'src/app/services/project/project.service';
+import {
+  ProjectModification,
+  ProjectModificationOperation,
+} from '../../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-project-form',
@@ -12,7 +16,8 @@ export class ProjectFormComponent implements OnInit {
   form: UntypedFormGroup;
   @Input() projectId: number;
   @Input() editMode: boolean;
-  @Output() actionFinished: EventEmitter<boolean> = new EventEmitter();
+  @Output() actionFinished: EventEmitter<ProjectModification> =
+    new EventEmitter();
 
   project: Project = {};
 
@@ -22,7 +27,6 @@ export class ProjectFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.projectId);
     if (this.editMode) {
       this.projectService
         .getProject(this.projectId)
@@ -40,10 +44,14 @@ export class ProjectFormComponent implements OnInit {
     (this.editMode
       ? this.projectService.updateProject(this.project)
       : this.projectService.saveProject(this.project)
-    ).subscribe(() => {
-      if (!this.editMode) {
-        this.actionFinished.emit(true);
-      }
+    ).subscribe((savedProject: Project) => {
+      const projectModification: ProjectModification = {
+        operation: this.editMode
+          ? ProjectModificationOperation.EDITED
+          : ProjectModificationOperation.CREATED,
+        projectId: savedProject.id,
+      };
+      this.actionFinished.emit(projectModification);
     });
   }
 
