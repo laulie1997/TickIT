@@ -54,7 +54,11 @@ export class TicketModalComponent implements OnInit {
     });
   }
 
-  deleteTicket() {}
+  deleteTicket() {
+    this.ticketService
+      .deleteTicket(this.ticket.id)
+      .subscribe(() => this.dialogRef.close(false));
+  }
 
   saveTicket() {
     this.ticket.title = this.form.get('name').value;

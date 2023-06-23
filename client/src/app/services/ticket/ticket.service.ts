@@ -28,7 +28,7 @@ export class TicketService {
     );
   }
 
-  deleteTicket(ticket: Ticket): Observable<boolean> {
-    return this.http.delete<boolean>(this.baseURL + '/' + ticket.id);
+  deleteTicket(ticketId: number): Observable<boolean> {
+    return this.http.delete<boolean>(this.baseURL + '/' + ticketId);
   }
 }
