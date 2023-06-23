@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
-import { ActivatedRoute, Data, Router } from '@angular/router';
+import { Data } from '@angular/router';
 import { User } from '../../api/user';
 import { UserService } from '../../services/user/user.service';
-import { PasswordChangeRequest } from '../../api/passwordChangeRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
 
 @Component({
   selector: 'app-user',
@@ -14,25 +14,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserComponent implements OnInit {
   user: User;
-  passwordChangeRequest: PasswordChangeRequest;
-  requestChange: boolean = false;
-  requestPasswordChange: boolean = false;
+
   form: any = {
     name: null,
     surname: null,
     email: null,
     username: null,
   };
-  updatePasswordForm: any = {
-    oldPassword: null,
-    newPassword: null,
-  };
+
   @Output() updateEvent = new EventEmitter<Data>();
+
   constructor(
     private tokenStorage: TokenStorageService,
     private userService: UserService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
+
   ngOnInit() {
     // fetch user from api
     const userId = this.tokenStorage.getUser().id;
@@ -41,40 +39,27 @@ export class UserComponent implements OnInit {
       .subscribe((user: User) => (this.user = user));
   }
 
-  changeData() {
-    this.requestChange = true;
-  }
-
-  changePassword() {
-    this.requestPasswordChange = true;
-  }
-
-  cancelUpdate() {
-    this.requestChange = false;
-  }
-  cancelPasswordChange() {
-    this.requestPasswordChange = false;
-  }
-  updateData() {
+  updateUser() {
     this.userService
       .updateUser(this.user)
       .subscribe((user: User) => (this.user = user));
-    this.requestChange = false;
-    this.openSnackBar('Userdaten wurden aktualisiert', 'schließen');
+    this.openSnackBar('Benutzerdaten wurden aktualisiert', 'schließen');
   }
 
-  updatePassword() {
-    this.passwordChangeRequest = this.updatePasswordForm;
-    const userId = this.tokenStorage.getUser().id;
-    // this.requestPasswordChange = this.updatePasswordForm;
-    this.userService
-      .updatePassword(this.passwordChangeRequest, userId)
-      .subscribe((passwordChangeRequest: PasswordChangeRequest) => {
-        this.passwordChangeRequest = passwordChangeRequest;
-        this.requestPasswordChange = false;
+  openChangePasswordModal() {
+    const dialogRef = this.dialog.open(ChangePasswordModalComponent, {
+      height: '400px',
+      width: '400px',
+      data: { userId: this.user.id },
+    });
+
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
         this.openSnackBar('Passwort wurde geändert', 'schließen');
-      });
+      }
+    });
   }
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000 });
   }
