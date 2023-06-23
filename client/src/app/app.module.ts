@@ -21,7 +21,6 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserComponent } from './components/user/user.component';
-import { ProjectComponent } from './components/project/project.component';
 import { ProjectBoardComponent } from './components/project-board/project-board.component';
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { ProjectPreviewComponent } from './components/dashboard-components/project-preview/project-preview.component';
@@ -49,6 +48,7 @@ import { ProjectMembersComponent } from './components/project-members/project-me
 import { UserSelectionModalComponent } from './components/user-selection-modal/user-selection-modal.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationItemComponent } from './components/navigation-item/navigation-item.component';
+import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,6 @@ import { NavigationItemComponent } from './components/navigation-item/navigation
     DashboardComponent,
     LogoutComponent,
     UserComponent,
-    ProjectComponent,
     ProjectBoardComponent,
     ProjectPreviewComponent,
     ProjectModalComponent,
@@ -73,6 +72,7 @@ import { NavigationItemComponent } from './components/navigation-item/navigation
     ProjectMembersComponent,
     UserSelectionModalComponent,
     NavigationItemComponent,
+    ChangePasswordModalComponent,
   ],
   imports: [
     BrowserModule,
