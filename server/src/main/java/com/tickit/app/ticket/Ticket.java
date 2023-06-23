@@ -49,11 +49,12 @@ public class Ticket implements Serializable, Comparable<Ticket> {
     @JsonIgnore
     @NotNull
     @ManyToOne(targetEntity = Project.class, optional = false)
-    @Cascade(CascadeType.DELETE)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project project;
 
     @NotNull
     @ManyToOne(targetEntity = Status.class, optional = false)
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private Status status;
 
     @ManyToMany(targetEntity = Category.class)
