@@ -71,6 +71,16 @@ export class ProjectService {
     );
   }
 
+  createStatusForProject(
+    projectId: number,
+    status: Status
+  ): Observable<Status> {
+    return this.http.post<Status>(
+      `${this.baseURL}/${projectId}/status`,
+      status
+    );
+  }
+
   emitProjectId(projectId: number): void {
     this.projectIdSubject.next(projectId);
   }
