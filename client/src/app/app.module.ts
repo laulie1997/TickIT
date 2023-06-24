@@ -49,6 +49,8 @@ import { UserSelectionModalComponent } from './components/user-selection-modal/u
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationItemComponent } from './components/navigation-item/navigation-item.component';
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
     UserSelectionModalComponent,
     NavigationItemComponent,
     ChangePasswordModalComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +104,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
     MatMenuModule,
     MatTabsModule,
     MatTooltipModule,
+    MatChipsModule,
   ],
   providers: [
     ProjectBoardComponent,
@@ -109,7 +113,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    // { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],
 })

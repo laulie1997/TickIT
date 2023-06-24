@@ -20,7 +20,6 @@ import { UntypedFormGroup } from '@angular/forms';
   styleUrls: ['./project-dropdown.component.css'],
 })
 export class ProjectDropdownComponent implements OnInit {
-  categories: Category[] = [];
   projectId: number;
   projectIdSubscription: Subscription;
   @Input() category: Category;
@@ -32,7 +31,6 @@ export class ProjectDropdownComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -41,7 +39,6 @@ export class ProjectDropdownComponent implements OnInit {
         this.projectId = projectId;
         console.log(projectId);
         this.getProjectName();
-        this.fetchCategories(projectId);
       }
     );
   }
@@ -65,22 +62,6 @@ export class ProjectDropdownComponent implements OnInit {
   getProjectName() {
     this.projectService.getProject(this.projectId).subscribe(project => {
       this.project = project;
-    });
-  }
-
-  fetchCategories(projectId: any) {
-    this.categoryService
-      .getCategories(projectId)
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
-        console.log(this.categories);
-      });
-  }
-
-  openEditCategoryModal(): void {
-    const dialogRef = this.dialog.open(CategoriesModalComponent, {
-      width: '500px',
-      data: {},
     });
   }
 }

@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Project } from '../../api/project';
 import { Category } from '../../api/category';
+import { CategoryWrapper } from '../../api/categoryWrapper';
 import { ProjectService } from '../project/project.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +20,14 @@ export class CategoryService {
   ) {}
 
   getCategories(projectId: any): Observable<Category[]> {
-    return this.http.get<Category[]>(
-      this.baseURL + '/' + projectId + '/category'
-    );
+    return this.http
+      .get<CategoryWrapper>(this.baseURL + '/' + projectId + '/category')
+      .pipe(map((wrapper: CategoryWrapper) => wrapper.categories));
   }
 
-  getCategory(id: number): Observable<Category> {
+  getCategory(projectId: number): Observable<Category> {
     return this.http.get<Category>(
-      this.baseURL + '/' + this.projectId + '/category/' + 'categoryID'
+      this.baseURL + '/' + projectId + '/category/' + 'categoryID'
     );
   }
 
@@ -47,9 +49,5 @@ export class CategoryService {
       this.baseURL + '/' + this.projectId + '/category/' + category.id,
       category
     );
-  }
-
-  setProjectId() {
-    this.projectId = this.projectService.getProject(this.project.id);
   }
 }
