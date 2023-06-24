@@ -1,5 +1,9 @@
 <div *ngFor="let category of categories">
-  <button mat-raised-button (click)="openEditCategoryModal()">{{category?.name}}</button>
+  <button mat-raised-button
+          [style.background-color]="category?.color ? category.color : ''"
+          (click)="openEditCategoryModal()">
+    {{category?.name}}
+  </button>
 </div>
   <div class="row">
   <button mat-raised-button (click)="openEditCategoryModal()">Kategorie hinzufügen</button>

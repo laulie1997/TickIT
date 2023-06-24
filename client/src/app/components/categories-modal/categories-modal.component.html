@@ -7,7 +7,19 @@
       <mat-label>Kategoriename</mat-label>
       <input matInput formControlName="name" />
     </mat-form-field>
-
+    <mat-label>Farbe auswählen</mat-label>
+    <div class="color-picker">
+      <ngx-colors
+        *ngIf="form.get('color')"
+        ngx-colors-trigger
+        [format]="'hex'"
+        [hideTextInput]="true"
+        [hideColorPicker]="true"
+        [palette]="colorPalette"
+        style="display: inline-block; margin: 5px"
+        formControlName="color"></ngx-colors>
+      <span>{{ form.get('color').value }}</span>
+    </div>
   <mat-dialog-actions>
     <div class="dialog-actions">
       <div>

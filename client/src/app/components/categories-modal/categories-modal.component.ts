@@ -17,6 +17,23 @@ export class CategoriesModalComponent implements OnInit {
   editMode: boolean;
   project: Project = {};
   @Input() projectId: number;
+  readonly defaultColor = '#292929';
+  readonly colorPalette: string[] = [
+    '#ffa726',
+    '#ec407a',
+    '#7e57c2',
+    '#3f51b5',
+    '#c62828',
+    '#03a9f4',
+    '#26a69a',
+    '#66bb6a',
+    '#fbc02d',
+    '#ff5722',
+    '#795548',
+    '#757575',
+    '#607d8b',
+    this.defaultColor,
+  ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -42,11 +59,13 @@ export class CategoriesModalComponent implements OnInit {
   private buildForm() {
     this.form = this.formBuilder.group({
       name: [this.category.name || '', [Validators.required]],
+      color: [this.category.color || this.defaultColor],
     });
   }
 
   saveCategory() {
     this.category.name = this.form.get('name').value;
+    this.category.color = this.form.get('color').value;
     if (!this.editMode) {
       this.category.project = { id: this.projectId };
     }
