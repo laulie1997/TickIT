@@ -49,6 +49,7 @@ import { UserSelectionModalComponent } from './components/user-selection-modal/u
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationItemComponent } from './components/navigation-item/navigation-item.component';
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
     UserSelectionModalComponent,
     NavigationItemComponent,
     ChangePasswordModalComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
