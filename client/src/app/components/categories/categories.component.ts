@@ -15,13 +15,13 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   project: Project;
   @Input() projectId: number;
+
   constructor(
     private categoryService: CategoryService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    console.log(this.projectId);
     this.fetchCategories(this.projectId);
   }
 
