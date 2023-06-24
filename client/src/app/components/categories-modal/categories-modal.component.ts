@@ -20,14 +20,15 @@ export class CategoriesModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { categoryId: number; projectId: number },
+    public data: { categoryId: number },
     public dialogRef: MatDialogRef<CategoriesModalComponent>,
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     console.log(this.projectId);
-    this.editMode = this.data.categoryId != null;
+    console.log(this.category.name);
+    this.editMode = this.category.id != null;
     if (this.editMode) {
       this.categoryService
         .getCategory(this.projectId)
@@ -61,5 +62,10 @@ export class CategoriesModalComponent implements OnInit {
     });
   }
 
-  fetchCategory(projectId: any) {}
+  private updateForm(): void {
+    this.form.get('name').setValue(this.category?.name);
+    if (this.category.color) {
+      this.form.get('color').setValue(this.category.color);
+    }
+  }
 }

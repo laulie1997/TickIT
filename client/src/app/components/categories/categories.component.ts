@@ -18,13 +18,9 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private dialog: MatDialog,
-    private projectService: ProjectService
   ) {}
 
   ngOnInit(): void {
-    this.projectService
-      .getProject(this.projectId)
-      .subscribe((project: Project) => (this.project = project));
     console.log(this.projectId);
     this.fetchCategories(this.projectId);
   }
@@ -44,5 +40,10 @@ export class CategoriesComponent implements OnInit {
       data: {},
     });
     dialogRef.componentInstance.projectId = this.projectId;
+    dialogRef.afterClosed().subscribe((successful: boolean) => {
+      if (successful) {
+        this.fetchCategories(this.projectId);
+      }
+    });
   }
 }
