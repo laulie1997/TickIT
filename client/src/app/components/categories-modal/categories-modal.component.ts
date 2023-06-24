@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Project } from '../../api/project';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Category } from '../../api/category';
 import { CategoryService } from '../../services/category/category.service';
+import { ProjectService } from '../../services/project/project.service';
 
 @Component({
   selector: 'app-categories-modal',
@@ -15,20 +16,21 @@ export class CategoriesModalComponent implements OnInit {
   category: Category = {};
   editMode: boolean;
   project: Project = {};
-  projectId: number;
+  @Input() projectId: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { categoryId: number; projectId: number },
     public dialogRef: MatDialogRef<CategoriesModalComponent>,
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {}
   ngOnInit(): void {
+    console.log(this.projectId);
     this.editMode = this.data.categoryId != null;
     if (this.editMode) {
       this.categoryService
-        .getCategory(this.data.categoryId)
+        .getCategory(this.projectId)
         .subscribe((category: Category) => {
           this.category = category;
           this.buildForm();
@@ -45,11 +47,11 @@ export class CategoriesModalComponent implements OnInit {
   saveCategory() {
     this.category.name = this.form.get('name').value;
     if (!this.editMode) {
-      this.category.project = { id: this.data.projectId };
+      this.category.project = { id: this.projectId };
     }
     (this.editMode
       ? this.categoryService.updateCategory(this.category)
-      : this.categoryService.createCategory(this.data.projectId, this.category)
+      : this.categoryService.createCategory(this.projectId, this.category)
     ).subscribe(() => this.dialogRef.close(true));
   }
 
@@ -58,4 +60,6 @@ export class CategoriesModalComponent implements OnInit {
       this.dialogRef.close(true);
     });
   }
+
+  fetchCategory(projectId: any) {}
 }

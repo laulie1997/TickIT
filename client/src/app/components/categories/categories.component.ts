@@ -43,5 +43,6 @@ export class CategoriesComponent implements OnInit {
       width: '500px',
       data: {},
     });
+    dialogRef.componentInstance.projectId = this.projectId;
   }
 }

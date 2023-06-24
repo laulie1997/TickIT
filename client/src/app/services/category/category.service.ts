@@ -25,9 +25,9 @@ export class CategoryService {
       .pipe(map((wrapper: CategoryWrapper) => wrapper.categories));
   }
 
-  getCategory(id: number): Observable<Category> {
+  getCategory(projectId: number): Observable<Category> {
     return this.http.get<Category>(
-      this.baseURL + '/' + this.projectId + '/category/' + 'categoryID'
+      this.baseURL + '/' + projectId + '/category/' + 'categoryID'
     );
   }
 
@@ -49,9 +49,5 @@ export class CategoryService {
       this.baseURL + '/' + this.projectId + '/category/' + category.id,
       category
     );
-  }
-
-  setProjectId() {
-    this.projectId = this.projectService.getProject(this.project.id);
   }
 }
