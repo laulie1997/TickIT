@@ -14,7 +14,7 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   project: Project;
   @Input() projectId: number;
-
+  @Input() category: Category;
   constructor(
     private projectService: ProjectService,
     private dialog: MatDialog
@@ -33,10 +33,11 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  openEditCategoryModal(): void {
+  openDialog(categoryId?: number) {
     const dialogRef = this.dialog.open(CategoriesModalComponent, {
+      height: '480px',
       width: '500px',
-      data: {},
+      data: { categoryId: categoryId },
     });
     dialogRef.componentInstance.projectId = this.projectId;
     dialogRef.afterClosed().subscribe((successful: boolean) => {

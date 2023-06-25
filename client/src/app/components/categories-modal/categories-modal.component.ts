@@ -34,6 +34,7 @@ export class CategoriesModalComponent implements OnInit {
     '#607d8b',
     this.defaultColor,
   ];
+  categoryId: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -42,10 +43,11 @@ export class CategoriesModalComponent implements OnInit {
     private categoryService: CategoryService,
     private projectService: ProjectService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.categoryId = data.categoryId;
+  }
+
   ngOnInit(): void {
-    console.log(this.projectId);
-    console.log(this.category.name);
     this.editMode = this.data.categoryId != null;
     if (this.editMode) {
       this.categoryService
@@ -57,6 +59,7 @@ export class CategoriesModalComponent implements OnInit {
     }
     this.buildForm();
   }
+
   private buildForm() {
     this.form = this.formBuilder.group({
       name: [this.category.name || '', [Validators.required]],
@@ -80,12 +83,5 @@ export class CategoriesModalComponent implements OnInit {
     this.categoryService.deleteCategory(this.category.id).subscribe(() => {
       this.dialogRef.close(true);
     });
-  }
-
-  private updateForm(): void {
-    this.form.get('name').setValue(this.category?.name);
-    if (this.category.color) {
-      this.form.get('color').setValue(this.category.color);
-    }
   }
 }

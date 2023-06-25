@@ -51,6 +51,7 @@ export class TicketModalComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: [this.ticket.title || '', [Validators.required]],
       description: [this.ticket.description || ''],
+      dueDate: [this.ticket.dueDate || ''],
     });
   }
 
@@ -63,6 +64,7 @@ export class TicketModalComponent implements OnInit {
   saveTicket() {
     this.ticket.title = this.form.get('name').value;
     this.ticket.description = this.form.get('description').value;
+    this.ticket.dueDate = this.form.get('dueDate').value;
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
@@ -79,5 +81,6 @@ export class TicketModalComponent implements OnInit {
   private updateForm(): void {
     this.form.get('name').setValue(this.ticket?.title);
     this.form.get('description').setValue(this.ticket?.description);
+    this.form.get('dueDate').setValue(this.ticket?.dueDate);
   }
 }
