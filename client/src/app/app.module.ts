@@ -51,6 +51,7 @@ import { NavigationItemComponent } from './components/navigation-item/navigation
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { TicketMembersComponent } from './components/ticket-members/ticket-members.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { MatChipsModule } from '@angular/material/chips';
     NavigationItemComponent,
     ChangePasswordModalComponent,
     CategoriesComponent,
+    TicketMembersComponent,
   ],
   imports: [
     BrowserModule,
