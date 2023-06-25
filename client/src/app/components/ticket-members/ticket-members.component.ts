@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../api/user';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';
-import { UserSelectionModalComponent } from '../user-selection-modal/user-selection-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketService } from '../../services/ticket/ticket.service';
 
@@ -15,6 +14,7 @@ export class TicketMembersComponent implements OnInit {
   @Input() projectId: number;
   @Input() ticketId: number;
   ticketMembers: User[];
+  selectedMembers: User[] = [];
   project: Project;
   constructor(
     private projectService: ProjectService,
@@ -28,23 +28,22 @@ export class TicketMembersComponent implements OnInit {
       .getProjectMembers(29)
       .subscribe((members: User[]) => (this.ticketMembers = members));
   }
-
-  openAddMembersModal() {
-    const dialogRef = this.dialog.open(UserSelectionModalComponent, {
-      height: '500px',
-      width: '500px',
-      data: this.ticketMembers.map(member => member.id),
-    });
-    dialogRef
-      .afterClosed()
-      .subscribe((selectedUsers: User[]) =>
-        this.ticketMembers.push(...selectedUsers)
-      );
+  isSelected(member: User): boolean {
+    return this.selectedMembers.includes(member);
   }
 
+  toggleSelection(member: User): void {
+    const index = this.selectedMembers.indexOf(member);
+    if (index === -1) {
+      this.selectedMembers.push(member);
+    } else {
+      this.selectedMembers.splice(index, 1);
+    }
+  }
   //returns 500 error
   saveTicketMembers() {
-    const memberIds = this.ticketMembers.map(user => user.id);
+    const memberIds = this.selectedMembers.map(member => member.id);
+    console.log(this.selectedMembers);
     this.ticketService
       .updateTicketMembership(this.ticketId, {
         userIds: memberIds,
