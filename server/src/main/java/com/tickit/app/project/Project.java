@@ -54,7 +54,7 @@ public class Project {
     private Set<Ticket> tickets;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Category.class, mappedBy = Category.PROPERTY_PROJECT)
+    @OneToMany(mappedBy = Category.PROPERTY_PROJECT, cascade = CascadeType.REMOVE)
     private Set<Category> categories;
 
     @CreationTimestamp
