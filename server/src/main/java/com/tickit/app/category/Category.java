@@ -7,8 +7,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,7 +40,7 @@ public class Category implements Serializable {
     @JsonIgnore
     @NotNull
     @ManyToOne(targetEntity = Project.class, optional = false)
-    @Cascade(CascadeType.DELETE)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project project;
 
     @CreationTimestamp

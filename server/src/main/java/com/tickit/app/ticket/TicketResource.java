@@ -35,4 +35,9 @@ public class TicketResource {
     public boolean deleteTicket(@PathVariable final Long ticketId) {
         return ticketService.deleteTicket(ticketId);
     }
+
+    @PutMapping("{ticketId}/category")
+    public Ticket updateTicketStatus(@PathVariable final Long ticketId, @RequestBody CategoryAssignment categoryAssignment) {
+        return ticketService.updateAssignedCategories(ticketId, categoryAssignment);
+    }
 }
