@@ -2,4 +2,9 @@
   <mat-card-header>
     <h2>{{ ticket?.title }}</h2>
   </mat-card-header>
+  <mat-card-footer>
+    <mat-chip>
+    {{ticket?.assignee.name}} {{ticket?.assignee.surname}}
+    </mat-chip>
+  </mat-card-footer>
 </mat-card>
