@@ -34,21 +34,24 @@ export class CategoriesModalComponent implements OnInit {
     '#607d8b',
     this.defaultColor,
   ];
+  categoryId: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { categoryId: number },
     public dialogRef: MatDialogRef<CategoriesModalComponent>,
     private categoryService: CategoryService,
+    private projectService: ProjectService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.categoryId = data.categoryId;
+  }
+
   ngOnInit(): void {
-    console.log(this.projectId);
-    console.log(this.category.name);
-    this.editMode = this.category.id != null;
+    this.editMode = this.data.categoryId != null;
     if (this.editMode) {
       this.categoryService
-        .getCategory(this.projectId)
+        .getCategory(this.data.categoryId)
         .subscribe((category: Category) => {
           this.category = category;
           this.buildForm();
@@ -56,6 +59,7 @@ export class CategoriesModalComponent implements OnInit {
     }
     this.buildForm();
   }
+
   private buildForm() {
     this.form = this.formBuilder.group({
       name: [this.category.name || '', [Validators.required]],
@@ -71,20 +75,13 @@ export class CategoriesModalComponent implements OnInit {
     }
     (this.editMode
       ? this.categoryService.updateCategory(this.category)
-      : this.categoryService.createCategory(this.projectId, this.category)
+      : this.projectService.createCategory(this.projectId, this.category)
     ).subscribe(() => this.dialogRef.close(true));
   }
 
   deleteCategory() {
-    this.categoryService.deleteCategory(this.category).subscribe(() => {
+    this.categoryService.deleteCategory(this.category.id).subscribe(() => {
       this.dialogRef.close(true);
     });
-  }
-
-  private updateForm(): void {
-    this.form.get('name').setValue(this.category?.name);
-    if (this.category.color) {
-      this.form.get('color').setValue(this.category.color);
-    }
   }
 }

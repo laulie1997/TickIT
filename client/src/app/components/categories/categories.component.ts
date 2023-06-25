@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../../api/category';
-import { CategoryService } from '../../services/category/category.service';
 import { CategoriesModalComponent } from '../categories-modal/categories-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Project } from '../../api/project';
 import { ProjectService } from '../../services/project/project.service';
+import { Ticket } from '../../api/ticket';
+import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
+import { StatusModalComponent } from '../status-modal/status-modal.component';
 
 @Component({
   selector: 'app-categories',
@@ -15,9 +17,9 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   project: Project;
   @Input() projectId: number;
-
+  @Input() category: Category;
   constructor(
-    private categoryService: CategoryService,
+    private projectService: ProjectService,
     private dialog: MatDialog
   ) {}
 
@@ -25,8 +27,8 @@ export class CategoriesComponent implements OnInit {
     this.fetchCategories(this.projectId);
   }
 
-  fetchCategories(projectId: any) {
-    this.categoryService
+  fetchCategories(projectId: number) {
+    this.projectService
       .getCategories(projectId)
       .subscribe((categories: Category[]) => {
         this.categories = categories;
@@ -34,10 +36,11 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  openEditCategoryModal(): void {
+  openDialog(categoryId?: number) {
     const dialogRef = this.dialog.open(CategoriesModalComponent, {
+      height: '480px',
       width: '500px',
-      data: {},
+      data: { categoryId: categoryId },
     });
     dialogRef.componentInstance.projectId = this.projectId;
     dialogRef.afterClosed().subscribe((successful: boolean) => {
