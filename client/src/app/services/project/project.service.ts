@@ -13,6 +13,8 @@ import { StatusTicketDto } from 'src/app/api/statusTicketDto';
 import { UserWrapper } from 'src/app/api/userWrapper';
 import { User } from 'src/app/api/user';
 import { ProjectMembership } from 'src/app/api/projectMembership';
+import { Category } from 'src/app/api/category';
+import { CategoryWrapper } from 'src/app/api/categoryWrapper';
 
 @Injectable({
   providedIn: 'root',
@@ -98,5 +100,18 @@ export class ProjectService {
     return this.http
       .put<UserWrapper>(`${this.baseURL}/${projectId}/membership`, membership)
       .pipe(map((wrapper: UserWrapper) => wrapper.users));
+  }
+
+  getCategories(projectId: number): Observable<Category[]> {
+    return this.http
+      .get<CategoryWrapper>(`${this.baseURL}/${projectId}/category`)
+      .pipe(map((wrapper: CategoryWrapper) => wrapper.categories));
+  }
+
+  createCategory(projectId: number, category: Category): Observable<Category> {
+    return this.http.post<Category>(
+      `${this.baseURL}/${projectId}/category`,
+      category
+    );
   }
 }

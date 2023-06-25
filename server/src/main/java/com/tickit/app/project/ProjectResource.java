@@ -1,5 +1,8 @@
 package com.tickit.app.project;
 
+import com.tickit.app.category.Category;
+import com.tickit.app.category.CategoryService;
+import com.tickit.app.category.CategoryWrapper;
 import com.tickit.app.security.user.UserWrapper;
 import com.tickit.app.status.Status;
 import com.tickit.app.status.StatusService;
@@ -17,13 +20,17 @@ public class ProjectResource {
     private final ProjectService projectService;
     @NonNull
     private final StatusService statusService;
+    @NonNull
+    private final CategoryService categoryService;
 
     @Autowired
     public ProjectResource(
             @NonNull final ProjectService projectService,
-            @NonNull final StatusService statusService) {
+            @NonNull final StatusService statusService,
+            @NonNull CategoryService categoryService) {
         this.projectService = projectService;
         this.statusService = statusService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping
@@ -75,5 +82,15 @@ public class ProjectResource {
     @PutMapping("{projectId}/membership")
     public UserWrapper updateProjectMembership(@PathVariable Long projectId, @RequestBody ProjectMembership projectMembership) {
         return new UserWrapper(projectService.updateProjectMembership(projectId, projectMembership));
+    }
+
+    @PostMapping("{projectId}/category")
+    public Category createCategory(@PathVariable final Long projectId, @RequestBody final Category category) {
+        return categoryService.createCategory(projectId, category);
+    }
+
+    @GetMapping("{projectId}/category")
+    public CategoryWrapper getCategories(@PathVariable final Long projectId) {
+        return new CategoryWrapper(categoryService.getCategoriesOfProject(projectId));
     }
 }

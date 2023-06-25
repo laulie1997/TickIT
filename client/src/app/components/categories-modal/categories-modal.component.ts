@@ -40,15 +40,16 @@ export class CategoriesModalComponent implements OnInit {
     public data: { categoryId: number },
     public dialogRef: MatDialogRef<CategoriesModalComponent>,
     private categoryService: CategoryService,
+    private projectService: ProjectService,
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     console.log(this.projectId);
     console.log(this.category.name);
-    this.editMode = this.category.id != null;
+    this.editMode = this.data.categoryId != null;
     if (this.editMode) {
       this.categoryService
-        .getCategory(this.projectId)
+        .getCategory(this.data.categoryId)
         .subscribe((category: Category) => {
           this.category = category;
           this.buildForm();
@@ -71,12 +72,12 @@ export class CategoriesModalComponent implements OnInit {
     }
     (this.editMode
       ? this.categoryService.updateCategory(this.category)
-      : this.categoryService.createCategory(this.projectId, this.category)
+      : this.projectService.createCategory(this.projectId, this.category)
     ).subscribe(() => this.dialogRef.close(true));
   }
 
   deleteCategory() {
-    this.categoryService.deleteCategory(this.category).subscribe(() => {
+    this.categoryService.deleteCategory(this.category.id).subscribe(() => {
       this.dialogRef.close(true);
     });
   }

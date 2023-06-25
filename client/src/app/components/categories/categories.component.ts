@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from '../../api/category';
-import { CategoryService } from '../../services/category/category.service';
 import { CategoriesModalComponent } from '../categories-modal/categories-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Project } from '../../api/project';
@@ -17,7 +16,7 @@ export class CategoriesComponent implements OnInit {
   @Input() projectId: number;
 
   constructor(
-    private categoryService: CategoryService,
+    private projectService: ProjectService,
     private dialog: MatDialog
   ) {}
 
@@ -25,8 +24,8 @@ export class CategoriesComponent implements OnInit {
     this.fetchCategories(this.projectId);
   }
 
-  fetchCategories(projectId: any) {
-    this.categoryService
+  fetchCategories(projectId: number) {
+    this.projectService
       .getCategories(projectId)
       .subscribe((categories: Category[]) => {
         this.categories = categories;
