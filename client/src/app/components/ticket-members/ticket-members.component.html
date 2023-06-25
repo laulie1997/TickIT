@@ -1,1 +1,12 @@
-<p>ticket-members works!</p>
+<button mat-stroked-button (click)="openAddMembersModal()">Mitglieder Hinzufügen</button>
+<div class="row">
+<mat-chip-option *ngFor="let user of ticketMembers">
+  {{ user?.name }} {{ user?.surname }}
+  <button matChipRemove aria-label="Remove">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</mat-chip-option>
+</div>
+<button mat-flat-button color="primary" (click)="saveTicketMembers()">
+  Speichern
+</button>

@@ -1,9 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
 import { TicketService } from '../../services/ticket/ticket.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project/project.service';
+import { Project } from '../../api/project';
+import { Subscription } from 'rxjs';
+import { UserSelectionModalComponent } from '../user-selection-modal/user-selection-modal.component';
+import { User } from '../../api/user';
 
 @Component({
   selector: 'app-ticketdata',
@@ -11,6 +19,8 @@ import { ProjectService } from 'src/app/services/project/project.service';
   styleUrls: ['./ticket-modal.component.css'],
 })
 export class TicketModalComponent implements OnInit {
+  @Input() projectId: number;
+  @Input() project: Project;
   form: any = {
     title: null,
     description: null,
@@ -25,6 +35,7 @@ export class TicketModalComponent implements OnInit {
     private ticketService: TicketService,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA)
     public data: { ticketId: number; projectId: number; statusId: number }
   ) {}
