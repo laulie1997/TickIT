@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/project/{projectId}/category")
+@RequestMapping("/api/v1/category")
 public class CategoryResource {
     @NonNull
     private final CategoryService categoryService;
@@ -15,14 +15,9 @@ public class CategoryResource {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
-    public CategoryWrapper getCategories(@PathVariable final Long projectId) {
-        return new CategoryWrapper(categoryService.getCategoriesOfProject(projectId));
-    }
-
-    @PostMapping
-    public Category createCategory(@PathVariable final Long projectId, @RequestBody final Category category) {
-        return categoryService.createCategory(projectId, category);
+    @GetMapping("{categoryId}")
+    public Category getCategory(@PathVariable final Long categoryId) {
+        return categoryService.getCategory(categoryId);
     }
 
     @DeleteMapping("{categoryId}")
