@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ticket } from '../../api/ticket';
+import { CategoryAssignment } from 'src/app/api/categoryAssignment';
 @Injectable({
   providedIn: 'root',
 })
@@ -30,5 +31,11 @@ export class TicketService {
 
   deleteTicket(ticketId: number): Observable<boolean> {
     return this.http.delete<boolean>(this.baseURL + '/' + ticketId);
+  }
+
+  assignCategories(ticketId: number, categories: CategoryAssignment) {
+    return this.http.put<Ticket>(
+      `${this.baseURL}/${ticketId}/category`, categories
+    );
   }
 }
