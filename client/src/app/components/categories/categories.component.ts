@@ -4,9 +4,6 @@ import { CategoriesModalComponent } from '../categories-modal/categories-modal.c
 import { MatDialog } from '@angular/material/dialog';
 import { Project } from '../../api/project';
 import { ProjectService } from '../../services/project/project.service';
-import { Ticket } from '../../api/ticket';
-import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
-import { StatusModalComponent } from '../status-modal/status-modal.component';
 
 @Component({
   selector: 'app-categories',
