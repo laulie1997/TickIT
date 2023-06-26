@@ -4,10 +4,13 @@ import com.tickit.app.category.Category;
 import com.tickit.app.category.CategoryService;
 import com.tickit.app.project.ProjectUpdateEvent;
 import com.tickit.app.repository.TicketRepository;
+import com.tickit.app.security.user.User;
+import com.tickit.app.security.user.UserService;
 import com.tickit.app.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -23,17 +26,21 @@ public class TicketService {
     private final ApplicationEventPublisher applicationEventPublisher;
     @NonNull
     private final CategoryService categoryService;
+    @NonNull
+    private final UserService userService;
 
     @Autowired
     public TicketService(
             @NonNull TicketRepository ticketRepository,
             @NonNull StatusService statusService,
             @NonNull ApplicationEventPublisher applicationEventPublisher,
-            @NonNull CategoryService categoryService) {
+            @NonNull CategoryService categoryService,
+            @NonNull UserService userService) {
         this.ticketRepository = ticketRepository;
         this.statusService = statusService;
         this.applicationEventPublisher = applicationEventPublisher;
         this.categoryService = categoryService;
+        this.userService = userService;
     }
 
     /**
@@ -58,7 +65,14 @@ public class TicketService {
         dbTicket.setDescription(ticket.getDescription());
         dbTicket.setTitle(ticket.getTitle());
         dbTicket.setStatus(ticket.getStatus());
+        dbTicket.setAssignee(getAssignee(ticket));
         return ticketRepository.save(dbTicket);
+    }
+
+    @Nullable
+    private User getAssignee(@NonNull final Ticket ticket) {
+        return (ticket.getAssignee() == null || ticket.getAssignee().getId() == 0L)
+                       ? null : userService.getUserById(ticket.getAssignee().getId());
     }
 
     @NonNull

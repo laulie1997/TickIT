@@ -37,7 +37,7 @@ public class TicketResource {
     }
 
     @PutMapping("{ticketId}/category")
-    public Ticket updateTicketStatus(@PathVariable final Long ticketId, @RequestBody CategoryAssignment categoryAssignment) {
+    public Ticket updateAssignedCategories(@PathVariable final Long ticketId, @RequestBody CategoryAssignment categoryAssignment) {
         return ticketService.updateAssignedCategories(ticketId, categoryAssignment);
     }
 }
