@@ -1,16 +1,16 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from '@angular/material/dialog';
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
 import { TicketService } from '../../services/ticket/ticket.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { Project } from '../../api/project';
-import { Subscription } from 'rxjs';
-import { UserSelectionModalComponent } from '../user-selection-modal/user-selection-modal.component';
 import { User } from '../../api/user';
 
 @Component({
@@ -29,21 +29,17 @@ export class TicketModalComponent implements OnInit {
   ticket: Ticket = {};
   editMode: boolean;
   dialogTitle = '';
+  ticketMembers: User[];
+  selectedMembers: User[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
     private ticketService: TicketService,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA)
     public data: { ticketId: number; projectId: number; statusId: number }
   ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   ngOnInit(): void {
     this.editMode = this.data.ticketId != null;
     this.dialogTitle = this.editMode ? 'Ticket bearbeiten' : 'Ticket erstellen';
@@ -56,6 +52,9 @@ export class TicketModalComponent implements OnInit {
           this.updateForm();
         });
     }
+    this.projectService
+      .getProjectMembers(29)
+      .subscribe((members: User[]) => (this.ticketMembers = members));
   }
 
   private buildForm() {
@@ -63,6 +62,7 @@ export class TicketModalComponent implements OnInit {
       name: [this.ticket.title || '', [Validators.required]],
       description: [this.ticket.description || ''],
       dueDate: [this.ticket.dueDate || ''],
+      assignee: [this.selectedMembers],
     });
   }
 
@@ -76,6 +76,9 @@ export class TicketModalComponent implements OnInit {
     this.ticket.title = this.form.get('name').value;
     this.ticket.description = this.form.get('description').value;
     this.ticket.dueDate = this.form.get('dueDate').value;
+    this.ticket.assignee = this.form.get('assignee').value;
+    this.selectedMembers.map(member => member.id);
+    console.log('IDs ' + this.selectedMembers);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
@@ -93,5 +96,18 @@ export class TicketModalComponent implements OnInit {
     this.form.get('name').setValue(this.ticket?.title);
     this.form.get('description').setValue(this.ticket?.description);
     this.form.get('dueDate').setValue(this.ticket?.dueDate);
+    this.form.get('assignee').setValue(this.ticket?.assignee);
+  }
+  isSelected(member: User): boolean {
+    return this.selectedMembers.includes(member);
+  }
+
+  toggleSelection(member: User): void {
+    const index = this.selectedMembers.indexOf(member);
+    if (index === -1) {
+      this.selectedMembers.push(member);
+    } else {
+      this.selectedMembers.splice(index, 1);
+    }
   }
 }
