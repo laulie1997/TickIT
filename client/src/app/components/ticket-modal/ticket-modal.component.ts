@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { Project } from '../../api/project';
 import { User } from '../../api/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticketdata',
@@ -31,12 +32,13 @@ export class TicketModalComponent implements OnInit {
     private ticketService: TicketService,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
+    public router: Router,
     @Inject(MAT_DIALOG_DATA)
     public data: { ticketId: number; projectId: number; statusId: number }
   ) {
     this.projectId = data.projectId;
-    console.log('projectID ' + this.projectId);
   }
+
   ngOnInit(): void {
     this.editMode = this.data.ticketId != null;
     this.dialogTitle = this.editMode ? 'Ticket bearbeiten' : 'Ticket erstellen';
@@ -49,9 +51,11 @@ export class TicketModalComponent implements OnInit {
           this.updateForm();
         });
     }
-    this.projectService
-      .getProjectMembers(this.projectId)
-      .subscribe((members: User[]) => (this.ticketMembers = members));
+    if (this.router.url.includes('/project')) {
+      this.projectService
+        .getProjectMembers(this.projectId)
+        .subscribe((members: User[]) => (this.ticketMembers = members));
+    }
   }
 
   private buildForm() {
@@ -94,6 +98,7 @@ export class TicketModalComponent implements OnInit {
     this.form.get('dueDate').setValue(this.ticket?.dueDate);
     this.selectedMember = this.ticket?.assignee;
   }
+
   isSelected(member: User): boolean {
     return this.selectedMember !== null && this.selectedMember.id === member.id;
   }
@@ -107,6 +112,4 @@ export class TicketModalComponent implements OnInit {
       this.selectedMember = member;
     }
   }
-
-  getProjectMembers() {}
 }
