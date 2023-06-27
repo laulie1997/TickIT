@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ticket } from '../../api/ticket';
 import { CategoryAssignment } from 'src/app/api/categoryAssignment';
+import { User } from '../../api/user';
+import { TicketMembership } from '../../api/ticketMembership';
+import { UserWrapper } from '../../api/userWrapper';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,6 +35,15 @@ export class TicketService {
 
   deleteTicket(ticketId: number): Observable<boolean> {
     return this.http.delete<boolean>(this.baseURL + '/' + ticketId);
+  }
+
+  updateTicketMembership(
+    ticketId: number,
+    membership: TicketMembership
+  ): Observable<User[]> {
+    return this.http
+      .put<UserWrapper>(this.baseURL + '/' + ticketId, membership)
+      .pipe(map((wrapper: UserWrapper) => wrapper.users));
   }
 
   assignCategories(ticketId: number, categories: CategoryAssignment) {

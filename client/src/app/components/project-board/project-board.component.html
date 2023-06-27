@@ -15,6 +15,7 @@
     <div class="ticket-container">
       <app-ticket-card
         *ngFor="let ticket of dto.tickets"
+        [projectId]="projectId"
         [ticket]="ticket"
         [cdkDragData]="ticket"
         cdkDrag
