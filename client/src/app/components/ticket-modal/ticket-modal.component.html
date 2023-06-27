@@ -15,9 +15,11 @@
     </mat-form-field>
 
       <mat-label>Verantwortliche</mat-label>
+    <mat-chip-listbox>
     <mat-chip-option *ngFor="let user of ticketMembers" [selected]="isSelected(user)" (click)="toggleSelection(user)">
       {{ user?.name }} {{ user?.surname }}
     </mat-chip-option>
+    </mat-chip-listbox>
 
   <mat-dialog-actions>
     <div class="dialog-actions">
