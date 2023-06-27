@@ -33,7 +33,10 @@ export class TicketModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: { ticketId: number; projectId: number; statusId: number }
-  ) {}
+  ) {
+    this.projectId = data.projectId;
+    console.log('projectID ' + this.projectId);
+  }
   ngOnInit(): void {
     this.editMode = this.data.ticketId != null;
     this.dialogTitle = this.editMode ? 'Ticket bearbeiten' : 'Ticket erstellen';
@@ -47,7 +50,7 @@ export class TicketModalComponent implements OnInit {
         });
     }
     this.projectService
-      .getProjectMembers(29)
+      .getProjectMembers(this.projectId)
       .subscribe((members: User[]) => (this.ticketMembers = members));
   }
 
@@ -104,4 +107,6 @@ export class TicketModalComponent implements OnInit {
       this.selectedMember = member;
     }
   }
+
+  getProjectMembers() {}
 }
