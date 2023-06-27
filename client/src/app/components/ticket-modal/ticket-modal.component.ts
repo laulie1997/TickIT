@@ -96,6 +96,12 @@ export class TicketModalComponent implements OnInit {
   }
 
   toggleSelection(member: User): void {
-    this.selectedMember = member;
+    if (this.selectedMember !== null && this.selectedMember.id === member.id) {
+      // If the member is already selected, remove the selection
+      this.selectedMember = null;
+    } else {
+      // Otherwise, set the member as the selected assignee
+      this.selectedMember = member;
+    }
   }
 }
