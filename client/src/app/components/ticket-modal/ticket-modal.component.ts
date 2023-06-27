@@ -24,7 +24,7 @@ export class TicketModalComponent implements OnInit {
   editMode: boolean;
   dialogTitle = '';
   ticketMembers: User[];
-  selectedMember: User;
+  selectedMember: User = null;
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -89,10 +89,10 @@ export class TicketModalComponent implements OnInit {
     this.form.get('name').setValue(this.ticket?.title);
     this.form.get('description').setValue(this.ticket?.description);
     this.form.get('dueDate').setValue(this.ticket?.dueDate);
-    this.form.get('assignee').setValue(this.ticket?.assignee);
+    this.selectedMember = this.ticket?.assignee;
   }
   isSelected(member: User): boolean {
-    return this.selectedMember === member;
+    return this.selectedMember !== null && this.selectedMember.id === member.id;
   }
 
   toggleSelection(member: User): void {
