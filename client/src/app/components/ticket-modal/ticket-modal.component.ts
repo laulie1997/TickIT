@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Ticket } from '../../api/ticket';
 import { TicketService } from '../../services/ticket/ticket.service';
@@ -30,7 +24,7 @@ export class TicketModalComponent implements OnInit {
   editMode: boolean;
   dialogTitle = '';
   ticketMembers: User[];
-  selectedMembers: User[] = [];
+  selectedMember: User;
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -62,7 +56,7 @@ export class TicketModalComponent implements OnInit {
       name: [this.ticket.title || '', [Validators.required]],
       description: [this.ticket.description || ''],
       dueDate: [this.ticket.dueDate || ''],
-      assignee: [this.selectedMembers],
+      assignee: [''],
     });
   }
 
@@ -76,9 +70,8 @@ export class TicketModalComponent implements OnInit {
     this.ticket.title = this.form.get('name').value;
     this.ticket.description = this.form.get('description').value;
     this.ticket.dueDate = this.form.get('dueDate').value;
-    this.ticket.assignee = this.form.get('assignee').value;
-    this.selectedMembers.map(member => member.id);
-    console.log('IDs ' + this.selectedMembers);
+    this.ticket.assignee = this.selectedMember;
+    console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
@@ -99,15 +92,10 @@ export class TicketModalComponent implements OnInit {
     this.form.get('assignee').setValue(this.ticket?.assignee);
   }
   isSelected(member: User): boolean {
-    return this.selectedMembers.includes(member);
+    return this.selectedMember === member;
   }
 
   toggleSelection(member: User): void {
-    const index = this.selectedMembers.indexOf(member);
-    if (index === -1) {
-      this.selectedMembers.push(member);
-    } else {
-      this.selectedMembers.splice(index, 1);
-    }
+    this.selectedMember = member;
   }
 }
