@@ -99,14 +99,22 @@ export class TicketModalComponent implements OnInit {
         .subscribe(() => {
           console.log(categoryAssignment);
         });
+    } else {
+      // If no categories selected, clear the category assignment
+      const categoryAssignment: CategoryAssignment = {
+        categoryIds: [],
+      };
+      this.ticketService
+        .assignCategories(this.ticket.id, categoryAssignment)
+        .subscribe(() => {
+          console.log(categoryAssignment);
+        });
     }
-
     console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
     }
-
     (this.editMode
       ? this.ticketService.updateTicket(this.ticket)
       : this.projectService.createTicketForProject(
