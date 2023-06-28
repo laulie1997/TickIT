@@ -21,7 +21,9 @@
     </mat-menu>
 
     <div *ngIf="selectedCategory">
-      <button mat-stroked-button>{{ selectedCategory.name }}</button>
+      <button mat-stroked-button>
+        <span>{{ selectedCategory.name }}</span> </button>
+      <mat-icon *ngIf="selectedCategory" (click)="clearCategory()">delete</mat-icon>
     </div>
 
 <div class="row">

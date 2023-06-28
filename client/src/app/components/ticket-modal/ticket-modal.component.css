@@ -7,3 +7,6 @@ mat-dialog-actions {
   width: 100%;
   justify-content: space-between;
 }
+.delete-icon {
+  color: rgba(0, 0, 0, 0.54);
+}

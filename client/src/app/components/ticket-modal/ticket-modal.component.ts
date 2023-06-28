@@ -73,6 +73,7 @@ export class TicketModalComponent implements OnInit {
       description: [this.ticket.description || ''],
       dueDate: [this.ticket.dueDate || ''],
       assignee: [''],
+      category: ['']
     });
   }
 
@@ -129,8 +130,11 @@ export class TicketModalComponent implements OnInit {
         console.log(this.categories);
       });
   }
-
   selectCategory(category: any) {
     this.selectedCategory = category;
+  }
+
+  clearCategory() {
+    this.selectedCategory = null;
   }
 }
