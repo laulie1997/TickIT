@@ -116,6 +116,7 @@ export class TicketModalComponent implements OnInit {
     this.form.get('description').setValue(this.ticket?.description);
     this.form.get('dueDate').setValue(this.ticket?.dueDate);
     this.selectedMember = this.ticket?.assignee;
+    this.selectedCategories = this.ticket?.categories || [];
   }
 
   isSelected(member: User): boolean {
@@ -149,6 +150,11 @@ export class TicketModalComponent implements OnInit {
     const index = this.selectedCategories.indexOf(category);
     if (index > -1) {
       this.selectedCategories.splice(index, 1);
+    }
+
+    // Check if no category is selected
+    if (this.selectedCategories.length === 0) {
+      this.selectedCategories = [];
     }
   }
 }

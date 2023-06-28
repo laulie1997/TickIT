@@ -1,6 +1,7 @@
 import { Project } from './project';
 import { Status } from './status';
 import { User } from './user';
+import { Category } from './category';
 
 export interface Ticket {
   id?: number;
@@ -13,4 +14,5 @@ export interface Ticket {
   status?: Status;
   creationDate?: Date;
   modificationDate?: Date;
+  categories?: Category[];
 }

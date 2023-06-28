@@ -25,13 +25,12 @@
 
     <div class="category-chips">
       <div class="category-chip" *ngFor="let category of selectedCategories">
-        <button  [style.background-color]="category?.color ? category.color : ''"mat-stroked-button>
+        <button mat-stroked-button [style.background]="category?.color ? category.color : ''">
           <span class="category-name">{{ category.name }}</span>
         </button>
         <mat-icon class="delete-icon" (click)="removeCategory(category)">clear</mat-icon>
       </div>
     </div>
-
 
     <div class="row">
       <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
