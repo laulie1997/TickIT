@@ -7,6 +7,7 @@ import { ProjectService } from 'src/app/services/project/project.service';
 import { Project } from '../../api/project';
 import { User } from '../../api/user';
 import { Router } from '@angular/router';
+import { Category } from '../../api/category';
 
 @Component({
   selector: 'app-ticketdata',
@@ -26,6 +27,7 @@ export class TicketModalComponent implements OnInit {
   dialogTitle = '';
   ticketMembers: User[];
   selectedMember: User = null;
+  categories: Category[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -34,7 +36,12 @@ export class TicketModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     @Inject(MAT_DIALOG_DATA)
-    public data: { ticketId: number; projectId: number; statusId: number }
+    public data: {
+      ticketId: number;
+      projectId: number;
+      statusId: number;
+      categoryId;
+    }
   ) {
     this.projectId = data.projectId;
   }
@@ -56,6 +63,7 @@ export class TicketModalComponent implements OnInit {
         .getProjectMembers(this.projectId)
         .subscribe((members: User[]) => (this.ticketMembers = members));
     }
+    this.fetchCategories(this.projectId);
   }
 
   private buildForm() {
@@ -111,5 +119,13 @@ export class TicketModalComponent implements OnInit {
       // Otherwise, set the member as the selected assignee
       this.selectedMember = member;
     }
+  }
+  fetchCategories(projectId: number) {
+    this.projectService
+      .getCategories(projectId)
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+        console.log(this.categories);
+      });
   }
 }
