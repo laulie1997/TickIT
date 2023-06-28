@@ -89,19 +89,24 @@ export class TicketModalComponent implements OnInit {
     this.ticket.description = this.form.get('description').value;
     this.ticket.dueDate = this.form.get('dueDate').value;
     this.ticket.assignee = this.selectedMember;
-    const categoryAssignment: CategoryAssignment = {
-      categoryIds: this.selectedCategories.map(category => category.id),
-    };
-    this.ticketService
-      .assignCategories(this.ticket.id, categoryAssignment)
-      .subscribe(() => {
-        console.log(categoryAssignment);
-      });
+
+    if (this.selectedCategories.length > 0) {
+      const categoryAssignment: CategoryAssignment = {
+        categoryIds: this.selectedCategories.map(category => category.id),
+      };
+      this.ticketService
+        .assignCategories(this.ticket.id, categoryAssignment)
+        .subscribe(() => {
+          console.log(categoryAssignment);
+        });
+    }
+
     console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
     }
+
     (this.editMode
       ? this.ticketService.updateTicket(this.ticket)
       : this.projectService.createTicketForProject(
