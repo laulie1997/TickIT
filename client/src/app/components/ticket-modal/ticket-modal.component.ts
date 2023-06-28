@@ -69,10 +69,14 @@ export class TicketModalComponent implements OnInit {
   }
 
   private buildForm() {
+    const date =
+      this.ticket.dueDate != null
+        ? new Date(this.ticket.dueDate).toISOString()
+        : '';
     this.form = this.formBuilder.group({
       name: [this.ticket.title || '', [Validators.required]],
       description: [this.ticket.description || ''],
-      dueDate: [this.ticket.dueDate || ''],
+      dueDate: [date],
       assignee: [''],
       category: [''],
     });
@@ -87,30 +91,12 @@ export class TicketModalComponent implements OnInit {
   saveTicket() {
     this.ticket.title = this.form.get('name').value;
     this.ticket.description = this.form.get('description').value;
-    this.ticket.dueDate = this.form.get('dueDate').value;
+    if (this.form.get('dueDate').value) {
+      const date = new Date(this.form.get('dueDate').value);
+      this.ticket.dueDate = date.getTime();
+    }
     this.ticket.assignee = this.selectedMember;
 
-    if (this.selectedCategories.length > 0) {
-      const categoryAssignment: CategoryAssignment = {
-        categoryIds: this.selectedCategories.map(category => category.id),
-      };
-      this.ticketService
-        .assignCategories(this.ticket.id, categoryAssignment)
-        .subscribe(() => {
-          console.log(categoryAssignment);
-        });
-    } else {
-      // If no categories selected, clear the category assignment
-      const categoryAssignment: CategoryAssignment = {
-        categoryIds: [],
-      };
-      this.ticketService
-        .assignCategories(this.ticket.id, categoryAssignment)
-        .subscribe(() => {
-          console.log(categoryAssignment);
-        });
-    }
-    console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
       this.ticket.status = { id: this.data.statusId };
@@ -121,13 +107,32 @@ export class TicketModalComponent implements OnInit {
           this.data.projectId,
           this.ticket
         )
-    ).subscribe(() => this.dialogRef.close(true));
+    ).subscribe((savedTicket: Ticket) => this.assignCategories(savedTicket.id));
+  }
+
+  private assignCategories(ticketId: number) {
+    const selectedCategoriesIds =
+      this.selectedCategories.length > 0
+        ? this.selectedCategories.map(category => category.id)
+        : [];
+    const categoryAssignment: CategoryAssignment = {
+      categoryIds: selectedCategoriesIds,
+    };
+    this.ticketService
+      .assignCategories(ticketId, categoryAssignment)
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
   }
 
   private updateForm(): void {
     this.form.get('name').setValue(this.ticket?.title);
     this.form.get('description').setValue(this.ticket?.description);
-    this.form.get('dueDate').setValue(this.ticket?.dueDate);
+    const date =
+      this.ticket.dueDate != null
+        ? new Date(this.ticket.dueDate).toISOString()
+        : '';
+    this.form.get('dueDate').setValue(date);
     this.selectedMember = this.ticket?.assignee;
     this.selectedCategories = this.ticket?.categories || [];
   }

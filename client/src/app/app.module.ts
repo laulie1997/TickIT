@@ -52,6 +52,7 @@ import { ChangePasswordModalComponent } from './components/change-password-modal
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatTooltipModule,
     MatChipsModule,
     MatButtonToggleModule,
+    MatNativeDateModule,
   ],
   providers: [
     ProjectBoardComponent,
