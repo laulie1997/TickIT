@@ -8,6 +8,7 @@ import { Project } from '../../api/project';
 import { User } from '../../api/user';
 import { Router } from '@angular/router';
 import { Category } from '../../api/category';
+import { CategoryAssignment } from '../../api/categoryAssignment';
 
 @Component({
   selector: 'app-ticketdata',
@@ -88,6 +89,14 @@ export class TicketModalComponent implements OnInit {
     this.ticket.description = this.form.get('description').value;
     this.ticket.dueDate = this.form.get('dueDate').value;
     this.ticket.assignee = this.selectedMember;
+    const categoryAssignment: CategoryAssignment = {
+      categoryIds: this.selectedCategories.map(category => category.id),
+    };
+    this.ticketService
+      .assignCategories(this.ticket.id, categoryAssignment)
+      .subscribe(() => {
+        console.log(categoryAssignment);
+      });
     console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
@@ -142,5 +151,4 @@ export class TicketModalComponent implements OnInit {
       this.selectedCategories.splice(index, 1);
     }
   }
-
 }
