@@ -28,6 +28,7 @@ export class TicketModalComponent implements OnInit {
   ticketMembers: User[];
   selectedMember: User = null;
   categories: Category[] = [];
+  selectedCategory: any;
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -127,5 +128,9 @@ export class TicketModalComponent implements OnInit {
         this.categories = categories;
         console.log(this.categories);
       });
+  }
+
+  selectCategory(category: any) {
+    this.selectedCategory = category;
   }
 }

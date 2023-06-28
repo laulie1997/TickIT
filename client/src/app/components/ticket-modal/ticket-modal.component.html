@@ -14,11 +14,15 @@
       <input matInput type="date" formControlName="dueDate" >
     </mat-form-field>
     <div class="row">
-    <button mat-stroked-button [matMenuTriggerFor]="menu">Kategorie hinzufügen</button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu" *ngIf="!selectedCategory">Kategorie hinzufügen</button>
     </div>
     <mat-menu #menu="matMenu">
-      <button *ngFor="let category of categories"mat-menu-item>{{category?.name}}</button>
+      <button mat-menu-item *ngFor="let category of categories"(click)="selectCategory(category)">{{category?.name}}</button>
     </mat-menu>
+
+    <div *ngIf="selectedCategory">
+      <button mat-stroked-button>{{ selectedCategory.name }}</button>
+    </div>
 
 <div class="row">
     <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
