@@ -157,4 +157,9 @@ export class TicketModalComponent implements OnInit {
       this.selectedCategories = [];
     }
   }
+  isCategorySelected(category: any): boolean {
+    return this.selectedCategories.some(
+      selectedCategory => selectedCategory.id === category.id
+    );
+  }
 }

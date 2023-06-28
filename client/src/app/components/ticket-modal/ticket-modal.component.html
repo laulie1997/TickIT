@@ -20,11 +20,12 @@
       <div class="category-chip" *ngFor="let category of selectedCategories">
         <button mat-button [style.background-color]="category?.color ? category.color : ''">
           <span class="category-name">{{ category.name }}</span>
-        </button>
           <mat-icon class="delete-icon" (click)="removeCategory(category)">clear</mat-icon>
+        </button>
       </div>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item  [style.background-color]="category?.color ? category.color : ''" *ngFor="let category of categories" (click)="selectCategory(category)">
+        <button mat-menu-item *ngFor="let category of categories" [style.background-color]="category?.color ? category.color : ''"
+                (click)="selectCategory(category)" [disabled]="isCategorySelected(category)">
           <span>{{ category.name }}</span>
         </button>
       </mat-menu>
@@ -32,6 +33,7 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
+
 
 
     <div class="row">
