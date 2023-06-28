@@ -14,51 +14,58 @@
       <input matInput type="date" formControlName="dueDate" >
     </mat-form-field>
     <div class="row">
-    <button mat-stroked-button [matMenuTriggerFor]="menu" >Kategorie hinzufügen</button>
+      <button mat-stroked-button [matMenuTriggerFor]="menu">Kategorie hinzufügen</button>
     </div>
+
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngFor="let category of categories"(click)="selectCategory(category)">{{category?.name}}</button>
+      <button mat-menu-item  [style.background-color]="category?.color ? category.color : ''" *ngFor="let category of categories" (click)="selectCategory(category)">
+        <span>{{ category.name }}</span>
+      </button>
     </mat-menu>
 
     <div class="category-chips">
       <div class="category-chip" *ngFor="let category of selectedCategories">
-        <button mat-stroked-button><span class="category-name">{{ category.name }}</span></button>
+        <button  [style.background-color]="category?.color ? category.color : ''"mat-stroked-button>
+          <span class="category-name">{{ category.name }}</span>
+        </button>
         <mat-icon class="delete-icon" (click)="removeCategory(category)">clear</mat-icon>
       </div>
     </div>
 
 
-<div class="row">
-    <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
-</div>
+    <div class="row">
+      <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
+    </div>
     <mat-chip-listbox>
-    <mat-chip-option *ngFor="let user of ticketMembers" [selected]="isSelected(user)" (click)="toggleSelection(user)">
-      {{ user?.name }} {{ user?.surname }}
-    </mat-chip-option>
+      <mat-chip-option *ngFor="let user of ticketMembers" [selected]="isSelected(user)" (click)="toggleSelection(user)">
+        {{ user?.name }} {{ user?.surname }}
+      </mat-chip-option>
     </mat-chip-listbox>
 
-  <mat-dialog-actions>
-    <div class="dialog-actions">
-      <div class="left-actions">
-        <button
-          *ngIf="editMode"
-          mat-stroked-button
-          color="warn"
-          (click)="deleteTicket()">
-          Löschen
-        </button>
+    <mat-dialog-actions>
+      <div class="dialog-actions">
+        <div class="left-actions">
+          <button
+            *ngIf="editMode"
+            mat-stroked-button
+            color="warn"
+            (click)="deleteTicket()"
+          >
+            Löschen
+          </button>
+        </div>
+        <div class="right-actions">
+          <button mat-stroked-button mat-dialog-close>Abbrechen</button>
+          <button
+            mat-flat-button
+            [disabled]="form?.invalid"
+            color="primary"
+            (click)="saveTicket()"
+          >
+            Speichern
+          </button>
+        </div>
       </div>
-      <div class="right-actions">
-        <button mat-stroked-button mat-dialog-close>Abbrechen</button>
-        <button
-          mat-flat-button
-          [disabled]="form?.invalid"
-          color="primary"
-          (click)="saveTicket()">
-          Speichern
-        </button>
-      </div>
-    </div>
-  </mat-dialog-actions>
+    </mat-dialog-actions>
   </mat-dialog-content>
 </div>
