@@ -10,3 +10,16 @@ mat-dialog-actions {
 .delete-icon {
   color: rgba(0, 0, 0, 0.54);
 }
+
+.category-chips {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.category-chip {
+  font-size: 12px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 20px;
+  color: #fff;
+}
