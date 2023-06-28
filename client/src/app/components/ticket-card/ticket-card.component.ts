@@ -5,6 +5,7 @@ import { TicketModalComponent } from '../ticket-modal/ticket-modal.component';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 import { Project } from '../../api/project';
 import { Router } from '@angular/router';
+import { Category } from '../../api/category';
 @Component({
   selector: 'app-ticket-card',
   templateUrl: './ticket-card.component.html',

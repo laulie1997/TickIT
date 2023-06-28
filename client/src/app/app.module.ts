@@ -51,6 +51,7 @@ import { NavigationItemComponent } from './components/navigation-item/navigation
 import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTabsModule,
     MatTooltipModule,
     MatChipsModule,
+    MatButtonToggleModule,
   ],
   providers: [
     ProjectBoardComponent,
