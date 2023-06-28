@@ -13,8 +13,16 @@
       <mat-label>Fälligkeitsdatum</mat-label>
       <input matInput type="date" formControlName="dueDate" >
     </mat-form-field>
+    <div class="row">
+    <button mat-stroked-button [matMenuTriggerFor]="menu">Kategorie hinzufügen</button>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let category of categories"mat-menu-item>{{category?.name}}</button>
+    </mat-menu>
 
-      <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
+<div class="row">
+    <mat-label *ngIf="router.url.includes('/project/')">Verantwortliche</mat-label>
+</div>
     <mat-chip-listbox>
     <mat-chip-option *ngFor="let user of ticketMembers" [selected]="isSelected(user)" (click)="toggleSelection(user)">
       {{ user?.name }} {{ user?.surname }}
