@@ -13,6 +13,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,7 @@ public class TicketService {
         dbTicket.setTitle(ticket.getTitle());
         dbTicket.setStatus(ticket.getStatus());
         dbTicket.setAssignee(getAssignee(ticket));
+        dbTicket.setDueDate(ticket.getDueDate());
         return ticketRepository.save(dbTicket);
     }
 
@@ -102,7 +104,7 @@ public class TicketService {
                                                      .collect(Collectors.toSet());
             ticket.setCategories(categories);
         } else {
-            ticket.setCategories(Set.of());
+            ticket.setCategories(new HashSet<Category>());
         }
         final var savedTicket = ticketRepository.save(ticket);
         applicationEventPublisher.publishEvent(new ProjectUpdateEvent(savedTicket.getProject().getId()));
