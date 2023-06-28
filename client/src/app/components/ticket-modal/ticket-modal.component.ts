@@ -28,7 +28,7 @@ export class TicketModalComponent implements OnInit {
   ticketMembers: User[];
   selectedMember: User = null;
   categories: Category[] = [];
-  selectedCategory: any;
+  selectedCategories: Category[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -73,7 +73,7 @@ export class TicketModalComponent implements OnInit {
       description: [this.ticket.description || ''],
       dueDate: [this.ticket.dueDate || ''],
       assignee: [''],
-      category: ['']
+      category: [''],
     });
   }
 
@@ -130,11 +130,17 @@ export class TicketModalComponent implements OnInit {
         console.log(this.categories);
       });
   }
-  selectCategory(category: any) {
-    this.selectedCategory = category;
+  selectCategory(category: Category) {
+    if (!this.selectedCategories.includes(category)) {
+      this.selectedCategories.push(category);
+    }
   }
 
-  clearCategory() {
-    this.selectedCategory = null;
+  removeCategory(category: Category) {
+    const index = this.selectedCategories.indexOf(category);
+    if (index > -1) {
+      this.selectedCategories.splice(index, 1);
+    }
   }
+
 }
