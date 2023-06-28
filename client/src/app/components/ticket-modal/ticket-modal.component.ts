@@ -7,6 +7,8 @@ import { ProjectService } from 'src/app/services/project/project.service';
 import { Project } from '../../api/project';
 import { User } from '../../api/user';
 import { Router } from '@angular/router';
+import { Category } from '../../api/category';
+import { CategoryAssignment } from '../../api/categoryAssignment';
 
 @Component({
   selector: 'app-ticketdata',
@@ -26,6 +28,8 @@ export class TicketModalComponent implements OnInit {
   dialogTitle = '';
   ticketMembers: User[];
   selectedMember: User = null;
+  categories: Category[] = [];
+  selectedCategories: Category[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<TicketModalComponent>,
@@ -34,7 +38,12 @@ export class TicketModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     @Inject(MAT_DIALOG_DATA)
-    public data: { ticketId: number; projectId: number; statusId: number }
+    public data: {
+      ticketId: number;
+      projectId: number;
+      statusId: number;
+      categoryId;
+    }
   ) {
     this.projectId = data.projectId;
   }
@@ -56,6 +65,7 @@ export class TicketModalComponent implements OnInit {
         .getProjectMembers(this.projectId)
         .subscribe((members: User[]) => (this.ticketMembers = members));
     }
+    this.fetchCategories(this.projectId);
   }
 
   private buildForm() {
@@ -64,6 +74,7 @@ export class TicketModalComponent implements OnInit {
       description: [this.ticket.description || ''],
       dueDate: [this.ticket.dueDate || ''],
       assignee: [''],
+      category: [''],
     });
   }
 
@@ -78,6 +89,27 @@ export class TicketModalComponent implements OnInit {
     this.ticket.description = this.form.get('description').value;
     this.ticket.dueDate = this.form.get('dueDate').value;
     this.ticket.assignee = this.selectedMember;
+
+    if (this.selectedCategories.length > 0) {
+      const categoryAssignment: CategoryAssignment = {
+        categoryIds: this.selectedCategories.map(category => category.id),
+      };
+      this.ticketService
+        .assignCategories(this.ticket.id, categoryAssignment)
+        .subscribe(() => {
+          console.log(categoryAssignment);
+        });
+    } else {
+      // If no categories selected, clear the category assignment
+      const categoryAssignment: CategoryAssignment = {
+        categoryIds: [],
+      };
+      this.ticketService
+        .assignCategories(this.ticket.id, categoryAssignment)
+        .subscribe(() => {
+          console.log(categoryAssignment);
+        });
+    }
     console.log('IDs ' + this.selectedMember);
     if (!this.editMode) {
       this.ticket.project = { id: this.data.projectId };
@@ -97,6 +129,7 @@ export class TicketModalComponent implements OnInit {
     this.form.get('description').setValue(this.ticket?.description);
     this.form.get('dueDate').setValue(this.ticket?.dueDate);
     this.selectedMember = this.ticket?.assignee;
+    this.selectedCategories = this.ticket?.categories || [];
   }
 
   isSelected(member: User): boolean {
@@ -111,5 +144,35 @@ export class TicketModalComponent implements OnInit {
       // Otherwise, set the member as the selected assignee
       this.selectedMember = member;
     }
+  }
+  fetchCategories(projectId: number) {
+    this.projectService
+      .getCategories(projectId)
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+        console.log(this.categories);
+      });
+  }
+  selectCategory(category: Category) {
+    if (!this.selectedCategories.includes(category)) {
+      this.selectedCategories.push(category);
+    }
+  }
+
+  removeCategory(category: Category) {
+    const index = this.selectedCategories.indexOf(category);
+    if (index > -1) {
+      this.selectedCategories.splice(index, 1);
+    }
+
+    // Check if no category is selected
+    if (this.selectedCategories.length === 0) {
+      this.selectedCategories = [];
+    }
+  }
+  isCategorySelected(category: any): boolean {
+    return this.selectedCategories.some(
+      selectedCategory => selectedCategory.id === category.id
+    );
   }
 }

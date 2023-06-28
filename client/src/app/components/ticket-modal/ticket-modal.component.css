@@ -7,3 +7,13 @@ mat-dialog-actions {
   width: 100%;
   justify-content: space-between;
 }
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.category-chips mat-chip {
+  white-space: nowrap;
+}
