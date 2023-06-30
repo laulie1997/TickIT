@@ -2,7 +2,6 @@ package com.tickit.app.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tickit.app.project.Project;
-import com.tickit.app.ticket.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,14 +11,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Setter
 @Getter
+@NamedNativeQuery(
+        name = Category.QUERY_DELETE_TICKET_ASSOCIATION,
+        query = "DELETE FROM ticket_categories WHERE categories_id = ?1")
 public class Category implements Serializable {
 
     public static final String PROPERTY_PROJECT = "project";
+    public static final String QUERY_DELETE_TICKET_ASSOCIATION = "Category.deleteTicketAssociation";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +34,6 @@ public class Category implements Serializable {
      * Color as HEX
      */
     private String color;
-
-    @JsonIgnore
-    @ManyToMany(targetEntity = Ticket.class, mappedBy = Ticket.PROPERTY_CATEGORIES)
-    private Set<Ticket> tickets;
 
     @JsonIgnore
     @NotNull

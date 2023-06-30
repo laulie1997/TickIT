@@ -2,9 +2,11 @@ package com.tickit.app.category;
 
 import com.tickit.app.project.ProjectService;
 import com.tickit.app.repository.CategoryRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,13 +19,17 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     @NonNull
     private final ProjectService projectService;
+    @NonNull
+    private final EntityManager entityManager;
 
     @Autowired
     public CategoryService(
             @NonNull final CategoryRepository categoryRepository,
-            @NonNull ProjectService projectService) {
+            @NonNull ProjectService projectService,
+            @NonNull final EntityManager entityManager) {
         this.categoryRepository = categoryRepository;
         this.projectService = projectService;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -70,7 +76,13 @@ public class CategoryService {
      * @param id category id
      * @return {@code true} if the deletion was successful
      */
+    @Transactional
     public boolean deleteCategory(@NonNull final Long id) {
+        entityManager.joinTransaction();
+        final var query = entityManager.createNamedQuery(Category.QUERY_DELETE_TICKET_ASSOCIATION)
+                                  .setParameter(1, id);
+
+        query.executeUpdate();
         categoryRepository.deleteById(id);
         return true;
     }
