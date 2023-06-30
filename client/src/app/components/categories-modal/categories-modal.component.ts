@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Category } from '../../api/category';
 import { CategoryService } from '../../services/category/category.service';
 import { ProjectService } from '../../services/project/project.service';
+import { Status } from '../../api/status';
 
 @Component({
   selector: 'app-categories-modal',
@@ -49,15 +50,15 @@ export class CategoriesModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = this.data.categoryId != null;
+    this.buildForm();
     if (this.editMode) {
       this.categoryService
         .getCategory(this.data.categoryId)
         .subscribe((category: Category) => {
           this.category = category;
-          this.buildForm();
+          this.updateForm();
         });
     }
-    this.buildForm();
   }
 
   private buildForm() {
@@ -83,5 +84,12 @@ export class CategoriesModalComponent implements OnInit {
     this.categoryService.deleteCategory(this.category.id).subscribe(() => {
       this.dialogRef.close(true);
     });
+  }
+
+  private updateForm(): void {
+    this.form.get('name').setValue(this.category?.name);
+    if (this.category.color) {
+      this.form.get('color').setValue(this.category.color);
+    }
   }
 }
