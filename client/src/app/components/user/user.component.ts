@@ -6,6 +6,7 @@ import { UserService } from '../../services/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordModalComponent } from '../change-password-modal/change-password-modal.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -14,13 +15,7 @@ import { ChangePasswordModalComponent } from '../change-password-modal/change-pa
 })
 export class UserComponent implements OnInit {
   user: User;
-
-  form: any = {
-    name: null,
-    surname: null,
-    email: null,
-    username: null,
-  };
+  userForm: FormGroup;
 
   @Output() updateEvent = new EventEmitter<Data>();
 
@@ -28,22 +23,34 @@ export class UserComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private userService: UserService,
     private _snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder
+  ) {
+    this.userForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      surname: [''],
+      email: ['', Validators.required],
+      username: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     // fetch user from api
     const userId = this.tokenStorage.getUser().id;
-    this.userService
-      .getUser(userId)
-      .subscribe((user: User) => (this.user = user));
+    this.userService.getUser(userId).subscribe((user: User) => {
+      this.user = user;
+      this.userForm.patchValue(user);
+    });
   }
 
   updateUser() {
-    this.userService
-      .updateUser(this.user)
-      .subscribe((user: User) => (this.user = user));
-    this.openSnackBar('Benutzerdaten wurden aktualisiert', 'schließen');
+    if (this.userForm.valid) {
+      const updatedUser = { ...this.user, ...this.userForm.value };
+      this.userService.updateUser(updatedUser).subscribe((user: User) => {
+        this.user = user;
+        this.openSnackBar('Benutzerdaten wurden aktualisiert', 'schließen');
+      });
+    }
   }
 
   openChangePasswordModal() {
