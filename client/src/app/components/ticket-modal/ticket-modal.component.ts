@@ -180,4 +180,25 @@ export class TicketModalComponent implements OnInit {
       selectedCategory => selectedCategory.id === category.id
     );
   }
+
+  duplicateTicket() {
+    // Create a copy of the ticket object
+    const duplicatedTicket: Ticket = { ...this.ticket };
+
+    // Reset the ID and other properties that should be unique for the new ticket
+    duplicatedTicket.id = null;
+    duplicatedTicket.title = 'Copy of ' + duplicatedTicket.title;
+    duplicatedTicket.description = 'Copy of ' + duplicatedTicket.description;
+
+    // Create the duplicated ticket
+    this.projectService
+      .createTicketForProject(this.data.projectId, duplicatedTicket)
+      .subscribe((createdTicket: Ticket) => {
+        // Assign the selected categories to the duplicated ticket
+        this.assignCategories(createdTicket.id);
+
+        // Close the dialog and indicate success
+        this.dialogRef.close(true);
+      });
+  }
 }
