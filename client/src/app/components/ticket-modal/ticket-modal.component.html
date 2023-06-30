@@ -60,10 +60,11 @@
       </mat-label>
     </div>
     <mat-chip-listbox>
-      <mat-chip-option
+      <mat-chip-option matChipAvatar
         *ngFor="let user of ticketMembers"
         [selected]="isSelected(user)"
         (click)="toggleSelection(user)">
+        <mat-icon matChipAvatar >person</mat-icon>
         {{ user?.name }} {{ user?.surname }}
       </mat-chip-option>
     </mat-chip-listbox>
