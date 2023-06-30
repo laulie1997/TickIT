@@ -69,7 +69,9 @@ export class ProjectBoardComponent implements OnInit, OnDestroy {
 
     const endpoint: string = '/topic/project/' + this.projectId;
 
-    this.socket = new SockJS('http://localhost:8080/sba-websocket');
+    this.socket = new SockJS(
+      `http://${window.location.hostname}/sba-websocket`
+    );
     this.stompClient = Stomp.over(this.socket);
 
     this.stompClient.connect({}, frame => {
