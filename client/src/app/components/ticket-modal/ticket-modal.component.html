@@ -1,5 +1,4 @@
 <div [formGroup]="form" class="dialog-container">
-  <mat-icon class="duplicate-icon" (click)="duplicateTicket()">file_copy</mat-icon>
   <h2 mat-dialog-title>{{ dialogTitle }}</h2>
   <mat-dialog-content>
     <mat-form-field appearance="outline">
@@ -78,6 +77,12 @@
             color="warn"
             (click)="deleteTicket()">
             Löschen
+          </button>
+          <button
+            *ngIf="editMode"
+            mat-stroked-button
+            (click)="duplicateTicket()">
+            Duplizieren
           </button>
         </div>
         <div class="right-actions">

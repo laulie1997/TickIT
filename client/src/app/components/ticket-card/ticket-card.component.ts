@@ -19,7 +19,7 @@ export class TicketCardComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TicketModalComponent, {
-      width: '500px',
+      width: '600px',
       data: {
         ticketId: this.ticket.id,
         projectId: this.projectId, // Pass the project ID to the modal
