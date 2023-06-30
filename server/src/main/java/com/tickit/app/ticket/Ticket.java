@@ -55,7 +55,7 @@ public class Ticket implements Serializable, Comparable<Ticket> {
     @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private Status status;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "ticket_categories",
             joinColumns = @JoinColumn(name = "tickets_id"),
             inverseJoinColumns = @JoinColumn(name = "categories_id"))
