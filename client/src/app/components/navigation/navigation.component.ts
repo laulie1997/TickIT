@@ -69,12 +69,10 @@ export class NavigationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: ProjectModification) => {
-      console.log(result?.operation === ProjectModificationOperation.CREATED);
       if (
         result?.operation === ProjectModificationOperation.CREATED &&
         result?.projectId
       ) {
-        console.log('jdfkjsadfkjjjjjjj');
         this.router.navigate(['project/' + result.projectId]);
       }
     });

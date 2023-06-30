@@ -37,7 +37,9 @@
         <app-project-dropdown></app-project-dropdown>
       </div>
       <div class="button-container" *ngIf="isLoggedIn">
-        <button mat-button (click)="navigateUser()">meine Daten</button>
+        <button mat-icon-button (click)="navigateUser()">
+          <mat-icon>account_circle</mat-icon>
+        </button>
         <app-logout></app-logout>
       </div>
     </mat-toolbar>

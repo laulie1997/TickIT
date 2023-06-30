@@ -1,13 +1,15 @@
 <div [formGroup]="form" class="dialog-container">
-  <mat-icon class="duplicate-icon" (click)="duplicateTicket()">file_copy</mat-icon>
+  <mat-icon class="duplicate-icon" (click)="duplicateTicket()"
+    >file_copy</mat-icon
+  >
   <h2 mat-dialog-title>{{ dialogTitle }}</h2>
   <mat-dialog-content>
     <mat-form-field appearance="outline">
-      <mat-label>Ticketname</mat-label>
+      <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Ticket Beschreibung</mat-label>
+      <mat-label>Beschreibung</mat-label>
       <textarea matInput formControlName="description"> </textarea>
     </mat-form-field>
 
@@ -29,9 +31,9 @@
         *ngFor="let category of selectedCategories"
         [style.background-color]="category?.color ? category.color : ''">
         {{ category.name }}
-        <mat-icon matChipRemove (click)="removeCategory(category)"
-          >cancel</mat-icon
-        >
+        <mat-icon matChipRemove (click)="removeCategory(category)">
+          cancel
+        </mat-icon>
       </mat-chip>
       <mat-menu #menu="matMenu">
         <button
