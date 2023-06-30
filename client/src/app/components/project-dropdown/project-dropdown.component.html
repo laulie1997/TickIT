@@ -1,6 +1,4 @@
-<span >{{project?.name}}</span>
-<button mat-icon-button (click)="openEditProjectModal(project.id)" color="accent">
-  <mat-icon>edit</mat-icon>
-</button>
-
-
+<button mat-button class="nameButton" [matMenuTriggerFor]="projectItem" >{{project?.name}}</button>
+<mat-menu #projectItem="matMenu">
+  <button mat-menu-item (click)="openEditProjectModal(this.projectId)">Projektdaten bearbeiten</button>
+</mat-menu>
