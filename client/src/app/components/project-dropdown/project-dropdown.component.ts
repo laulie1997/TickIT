@@ -30,7 +30,7 @@ export class ProjectDropdownComponent implements OnInit {
     private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class ProjectDropdownComponent implements OnInit {
   openEditProjectModal(projectId: number) {
     const dialogRef = this.dialog.open(ProjectModalComponent, {
       height: '600px',
-      width: '700px',
+      width: '500px',
       data: { projectId: projectId },
     });
 
