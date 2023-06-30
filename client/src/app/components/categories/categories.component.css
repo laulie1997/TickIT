@@ -4,3 +4,8 @@ button{
 .category-name{
   color: #fff;
 }
+
+.category-container{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
