@@ -3,7 +3,7 @@
   overflow-y: scroll;
 }
 
-.list-item-action {
+mat-dialog-actions {
   display: flex;
   justify-content:space-between;
 }
