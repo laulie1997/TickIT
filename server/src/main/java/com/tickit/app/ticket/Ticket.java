@@ -9,8 +9,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -57,8 +55,10 @@ public class Ticket implements Serializable, Comparable<Ticket> {
     @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private Status status;
 
-    @ManyToMany(targetEntity = Category.class)
-    @Cascade(CascadeType.DELETE)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.REMOVE})
+    @JoinTable(name = "ticket_categories",
+            joinColumns = @JoinColumn(name = "tickets_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id"))
     private Set<Category> categories;
 
     @CreationTimestamp
