@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/api/user';
 import { ProjectService } from 'src/app/services/project/project.service';
-import { UserService } from 'src/app/services/user/user.service';
 import { UserSelectionModalComponent } from '../user-selection-modal/user-selection-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Project } from 'src/app/api/project';

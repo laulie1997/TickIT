@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     public router: Router,
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {

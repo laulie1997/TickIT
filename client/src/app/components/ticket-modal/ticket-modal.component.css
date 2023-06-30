@@ -21,3 +21,15 @@ mat-dialog-actions {
 .duplicate-icon{
   cursor: pointer;
 }
+.category-name{
+  color: white;
+  font-weight: bold;
+}
+
+.add-category{
+  color: black;
+}
+
+.category-section, .assignee-section{
+  margin-top: 15px;
+}

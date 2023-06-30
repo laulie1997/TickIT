@@ -1,7 +1,4 @@
 <div [formGroup]="form" class="dialog-container">
-  <mat-icon class="duplicate-icon" (click)="duplicateTicket()"
-    >file_copy</mat-icon
-  >
   <h2 mat-dialog-title>{{ dialogTitle }}</h2>
   <mat-dialog-content>
     <mat-form-field appearance="outline">
@@ -22,7 +19,7 @@
         [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
-
+<div class="category-section" *ngIf="router.url.includes('/project/')">
     <div class="row">
       <mat-label>Kategorien</mat-label>
     </div>
@@ -36,7 +33,11 @@
         </mat-icon>
       </mat-chip>
       <mat-menu #menu="matMenu">
+        <button mat-button *ngIf="categories?.length < 1">
+          Für dieses Projekt gibt es noch keine Kategorien
+        </button>
         <button
+          class="category-name"
           mat-menu-item
           *ngFor="let category of categories"
           [style.background-color]="category?.color ? category.color : ''"
@@ -45,34 +46,46 @@
           {{ category.name }}
         </button>
       </mat-menu>
-      <button mat-stroked-button [matMenuTriggerFor]="menu">
+      <button
+        mat-button
+        class="add-category"
+        aria-label="Add category"
+        [matMenuTriggerFor]="menu">
         <mat-icon>add</mat-icon>
       </button>
     </div>
-
+</div>
+    <div class="assignee-section" *ngIf="router.url.includes('/project/')" >
     <div class="row">
-      <mat-label *ngIf="router.url.includes('/project/')">
+      <mat-label >
         Verantwortliche(r)
       </mat-label>
     </div>
     <mat-chip-listbox>
-      <mat-chip-option
+      <mat-chip-option matChipAvatar
         *ngFor="let user of ticketMembers"
         [selected]="isSelected(user)"
         (click)="toggleSelection(user)">
+        <mat-icon matChipAvatar >person</mat-icon>
         {{ user?.name }} {{ user?.surname }}
       </mat-chip-option>
     </mat-chip-listbox>
-
+    </div>
     <mat-dialog-actions>
       <div class="dialog-actions">
         <div class="left-actions">
           <button
-            *ngIf="editMode"
+            *ngIf="editMode && router.url.includes('/project/')"
             mat-stroked-button
             color="warn"
             (click)="deleteTicket()">
             Löschen
+          </button>
+          <button
+            *ngIf="editMode && router.url.includes('/project/')"
+            mat-stroked-button
+            (click)="duplicateTicket()">
+            Duplizieren
           </button>
         </div>
         <div class="right-actions">

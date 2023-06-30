@@ -1,49 +1,29 @@
 <mat-card>
   <mat-card-header><h1>Benutzerdaten aktualisieren</h1></mat-card-header>
   <mat-card-content>
-    <form #form="ngForm">
+    <form [formGroup]="userForm">
       <div class="row">
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input
-            matInput
-            name="name"
-            id="name"
-            [(ngModel)]="user.name"
-            required />
+          <input matInput formControlName="name" required />
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field>
-          <mat-label for="surname">Nachname</mat-label>
-          <input
-            matInput
-            type="text"
-            id="surname"
-            name="surname"
-            [(ngModel)]="user.surname" />
+          <mat-label>Nachname</mat-label>
+          <input matInput type="text" formControlName="surname" />
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field>
           <mat-label>E-mail-Adresse</mat-label>
-          <input
-            matInput
-            name="email"
-            id="email"
-            [(ngModel)]="user.email"
-            required />
+          <input matInput formControlName="email" required />
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field>
           <mat-label>Benutzername</mat-label>
-          <input
-            matInput
-            name="username"
-            id="username"
-            [(ngModel)]="user.username"
-            required />
+          <input matInput formControlName="username" required />
         </mat-form-field>
       </div>
     </form>
@@ -51,16 +31,8 @@
 
   <mat-dialog-actions>
     <div class="dialog-actions">
-      <button mat-stroked-button (click)="openChangePasswordModal()">
-        Passwort ändern
-      </button>
-      <button
-        mat-flat-button
-        (click)="updateUser()"
-        color="primary"
-        [disabled]="!form.valid">
-        Speichern
-      </button>
+      <button mat-stroked-button (click)="openChangePasswordModal()">Passwort ändern</button>
+      <button mat-flat-button (click)="updateUser()" color="primary" [disabled]="!userForm.valid">Speichern</button>
     </div>
   </mat-dialog-actions>
 </mat-card>

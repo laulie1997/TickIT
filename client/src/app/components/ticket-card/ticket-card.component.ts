@@ -15,11 +15,15 @@ export class TicketCardComponent implements OnInit {
   @Input() ticket: Ticket;
   @Input() project: Project;
   @Input() projectId: number;
-  constructor(public dialog: MatDialog, private ticketService: TicketService) {}
+  constructor(
+    public dialog: MatDialog,
+    private ticketService: TicketService,
+    public router: Router
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TicketModalComponent, {
-      width: '500px',
+      width: '600px',
       data: {
         ticketId: this.ticket.id,
         projectId: this.projectId, // Pass the project ID to the modal

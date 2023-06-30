@@ -64,8 +64,8 @@ export class TicketModalComponent implements OnInit {
       this.projectService
         .getProjectMembers(this.projectId)
         .subscribe((members: User[]) => (this.ticketMembers = members));
+      this.fetchCategories(this.projectId);
     }
-    this.fetchCategories(this.projectId);
   }
 
   private buildForm() {

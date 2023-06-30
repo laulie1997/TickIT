@@ -1,15 +1,17 @@
-<mat-card mat-button (click)="openDialog()">
+<mat-card  (click)="openDialog()">
   <mat-card-header>
-    <div *ngIf="ticket?.categories">
-      <mat-chip [style.background-color]="category?.color ? category.color : ''" *ngFor="let category of ticket.categories"> {{category?.name}}</mat-chip>
-    </div>
+    <h2>{{ ticket?.title }}</h2>
   </mat-card-header>
   <mat-card-content>
-    <h2>{{ ticket?.title }}</h2>
+    <div *ngIf="ticket?.categories">
+      <mat-chip  [style.background-color]="category?.color ? category.color : ''" *ngFor="let category of ticket.categories">
+        <span class="category-name">{{category?.name}}</span></mat-chip>
+    </div>
   </mat-card-content>
-  <mat-card-footer>
+  <div *ngIf="router.url.includes('/project/')">
     <mat-chip *ngIf="ticket?.assignee">
+      <mat-icon matChipAvatar >person</mat-icon>
   {{ticket?.assignee.name}} {{ticket?.assignee.surname}}
     </mat-chip>
-  </mat-card-footer>
+  </div>
 </mat-card>

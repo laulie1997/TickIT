@@ -1,7 +1,15 @@
 mat-card {
   margin-bottom: 10px;
   cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 mat-chip{
   margin: 3px;
+
+}
+
+.category-name{
+  color: white;
+  font-weight: bold;
 }
