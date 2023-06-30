@@ -17,3 +17,7 @@ mat-dialog-actions {
 .category-chips mat-chip {
   white-space: nowrap;
 }
+
+.duplicate-icon{
+  cursor: pointer;
+}
