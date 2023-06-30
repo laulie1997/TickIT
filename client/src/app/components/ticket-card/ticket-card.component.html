@@ -8,7 +8,7 @@
         <span class="category-name">{{category?.name}}</span></mat-chip>
     </div>
   </mat-card-content>
-  <div>
+  <div *ngIf="router.url.includes('/project/')">
     <mat-chip *ngIf="ticket?.assignee">
       <mat-icon matChipAvatar >person</mat-icon>
   {{ticket?.assignee.name}} {{ticket?.assignee.surname}}

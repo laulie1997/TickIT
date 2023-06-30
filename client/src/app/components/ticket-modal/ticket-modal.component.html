@@ -19,7 +19,7 @@
         [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
-<div class="category-section">
+<div class="category-section" *ngIf="router.url.includes('/project/')">
     <div class="row">
       <mat-label>Kategorien</mat-label>
     </div>
@@ -29,10 +29,12 @@
         [style.background-color]="category?.color ? category.color : ''">
         <span class="category-name"> {{ category.name }} </span>
         <mat-icon matChipRemove (click)="removeCategory(category)"
-          >cancel</mat-icon
-        >
+          >cancel</mat-icon>
       </mat-chip>
       <mat-menu #menu="matMenu">
+        <button mat-button *ngIf="categories?.length < 1">
+          Für dieses Projekt gibt es noch keine Kategorien
+        </button>
         <button
           class="category-name"
           mat-menu-item
@@ -52,9 +54,9 @@
       </button>
     </div>
 </div>
-    <div class="assignee-section">
+    <div class="assignee-section" *ngIf="router.url.includes('/project/')" >
     <div class="row">
-      <mat-label *ngIf="router.url.includes('/project/')">
+      <mat-label >
         Verantwortliche(r)
       </mat-label>
     </div>
@@ -72,14 +74,14 @@
       <div class="dialog-actions">
         <div class="left-actions">
           <button
-            *ngIf="editMode"
+            *ngIf="editMode && router.url.includes('/project/')"
             mat-stroked-button
             color="warn"
             (click)="deleteTicket()">
             Löschen
           </button>
           <button
-            *ngIf="editMode"
+            *ngIf="editMode && router.url.includes('/project/')"
             mat-stroked-button
             (click)="duplicateTicket()">
             Duplizieren
