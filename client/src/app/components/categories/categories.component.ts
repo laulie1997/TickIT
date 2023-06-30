@@ -27,10 +27,7 @@ export class CategoriesComponent implements OnInit {
   fetchCategories(projectId: number) {
     this.projectService
       .getCategories(projectId)
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
-        console.log(this.categories);
-      });
+      .subscribe((categories: Category[]) => (this.categories = categories));
   }
 
   openDialog(categoryId?: number) {

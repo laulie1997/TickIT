@@ -68,6 +68,7 @@ public class TicketService {
         dbTicket.setStatus(ticket.getStatus());
         dbTicket.setAssignee(getAssignee(ticket));
         dbTicket.setDueDate(ticket.getDueDate());
+        applicationEventPublisher.publishEvent(new ProjectUpdateEvent(dbTicket.getProject().getId()));
         return ticketRepository.save(dbTicket);
     }
 

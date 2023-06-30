@@ -37,7 +37,6 @@ export class ProjectDropdownComponent implements OnInit {
     this.projectIdSubscription = this.projectService.projectId$.subscribe(
       projectId => {
         this.projectId = projectId;
-        console.log(projectId);
         this.getProjectName();
       }
     );
