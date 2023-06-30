@@ -1,5 +1,5 @@
 <div *ngFor="let category of categories">
-  <button mat-raised-button
+  <button mat-raised-button class="category-name"
           [style.background-color]="category?.color ? category.color : ''"
           (click)="openDialog(category?.id)">
     {{category?.name}}

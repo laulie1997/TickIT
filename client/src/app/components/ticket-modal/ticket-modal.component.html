@@ -20,7 +20,7 @@
         [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
-
+<div class="category-section">
     <div class="row">
       <mat-label>Kategorien</mat-label>
     </div>
@@ -28,13 +28,14 @@
       <mat-chip
         *ngFor="let category of selectedCategories"
         [style.background-color]="category?.color ? category.color : ''">
-        {{ category.name }}
+        <span class="category-name"> {{ category.name }} </span>
         <mat-icon matChipRemove (click)="removeCategory(category)"
           >cancel</mat-icon
         >
       </mat-chip>
       <mat-menu #menu="matMenu">
         <button
+          class="category-name"
           mat-menu-item
           *ngFor="let category of categories"
           [style.background-color]="category?.color ? category.color : ''"
@@ -43,11 +44,16 @@
           {{ category.name }}
         </button>
       </mat-menu>
-      <button mat-stroked-button [matMenuTriggerFor]="menu">
+      <button
+        mat-button
+        class="add-category"
+        aria-label="Add category"
+        [matMenuTriggerFor]="menu">
         <mat-icon>add</mat-icon>
       </button>
     </div>
-
+</div>
+    <div class="assignee-section">
     <div class="row">
       <mat-label *ngIf="router.url.includes('/project/')">
         Verantwortliche(r)
@@ -61,7 +67,7 @@
         {{ user?.name }} {{ user?.surname }}
       </mat-chip-option>
     </mat-chip-listbox>
-
+    </div>
     <mat-dialog-actions>
       <div class="dialog-actions">
         <div class="left-actions">
