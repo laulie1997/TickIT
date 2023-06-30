@@ -117,7 +117,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
-    // { provide: ErrorHandler, useClass: GlobalErrorHandler },
+     { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],
 })
