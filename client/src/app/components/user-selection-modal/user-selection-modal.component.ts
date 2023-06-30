@@ -1,7 +1,6 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { MatListOption } from '@angular/material/list';
 import { User } from 'src/app/api/user';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -31,7 +30,6 @@ export class UserSelectionModalComponent implements OnInit {
 
   onSelectionChange(selection: MatListOption[]) {
     this.selection = selection.map(option => option.value);
-    console.log(this.selection);
   }
 
   confirmSelection() {
