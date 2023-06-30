@@ -1,10 +1,4 @@
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  ParamMap,
-  Router,
-  RouterEvent,
-} from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project/project.service';
 import { Project } from '../../api/project';

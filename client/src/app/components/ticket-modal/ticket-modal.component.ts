@@ -155,7 +155,6 @@ export class TicketModalComponent implements OnInit {
       .getCategories(projectId)
       .subscribe((categories: Category[]) => {
         this.categories = categories;
-        console.log(this.categories);
       });
   }
   selectCategory(category: Category) {
