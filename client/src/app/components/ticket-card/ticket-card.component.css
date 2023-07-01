@@ -3,7 +3,6 @@ mat-card {
   cursor: pointer;
   padding-left: 10px;
   padding-right: 10px;
-  padding-bottom: 10px;
 }
 mat-chip {
   margin: 3px;
