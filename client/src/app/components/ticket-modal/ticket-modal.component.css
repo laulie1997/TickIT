@@ -18,18 +18,19 @@ mat-dialog-actions {
   white-space: nowrap;
 }
 
-.duplicate-icon{
+.duplicate-icon {
   cursor: pointer;
 }
-.category-name{
-  color: white;
-  font-weight: bold;
+
+.category-name {
+  color: white !important;
 }
 
-.add-category{
+.add-category {
   color: black;
 }
 
-.category-section, .assignee-section{
+.category-section,
+.assignee-section {
   margin-top: 15px;
 }

@@ -19,57 +19,56 @@
         [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
-<div class="category-section" *ngIf="router.url.includes('/project/')">
-    <div class="row">
-      <mat-label>Kategorien</mat-label>
-    </div>
-    <div class="category-chips">
-      <mat-chip
-        *ngFor="let category of selectedCategories"
-        [style.background-color]="category?.color ? category.color : ''">
-        {{ category.name }}
-        <mat-icon matChipRemove (click)="removeCategory(category)">
-          cancel
-        </mat-icon>
-      </mat-chip>
-      <mat-menu #menu="matMenu">
-        <button mat-button *ngIf="categories?.length < 1">
-          Für dieses Projekt gibt es noch keine Kategorien
-        </button>
+    <div class="category-section" *ngIf="router.url.includes('/project/')">
+      <div class="row">
+        <mat-label>Kategorien</mat-label>
+      </div>
+      <div class="category-chips">
+        <mat-chip
+          *ngFor="let category of selectedCategories"
+          [style.background-color]="category?.color ? category.color : ''">
+          <span class="category-name">{{ category.name }}</span>
+          <mat-icon matChipRemove (click)="removeCategory(category)">
+            cancel
+          </mat-icon>
+        </mat-chip>
+        <mat-menu #menu="matMenu">
+          <button mat-button *ngIf="categories?.length < 1">
+            Für dieses Projekt gibt es noch keine Kategorien
+          </button>
+          <button
+            class="category-name"
+            mat-menu-item
+            *ngFor="let category of categories"
+            [style.background-color]="category?.color ? category.color : ''"
+            (click)="selectCategory(category)"
+            [disabled]="isCategorySelected(category)">
+            {{ category.name }}
+          </button>
+        </mat-menu>
         <button
-          class="category-name"
-          mat-menu-item
-          *ngFor="let category of categories"
-          [style.background-color]="category?.color ? category.color : ''"
-          (click)="selectCategory(category)"
-          [disabled]="isCategorySelected(category)">
-          {{ category.name }}
+          mat-button
+          class="add-category"
+          aria-label="Add category"
+          [matMenuTriggerFor]="menu">
+          <mat-icon>add</mat-icon>
         </button>
-      </mat-menu>
-      <button
-        mat-button
-        class="add-category"
-        aria-label="Add category"
-        [matMenuTriggerFor]="menu">
-        <mat-icon>add</mat-icon>
-      </button>
+      </div>
     </div>
-</div>
-    <div class="assignee-section" *ngIf="router.url.includes('/project/')" >
-    <div class="row">
-      <mat-label >
-        Verantwortliche(r)
-      </mat-label>
-    </div>
-    <mat-chip-listbox>
-      <mat-chip-option matChipAvatar
-        *ngFor="let user of ticketMembers"
-        [selected]="isSelected(user)"
-        (click)="toggleSelection(user)">
-        <mat-icon matChipAvatar >person</mat-icon>
-        {{ user?.name }} {{ user?.surname }}
-      </mat-chip-option>
-    </mat-chip-listbox>
+    <div class="assignee-section" *ngIf="router.url.includes('/project/')">
+      <div class="row">
+        <mat-label> Verantwortliche(r) </mat-label>
+      </div>
+      <mat-chip-listbox>
+        <mat-chip-option
+          matChipAvatar
+          *ngFor="let user of ticketMembers"
+          [selected]="isSelected(user)"
+          (click)="toggleSelection(user)">
+          <mat-icon matChipAvatar>person</mat-icon>
+          {{ user?.name }} {{ user?.surname }}
+        </mat-chip-option>
+      </mat-chip-listbox>
     </div>
     <mat-dialog-actions>
       <div class="dialog-actions">

@@ -10,8 +10,6 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Category } from '../../api/category';
-import { CategoryService } from '../../services/category/category.service';
-import { CategoriesModalComponent } from '../categories-modal/categories-modal.component';
 import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
@@ -45,7 +43,7 @@ export class ProjectDropdownComponent implements OnInit {
   openEditProjectModal(projectId: number) {
     const dialogRef = this.dialog.open(ProjectModalComponent, {
       height: '600px',
-      width: '500px',
+      width: '600px',
       data: { projectId: projectId },
     });
 

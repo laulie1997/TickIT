@@ -5,5 +5,11 @@
 
 mat-dialog-actions {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
+}
+
+.list-item-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
