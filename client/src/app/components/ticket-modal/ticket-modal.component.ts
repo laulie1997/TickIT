@@ -129,7 +129,7 @@ export class TicketModalComponent implements OnInit {
     this.form.get('name').setValue(this.ticket?.title);
     this.form.get('description').setValue(this.ticket?.description);
     const date =
-      this.ticket.dueDate != null
+      this.ticket.dueDate != null && this.ticket.dueDate != 0
         ? new Date(this.ticket.dueDate).toISOString()
         : '';
     this.form.get('dueDate').setValue(date);
@@ -174,7 +174,8 @@ export class TicketModalComponent implements OnInit {
       this.selectedCategories = [];
     }
   }
-  isCategorySelected(category: any): boolean {
+
+  isCategorySelected(category: Category): boolean {
     return this.selectedCategories.some(
       selectedCategory => selectedCategory.id === category.id
     );
@@ -182,12 +183,15 @@ export class TicketModalComponent implements OnInit {
 
   duplicateTicket() {
     // Create a copy of the ticket object
-    const duplicatedTicket: Ticket = { ...this.ticket };
-
     // Reset the ID and other properties that should be unique for the new ticket
-    duplicatedTicket.id = null;
-    duplicatedTicket.title = 'Copy of ' + duplicatedTicket.title;
-    duplicatedTicket.description = 'Copy of ' + duplicatedTicket.description;
+    const duplicatedTicket: Ticket = {
+      title: 'Copy of ' + this.ticket.title,
+      description: 'Copy of ' + this.ticket.description,
+      dueDate: this.ticket.dueDate,
+      project: { id: this.data.projectId },
+      status: { id: this.ticket.status.id },
+      assignee: { id: this.ticket.assignee.id },
+    };
 
     // Create the duplicated ticket
     this.projectService
@@ -195,9 +199,6 @@ export class TicketModalComponent implements OnInit {
       .subscribe((createdTicket: Ticket) => {
         // Assign the selected categories to the duplicated ticket
         this.assignCategories(createdTicket.id);
-
-        // Close the dialog and indicate success
-        this.dialogRef.close(true);
       });
   }
 }
