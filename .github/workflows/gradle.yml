@@ -62,4 +62,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build Artifact
-        path: build/libs
+        path: build/libsF
+
+
